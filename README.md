@@ -7,3 +7,6 @@ https://www.cs.cmu.edu/~clo/www/CMU/DataStructures/Lessons/lesson4_1.htm
 
 Single & double quotes;
 https://www.dba-oracle.com/t_linux_single_double_quotes.htm
+
+guide how to make shell in C.
+https://www.geeksforgeeks.org/making-linux-shell-c/
