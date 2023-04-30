@@ -10,3 +10,5 @@ https://www.dba-oracle.com/t_linux_single_double_quotes.htm
 
 guide how to make shell in C.
 https://www.geeksforgeeks.org/making-linux-shell-c/
+
+https://brennan.io/2015/01/16/write-a-shell-in-c/
