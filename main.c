@@ -1,16 +1,23 @@
 #include "minishell.h"
-int main(){
-int i = 0;
-while (1)
+int main(void)
 {
-char *test = get_next_line(0);
-if (!test)
-{
-    break;
+    int i = 0;
+    char *test;
+    while (1)
+    {
+        test = readline("{9aw9a3a hh}: \% ");
+        // readline("gggg");
+
+        if (!test)
+        {
+            free(test);
+            return 1;
+        }
+       if (ft_strlen(test) > 0)
+        add_history(test);
+       
+       tokenisation(test);
+    }
 }
 
-}
-
-
-
-}
+// void handler(char *string)

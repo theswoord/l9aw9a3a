@@ -1,3 +1,6 @@
 {
-    "C_Cpp.intelliSenseEngineFallback": "disabled"
+    "C_Cpp.intelliSenseEngineFallback": "disabled",
+    "files.associations": {
+        "history.h": "c"
+    }
 }
