@@ -17,3 +17,5 @@ https://www.bottomupcs.com/
 
 good quotes handling
  https://www.codevivek.com/writing-a-shell-in-c/
+awileeeeeeeeee 
+https://www.grymoire.com/Unix/Quote.html
