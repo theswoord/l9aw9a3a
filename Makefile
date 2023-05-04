@@ -2,7 +2,7 @@
 
 
 
-SRC = main.c lexer.c lexic_utils.c
+SRC = main.c lexer.c lexic_utils.c memory_friend.c
 SRCB = ./bonus_checker/bonus.c ./bonus_checker/instructionpush_bonus.c ./bonus_checker/instructionsrotate_bonus.c ./bonus_checker/instructionsswap_bonus.c ./bonus_checker/output_bonus.c ./bonus_checker/tools_bonus.c ./bonus_checker/instructionhelpers_bonus.c ./bonus_checker/utils2_bonus.c ./bonus_checker/tools2_bonus.c ./bonus_checker/free_bonus.c ./bonus_checker/checker_bonus.c
 NAME = shell
 NAMEB = checker
@@ -26,10 +26,10 @@ ${NAME} : ${obj}
 	${CC} -c $< -o $@
 
 libs: $(SUBDIRS)
-	@echo "\033[1;32mmaking the libs ...\033[0m"
+	# @echo "\033[1;32mmaking the libs ...\033[0m"
 
 	$(foreach dir, $(SUBDIRS), $(MAKE) -C $(dir) all;)
-	@echo "\033[1;31mit's made \033[0m"
+	# @echo "\033[1;31mit's made \033[0m"
 libsre: $(SUBDIRS)
 	$(foreach dir, $(SUBDIRS), $(MAKE) -C $(dir) re;)
 libsclean:	$(SUBDIRS)
