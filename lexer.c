@@ -13,8 +13,8 @@ char *tmp = ft_calloc(ft_strlen(str),1);
 ft_strlcpy(tmp,str,ft_strlen(str)+1);
 
 
-// if (syntax_check(elements,str)==0)
-// return;
+if (syntax_check(elements,str)==0)
+return;
 
 // if(closed_quotes(tmp) == 3){
 
@@ -25,11 +25,16 @@ ft_strlcpy(tmp,str,ft_strlen(str)+1);
 // tmp = quotefixer(tmp,'\'');
 // if(elements->quotes != 0 || elements->d_quotes != 0)
 printf("%d\n",closed_quotes(tmp));
-if(closed_quotes(tmp)==3)
-printf("%s\n",code_3_quotes(tmp));
+// if(closed_quotes(tmp)==3)
+// printf("%s\n",code_3_quotes(tmp));
 
 
-if (closed_quotes(tmp)==1)
+if (closed_double_quotes(tmp)==3 || closed_double_quotes(tmp)==1)
+{
+   tmp = special_trim(tmp,'"');
+    printf("%s\n",tmp);
+}
+else if (closed_quotes(tmp)==3 || closed_quotes(tmp)==1)
 {
    tmp = special_trim(tmp,'\'');
     printf("%s\n",tmp);
@@ -66,7 +71,7 @@ elements->r_left = e_search(str,'<');
 int syntax_check(t_counter *elements,char *str){
 int i;
 i=0;
-if (closed_quotes(str) == 0 || closed_double_quotes(str)==0){
+if (closed_quotes(str) == 0 || closed_double_quotes(str)==0  ){
 printf("syntax error !\n");
 return(0);
 // if (){
@@ -96,71 +101,71 @@ return 1;
 int closed_quotes(char *str){
 
     // -------------------------------- working without chat gpt
-    int i = 0;
-    int o = 0;
-    int s =0;
-    int c = 0;
-    int start = 0;
-    int finish = 0;
-    while (str[i]!= '\0')
-    {
+    // int i = 0;
+    // int o = 0;
+    // int s =0;
+    // int c = 0;
+    // int start = 0;
+    // int finish = 0;
+    // while (str[i]!= '\0')
+    // {
 
-    if (str[i] == '\'' && o == 0){
-     o=1;
-     start = i;
-     i++;
-    }
-    if (str[i] == '"' ||str[i] == '$')
-    s++;
+    // if (str[i] == '\'' && o == 0){
+    //  o=1;
+    //  start = i;
+    //  i++;
+    // }
+    // if (str[i] == '"' ||str[i] == '$')
+    // s++;
 
-    if(str[i] == '\'' && o == 1){
-    c = 1;
-    finish = i;
-    i++;
-    }
+    // if(str[i] == '\'' && o == 1){
+    // c = 1;
+    // finish = i;
+    // i++;
+    // }
 
-    if(c == 1 && pos(str+finish,'\'') > finish){
-    o = 0;
-    c = 0;
-    }
-    i++;
-    }
+    // if(c == 1 && pos(str+finish,'\'') > finish){
+    // o = 0;
+    // c = 0;
+    // }
+    // i++;
+    // }
 
-    if(o == 1 && c == 0)
-    return 0;
-    if (s != 0)
-    return 3;
+    // if(o == 1 && c == 0)
+    // return 0;
+    // if (s != 0)
+    // return 3;
 
-    return 1;
+    // return 1;
     // --------------------------------------- working with chat gpt
-// int i = 0;
-// int inside = 0;
-// int squotes_o = 0;
-// int squotes_c = 0;
-// int found = 0;
+int i = 0;
+int inside = 0;
+int squotes_o = 0;
+int squotes_c = 0;
+int found = 0;
 
-// while (str[i] != '\0')
-// {
-//     if (str[i] == '\'')
-//     {
-//         if (inside)
-//         squotes_c++;
-//         else
-//         squotes_o++;
+while (str[i] != '\0')
+{
+    if (str[i] == '\'')
+    {
+        if (inside)
+        squotes_c++;
+        else
+        squotes_o++;
 
-//         inside = !inside;
-//     }
-//     else if ((str[i] == '"' || str[i] == '$') && inside)
-//         found = 1;
-//     i++;
-// }
+        inside = !inside;
+    }
+    else if ((str[i] == '"' || str[i] == '$') && inside)
+        found = 1;
+    i++;
+}
 
-// if (inside)
-// return 0;
-// else if (found)
-// return 3;
-// else
-// return 1;
+if (inside)
+return 0;
+else if (found)
+return 3;
+else
+return 1;
 //--------------------------------------------------------
 }
 char* code_3_quotes(char * str){
