@@ -19,3 +19,7 @@ good quotes handling
  https://www.codevivek.com/writing-a-shell-in-c/
 awileeeeeeeeee 
 https://www.grymoire.com/Unix/Quote.html
+
+
+
+chof hadi mazal makhdamach '"nabil'bouhali' "' their result "nabilbouhali " , our resullt 'nabil'bouhali' '
