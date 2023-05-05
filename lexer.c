@@ -23,23 +23,23 @@ return;
 // tmp = quotefixer(tmp,'"');
 // if(elements->quotes != 0 )
 // tmp = quotefixer(tmp,'\'');
-// if(elements->quotes != 0 || elements->d_quotes != 0)
+if(elements->quotes != 0 || elements->d_quotes != 0){
 printf("%d\n",closed_quotes(tmp));
 // if(closed_quotes(tmp)==3)
 // printf("%s\n",code_3_quotes(tmp));
 
 
-if (closed_double_quotes(tmp)==3 || closed_double_quotes(tmp)==1)
+if ((closed_double_quotes(tmp)==3) && elements->d_quotes != 0)
 {
    tmp = special_trim(tmp,'"');
     printf("%s\n",tmp);
 }
-else if (closed_quotes(tmp)==3 || closed_quotes(tmp)==1)
+if ((closed_quotes(tmp)==3 ) && elements->quotes != 0)
 {
    tmp = special_trim(tmp,'\'');
     printf("%s\n",tmp);
 }
-
+}
 
 free(tmp);
 // free(str);
@@ -191,7 +191,7 @@ int closed_double_quotes(char *str){
      start = i;
      i++;
     }
-    if (str[i] == '$')
+    if (str[i] == '$'|| str[i] == '\'')
     s++;
 
     if(str[i] == '"' && o == 1){
