@@ -50,6 +50,7 @@ int closed_quotes(char *str);
 int closed_double_quotes(char *str);
 char* code_3_quotes(char * str);
 char *special_trim(char * str, char c);
+char *simple_trim(char *str, char c);
 /*	----	----free----	-----	*/
 void free_tableau(char** tableau,int lines);
 

@@ -27,6 +27,9 @@ if(elements->quotes != 0 || elements->d_quotes != 0){
 printf("%d\n",closed_quotes(tmp));
 // if(closed_quotes(tmp)==3)
 // printf("%s\n",code_3_quotes(tmp));
+if(closed_quotes(tmp)==1 || closed_double_quotes(tmp)==1){
+tmp = simple_trim(tmp,'"');
+}
 
 
 if ((closed_double_quotes(tmp)==3) && elements->d_quotes != 0)
@@ -39,8 +42,14 @@ if ((closed_quotes(tmp)==3 ) && elements->quotes != 0)
    tmp = special_trim(tmp,'\'');
     printf("%s\n",tmp);
 }
-}
+// else if ((closed_quotes(tmp)==1 ) && elements->quotes != 0)
+// {
+//    tmp = special_trim(tmp,'\'');
+//     printf("%s\n",tmp);
+// }
 
+}
+printf("%s\n",tmp);
 free(tmp);
 // free(str);
 }
@@ -275,4 +284,22 @@ char *special_trim(char * str, char c){
     // printf("idx%d\n",idxToDel);
     ft_memmove(&str[idxToDel], &str[idxToDel + 1], ft_strlen(str) - idxToDel);
     return str;
+}
+char *simple_trim(char *str, char c){
+
+    int i =0;
+    int idxToDel = 0; 
+    // char* toreturn;
+    while (str[i]!= '\0'){
+
+        if (str[i] == c){
+            idxToDel = i;
+            ft_memmove(&str[idxToDel], &str[idxToDel + 1], ft_strlen(str) - idxToDel);
+            // printf("%s\n",str);
+            // i++;
+        }
+        i++;
+
+    }
+    return (str);
 }
