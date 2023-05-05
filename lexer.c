@@ -24,24 +24,43 @@ return;
 // if(elements->quotes != 0 )
 // tmp = quotefixer(tmp,'\'');
 if(elements->quotes != 0 || elements->d_quotes != 0){
-printf("%d\n",closed_quotes(tmp));
+printf("kayn \'  .%d \n",closed_quotes(tmp));
+printf("kayn \" %d \n", closed_double_quotes(tmp));
+// printf("%d\n",closed_quotes(tmp));
 // if(closed_quotes(tmp)==3)
 // printf("%s\n",code_3_quotes(tmp));
-if(closed_quotes(tmp)==1 || closed_double_quotes(tmp)==1){
-tmp = simple_trim(tmp,'"');
+// ------------------------------------------------------------------------ mzyan 9bl rework e"cho" hhf'ds'fsd"qsdf"c"w'x"
+if (closed_quotes(tmp) == 3)
+{
+    special_trim(tmp,'\'');
+}
+else if (closed_quotes(tmp)== 1 )
+{
+   simple_trim(tmp,'\'');
 }
 
+if (closed_double_quotes(tmp) == 3 ) // matnsach expand
+{
+    special_trim(tmp,'"');
+}
+else if (closed_double_quotes(tmp)==1)
+simple_trim(tmp,'"');
+// if(closed_quotes(tmp)==1 || closed_double_quotes(tmp)==1){
+// tmp = simple_trim(tmp,'"');
+// }
 
-if ((closed_double_quotes(tmp)==3) && elements->d_quotes != 0)
-{
-   tmp = special_trim(tmp,'"');
-    printf("%s\n",tmp);
-}
-if ((closed_quotes(tmp)==3 ) && elements->quotes != 0)
-{
-   tmp = special_trim(tmp,'\'');
-    printf("%s\n",tmp);
-}
+
+// if ((closed_double_quotes(tmp)==3) && elements->d_quotes != 0)
+// {
+//    tmp = special_trim(tmp,'"');
+//     printf("%s\n",tmp);
+// }
+// if ((closed_quotes(tmp)==3 ) && elements->quotes != 0)
+// {
+//    tmp = special_trim(tmp,'\'');
+//     printf("%s\n",tmp);
+// }
+// ------------------------------------------------------------------------
 // else if ((closed_quotes(tmp)==1 ) && elements->quotes != 0)
 // {
 //    tmp = special_trim(tmp,'\'');
@@ -185,72 +204,72 @@ char* code_3_quotes(char * str){
 }
 int closed_double_quotes(char *str){
 
-    // -------------------------------- working without chat gpt
-    int i = 0;
-    int o = 0;
-    int s =0;
-    int c = 0;
-    int start = 0;
-    int finish = 0;
-    while (str[i]!= '\0')
-    {
+    // -------------------------------- working without chat gpt // dkhel expand 
+    // int i = 0;
+    // int o = 0;
+    // int s =0;
+    // int c = 0;
+    // int start = 0;
+    // int finish = 0;
+    // while (str[i]!= '\0')
+    // {
 
-    if (str[i] == '"' && o == 0){
-     o=1;
-     start = i;
-     i++;
-    }
-    if (str[i] == '$'|| str[i] == '\'')
-    s++;
+    // if (str[i] == '"' && o == 0){
+    //  o=1;
+    //  start = i;
+    //  i++;
+    // }
+    // if (str[i] == '$'|| str[i] == '\'')
+    // s++;
 
-    if(str[i] == '"' && o == 1){
-    c = 1;
-    finish = i;
-    i++;
-    }
+    // if(str[i] == '"' && o == 1){
+    // c = 1;
+    // finish = i;
+    // i++;
+    // }
 
-    if(c == 1 && pos(str+finish,'"') > finish){
-    o = 0;
-    c = 0;
-    }
-    i++;
-    }
+    // if(c == 1 && pos(str+finish,'"') > finish){
+    // o = 0;
+    // c = 0;
+    // }
+    // i++;
+    // }
 
-    if(o == 1 && c == 0)
-    return 0;
-    if (s != 0)
-    return 3;
+    // if(o == 1 && c == 0)
+    // return 0;
+    // if (s != 0)
+    // return 3;
 
-    return 1;
+    // return 1;
     // --------------------------------------- working with chat gpt
-// int i = 0;
-// int inside = 0;
-// int squotes_o = 0;
-// int squotes_c = 0;
-// int found = 0;
+int i = 0;
+int inside = 0;
+int squotes_o = 0;
+int squotes_c = 0;
+int found = 0;
 
-// while (str[i] != '\0')
-// {
-//     if (str[i] == '\'')
-//     {
-//         if (inside)
-//         squotes_c++;
-//         else
-//         squotes_o++;
+while (str[i] != '\0')
+{
+    if (str[i] == '\'')
+    {
+        if (inside)
+        squotes_c++;
+        else
+        squotes_o++;
 
-//         inside = !inside;
-//     }
-//     else if ((str[i] == '"' || str[i] == '$') && inside)
-//         found = 1;
-//     i++;
-// }
+        inside = !inside;
+    }
+    else if ((str[i] == '"' || str[i] == '$') && inside)
+        found = 1;
+    i++;
+}
 
-// if (inside)
-// return 0;
-// else if (found)
-// return 3;
-// else
-// return 1;
+if (inside)
+return 0;
+else if (found)
+return 3;
+else
+return 1;
 //--------------------------------------------------------
 }
 char *special_trim(char * str, char c){
