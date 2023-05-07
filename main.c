@@ -8,9 +8,9 @@ void sig(int signal){
     // printf("sig :%d\n",signal);
     // signal(SIGQUIT,sig);
     if (signal == SIGINT){
-        printf("sig engaged %d ",signal);
+        // printf("sig engaged %d ",signal);
         rl_on_new_line();
-        rl_replace_line("reset", 1);
+        rl_replace_line(" ", 0);
         rl_redisplay();
     }
 }

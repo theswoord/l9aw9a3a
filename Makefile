@@ -12,7 +12,8 @@ CFLAGS= -Wall -Wextra -Werror -lreadline
 msa7 = rm -rf
 obj = ${SRC:.c=.o}
 objb = ${SRCB:.c=.o}
-
+readflag = -L/Users/nbouhali/.brew/opt/readline/lib 
+readinc = -I/Users/nbouhali/.brew/opt/readline/include/readline
 libraries = ./printf/libftprintf.a ./gnl/gnl.a ./libft/libft.a 
 SUBDIRS = gnl printf libft
 
@@ -20,7 +21,7 @@ SUBDIRS = gnl printf libft
 all : libs ${NAME}
 
 ${NAME} : ${obj}
-	${CC} ${CFLAGS} ${obj} $(libraries) -o $(NAME)
+	${CC} ${CFLAGS} ${readflag} ${readinc} ${obj} $(libraries) -o $(NAME)
 
 %.o: %.c
 	${CC} -c $< -o $@
