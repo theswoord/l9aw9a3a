@@ -1,4 +1,21 @@
 #include "minishell.h"
+void sig(int signal){
+
+    // if (signal == SIGINT){
+
+    // }
+
+    // printf("sig :%d\n",signal);
+    // signal(SIGQUIT,sig);
+    if (signal == SIGINT){
+        printf("sig engaged %d ",signal);
+        rl_on_new_line();
+        rl_replace_line("reset", 1);
+        rl_redisplay();
+    }
+}
+
+
 int main(int ac, char **av, char **env)
 {
     int i = 0;
@@ -6,7 +23,16 @@ int main(int ac, char **av, char **env)
     (void)ac;
     (void)av;
     
-    // printf("%s\n",env[3]);
+    struct sigaction minisignols;
+    minisignols.sa_handler = sig;
+    sigemptyset(&minisignols.sa_mask);
+    sigaddset(&minisignols.sa_mask,SIGQUIT);
+    minisignols.sa_flags =0 ;
+    // sigprocmask(SIG_BLOCK, &sigblock, NULL);
+    // sigaction(SIGINT,&minisignols,NULL);
+    sigaction(SIGINT,&minisignols,NULL);
+    sigaction(SIGQUIT,&minisignols,NULL);
+
     while (1)
     {
         test = readline("{9aw9a3a hh}: \% ");

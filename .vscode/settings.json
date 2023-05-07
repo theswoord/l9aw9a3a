@@ -1,6 +1,7 @@
 {
     "C_Cpp.intelliSenseEngineFallback": "disabled",
     "files.associations": {
-        "history.h": "c"
+        "history.h": "c",
+        "minitalk.h": "c"
     }
 }

@@ -34,14 +34,14 @@ if (closed_quotes(tmp) == 3)
 {
     special_trim(tmp,'\'');
 }
+
+else if (closed_double_quotes(tmp) == 3 ) // matnsach expand
+{
+    special_trim(tmp,'"');
+}
 else if (closed_quotes(tmp)== 1 )
 {
    simple_trim(tmp,'\'');
-}
-
-if (closed_double_quotes(tmp) == 3 ) // matnsach expand
-{
-    special_trim(tmp,'"');
 }
 else if (closed_double_quotes(tmp)==1)
 simple_trim(tmp,'"');
