@@ -337,3 +337,4 @@ char *simple_trim(char *str, char c)
     }
     return (str);
 }
+
