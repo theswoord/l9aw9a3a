@@ -21,5 +21,7 @@ awileeeeeeeeee
 https://www.grymoire.com/Unix/Quote.html
 
 
+https://dev.to/oyagci/generating-a-parse-tree-from-a-shell-grammar-f1
+
 
 chof hadi mazal makhdamach '"nabil'bouhali' "' their result "nabilbouhali " , our resullt 'nabil'bouhali' '
