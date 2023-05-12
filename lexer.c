@@ -2,10 +2,15 @@
 
 void tokenisation(char *str)
 {
-
+    int i = 0;
     static t_counter *elements;
     if (!elements)
         elements = (t_counter *)malloc(sizeof(t_counter));
+    static t_prompt *helper;
+    if(!helper)
+        helper = (t_prompt *)malloc(sizeof(t_prompt));
+
+    
     element_init(elements, str);
 
     // printf("fdsfds\n");
@@ -13,6 +18,11 @@ void tokenisation(char *str)
     char *tmp = ft_calloc(ft_strlen(str), 1);
     ft_strlcpy(tmp, str, ft_strlen(str) + 1);
 
+
+    str_replacement(tmp);
+    // strr_replacement(tmp);
+
+        // printf("hahya %s\n",tmp);
     // if (syntax_check(elements, str) == 0)
     //     return;
 
@@ -23,58 +33,78 @@ void tokenisation(char *str)
     // tmp = quotefixer(tmp,'"');
     // if(elements->quotes != 0 )
     // tmp = quotefixer(tmp,'\'');
-    if (elements->quotes != 0 || elements->d_quotes != 0)
+    // if (elements->quotes != 0 || elements->d_quotes != 0)
+    // {
+    //     printf("kayn \" %d \n", closed_double_quotes(tmp));
+    //     printf("kayn \'  .%d \n", closed_quotes(tmp));
+    //     // printf("kayn \"  .%d \n", isQuotesClosed(tmp));
+
+    //     // printf("%d\n",closed_quotes(tmp));
+    //     // if(closed_quotes(tmp)==3)
+    //     // printf("%s\n",code_3_quotes(tmp));
+    //     // ------------------------------------------------------------------------ mzyan 9bl rework e"cho" hhf'ds'fsd"qsdf"c"w'x"
+    //     if (closed_quotes(tmp) == 3 || closed_quotes(tmp) == 1)
+    //     {
+    //         if (closed_quotes(tmp) == 1)
+    //         {
+    //             simple_trim(tmp, '\'');
+    //         }
+    //         else
+    //             special_trim(tmp, '\'');
+    //     }
+
+    //     // if (closed_double_quotes(tmp) == 3 || closed_double_quotes(tmp) == 1) // matnsach expand
+    //     // {
+    //     //     if (closed_double_quotes(tmp) == 1)
+    //     //         simple_trim(tmp, '"');
+    //     //     else
+    //     //         special_trim(tmp, '"');
+    //     // }
+    //     // if (closed_double_quotes(tmp) == 1)
+    //     //     simple_trim(tmp, '"');
+    //     // if (closed_quotes(tmp) == 1 || closed_double_quotes(tmp) == 1)
+    //     // {
+    //     //     tmp = simple_trim(tmp, '"');
+    //     // }
+
+    //     // if ((closed_double_quotes(tmp)==3) && elements->d_quotes != 0)
+    //     // {
+    //     //    tmp = special_trim(tmp,'"');
+    //     //     printf("%s\n",tmp);
+    //     // }
+    //     // if ((closed_quotes(tmp)==3 ) && elements->quotes != 0)
+    //     // {
+    //     //    tmp = special_trim(tmp,'\'');
+    //     //     printf("%s\n",tmp);
+    //     // }
+    //     // ------------------------------------------------------------------------
+    //     // else if ((closed_quotes(tmp)==1 ) && elements->quotes != 0)
+    //     // {
+    //     //    tmp = special_trim(tmp,'\'');
+    //     //     printf("%s\n",tmp);
+    //     // }
+    // }
+
+    //***************************************************************************
+    if (helper->tempdevider)
     {
-        printf("kayn \" %d \n", closed_double_quotes(tmp));
-        printf("kayn \'  .%d \n", closed_quotes(tmp));
-        // printf("%d\n",closed_quotes(tmp));
-        // if(closed_quotes(tmp)==3)
-        // printf("%s\n",code_3_quotes(tmp));
-        // ------------------------------------------------------------------------ mzyan 9bl rework e"cho" hhf'ds'fsd"qsdf"c"w'x"
-        if (closed_quotes(tmp) == 3 || closed_quotes(tmp) == 1)
-        {
-            if (closed_quotes(tmp) == 1)
-            {
-                simple_trim(tmp, '\'');
-            }
-            else
-                special_trim(tmp, '\'');
-        }
-
-        if (closed_double_quotes(tmp) == 3 || closed_double_quotes(tmp) == 1) // matnsach expand
-        {
-            if (closed_double_quotes(tmp) == 1)
-                simple_trim(tmp, '"');
-            else
-                special_trim(tmp, '"');
-        }
-        // if (closed_double_quotes(tmp) == 1)
-        //     simple_trim(tmp, '"');
-        // if (closed_quotes(tmp) == 1 || closed_double_quotes(tmp) == 1)
-        // {
-        //     tmp = simple_trim(tmp, '"');
-        // }
-
-        // if ((closed_double_quotes(tmp)==3) && elements->d_quotes != 0)
-        // {
-        //    tmp = special_trim(tmp,'"');
-        //     printf("%s\n",tmp);
-        // }
-        // if ((closed_quotes(tmp)==3 ) && elements->quotes != 0)
-        // {
-        //    tmp = special_trim(tmp,'\'');
-        //     printf("%s\n",tmp);
-        // }
-        // ------------------------------------------------------------------------
-        // else if ((closed_quotes(tmp)==1 ) && elements->quotes != 0)
-        // {
-        //    tmp = special_trim(tmp,'\'');
-        //     printf("%s\n",tmp);
-        // }
+    free_tableau(helper->tempdevider,helper->twodlen);
+    helper->twodlen=0;
+        /* code */
     }
-    printf("%s\n", tmp);
-    free(tmp);
+    
+    the_divider(helper,elements,tmp);
+    quoter(helper);
+    // printf("%s\n", tmp);
+    // free(tmp);
     // free(str);
+    while (helper->tempdevider[i])
+    {
+        printf(" fragments: %s\n", helper->tempdevider[i]);
+        i++;
+    }
+    i =0;
+    
 }
 char *quotefixer(char *str, char quote)
 {
@@ -137,71 +167,73 @@ int closed_quotes(char *str)
 {
 
     // -------------------------------- working without chat gpt
-    // int i = 0;
-    // int o = 0;
-    // int s =0;
-    // int c = 0;
-    // int start = 0;
-    // int finish = 0;
-    // while (str[i]!= '\0')
-    // {
-
-    // if (str[i] == '\'' && o == 0){
-    //  o=1;
-    //  start = i;
-    //  i++;
-    // }
-    // if (str[i] == '"' ||str[i] == '$')
-    // s++;
-
-    // if(str[i] == '\'' && o == 1){
-    // c = 1;
-    // finish = i;
-    // i++;
-    // }
-
-    // if(c == 1 && pos(str+finish,'\'') > finish){
-    // o = 0;
-    // c = 0;
-    // }
-    // i++;
-    // }
-
-    // if(o == 1 && c == 0)
-    // return 0;
-    // if (s != 0)
-    // return 3;
-
-    // return 1;
-    // --------------------------------------- working with chat gpt
     int i = 0;
-    int inside = 0;
-    int squotes_o = 0;
-    int squotes_c = 0;
-    int found = 0;
-
-    while (str[i] != '\0')
+    int o = 0;
+    int s =0;
+    int c = 0;
+    int start = 0;
+    int finish = 0;
+    while (str[i]!= '\0')
     {
-        if (str[i] == '\'')
-        {
-            if (inside)
-                squotes_c++;
-            else
-                squotes_o++;
 
-            inside = !inside;
-        }
-        else if ((str[i] == '"' || str[i] == '$') && inside)
-            found = 1;
-        i++;
+    if (str[i] == '\'' && o == 0){
+     o=1;
+     start = i;
+     i++;
+    }
+    if (str[i] == '"' ||str[i] == '$')
+    s++;
+
+    if(str[i] == '\'' && o == 1){
+    c = 1;
+    finish = i;
+    i++;
     }
 
-    if (inside)
-        return 0;
-    else if (found)
-        return 3;
-    else
-        return 1;
+    if(c == 1 && pos(str+finish,'\'') > finish){
+    o = 0;
+    c = 0;
+    }
+    i++;
+    }
+
+    if (o==0 && c ==0)
+    return 5;
+    if(o == 1 && c == 0)
+    return 0;
+    if (s != 0 ) // c == 0 oula 1  
+    return 3;
+    
+    return 1;
+    // --------------------------------------- working with chat gpt
+    // int i = 0;
+    // int inside = 0;
+    // int squotes_o = 0;
+    // int squotes_c = 0;
+    // int found = 0;
+
+    // while (str[i] != '\0')
+    // {
+    //     if (str[i] == '\'')
+    //     {
+    //         if (inside)
+    //             squotes_c++;
+    //         else
+    //             squotes_o++;
+
+    //         inside = !inside;
+    //     }
+    //     else if ((str[i] == '"' || str[i] == '$') && inside)
+    //         found = 1;
+    //     i++;
+    // }
+
+    // if (inside)
+    //     return 0;
+    // else if (found)
+    //     return 3;
+    // else
+    //     return 1;
     //--------------------------------------------------------
 }
 char *code_3_quotes(char *str)
@@ -215,71 +247,72 @@ int closed_double_quotes(char *str)
 {
 
     // -------------------------------- working without chat gpt // dkhel expand
-    // int i = 0;
-    // int o = 0;
-    // int s =0;
-    // int c = 0;
-    // int start = 0;
-    // int finish = 0;
-    // while (str[i]!= '\0')
-    // {
-
-    // if (str[i] == '"' && o == 0){
-    //  o=1;
-    //  start = i;
-    //  i++;
-    // }
-    // if (str[i] == '$'|| str[i] == '\'')
-    // s++;
-
-    // if(str[i] == '"' && o == 1){
-    // c = 1;
-    // finish = i;
-    // i++;
-    // }
-
-    // if(c == 1 && pos(str+finish,'"') > finish){
-    // o = 0;
-    // c = 0;
-    // }
-    // i++;
-    // }
-
-    // if(o == 1 && c == 0)
-    // return 0;
-    // if (s != 0)
-    // return 3;
-
-    // return 1;
-    // --------------------------------------- working with chat gpt
     int i = 0;
-    int inside = 0;
-    int squotes_o = 0;
-    int squotes_c = 0;
-    int found = 0;
-
-    while (str[i] != '\0')
+    int o = 0;
+    int s =0;
+    int c = 0;
+    int start = 0;
+    int finish = 0;
+    while (str[i]!= '\0')
     {
-        if (str[i] == '\'')
-        {
-            if (inside)
-                squotes_c++;
-            else
-                squotes_o++;
 
-            inside = !inside;
-        }
-        else if ((str[i] == '"' || str[i] == '$') && inside)
-            found = 1;
-        i++;
+    if (str[i] == '"' && o == 0){
+     o=1;
+     start = i;
+     i++;
+    }
+    if (str[i] == '$'|| str[i] == '\'')
+    s++;
+
+    if(str[i] == '"' && o == 1){
+    c = 1;
+    finish = i;
+    i++;
     }
 
-    if (inside)
-        return 0;
-    else if (found)
-        return 3;
-    else
-        return 1;
+    if(c == 1 && pos(str+finish,'"') > finish){
+    o = 0;
+    c = 0;
+    }
+    i++;
+    }
+    if (o==0 && c ==0)
+    return 5;
+    if(o == 1 && c == 0)
+    return 0;
+    if (s != 0)
+    return 3;
+
+    return 1;
+    // --------------------------------------- working with chat gpt
+    // int i = 0;
+    // int inside = 0;
+    // int squotes_o = 0;
+    // int squotes_c = 0;
+    // int found = 0;
+
+    // while (str[i] != '\0')
+    // {
+    //     if (str[i] == '\'')
+    //     {
+    //         if (inside)
+    //             squotes_c++;
+    //         else
+    //             squotes_o++;
+
+    //         inside = !inside;
+    //     }
+    //     else if ((str[i] == '"' || str[i] == '$') && inside)
+    //         found = 1;
+    //     i++;
+    // }
+
+    // if (inside)
+    //     return 0;
+    // else if (found)
+    //     return 3;
+    // else
+    //     return 1;
     //--------------------------------------------------------
 }
 char *special_trim(char *str, char c)
@@ -336,5 +369,82 @@ char *simple_trim(char *str, char c)
         i++;
     }
     return (str);
+}
+
+// int isQuotesClosed(const char *str) {
+//     int i = 0;
+//     int openQuotes = 0;
+//     int special = 0;
+//     int which = 0;
+
+//     while (str[i] != '\0') {
+//         if (str[i] == '"' || str[i] == '\'') {
+//             if (str[i] == '"')
+//             which = '"';
+//             // else if (str[i] == '\'')
+//             // which = '\'';
+
+            
+//             openQuotes = !openQuotes; // Toggle the openQuotes flag
+//         }
+//         else if (str[i] == '$' || str[i] == '\'')
+//             special++;
+//         i++;
+//     }
+//     if (special)
+//     {
+//         /* code */ return (3);
+//     }
+    
+//     return openQuotes == 0; // Return true if all opening quotes are closed
+
+
+// }
+
+void the_divider(t_prompt *helper ,t_counter *elements, char *str){
+
+if (elements->pipes != 0)
+{
+    helper->tempdevider = ft_split(str,'|');
+
+}
+// if (/* condition */)
+// {
+//     /* code */
+// }
+
+    helper->tempdevider = ft_split(str,'\n');
+    helper->twodlen=twodlen(helper->tempdevider);
+    free(str);
+}
+void quoter(t_prompt *helper){
+int i = 0;
+while (helper->tempdevider[i])
+{
+
+
+    printf("ster [%d] SQ =%d DQ=%d\n",i,closed_quotes(helper->tempdevider[i]), closed_double_quotes(helper->tempdevider[i]));
+// if (closed_quotes(helper->tempdevider[i])==0 || closed_double_quotes(helper->tempdevider[i])==0)
+// {
+//     printf("syntax error !\n");
+//     return;
+// }
+if (closed_quotes(helper->tempdevider[i])==1|| closed_double_quotes(helper->tempdevider[i])==1)
+{
+    if(closed_quotes(helper->tempdevider[i])==1)
+        simple_trim(helper->tempdevider[i],'\'');
+    else if (closed_double_quotes(helper->tempdevider[i])==1)
+        simple_trim(helper->tempdevider[i],'"');
+}
+else if (closed_quotes(helper->tempdevider[i])==3|| closed_double_quotes(helper->tempdevider[i])==3)
+{
+    if(closed_double_quotes(helper->tempdevider[i])==3)
+        special_trim(helper->tempdevider[i],'\'');
+    else if (closed_double_quotes(helper->tempdevider[i])==3)
+        special_trim(helper->tempdevider[i],'"');
+}
+i++;
+
+}
 }
 

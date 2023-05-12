@@ -17,6 +17,8 @@ typedef struct s_prompt
     char * command;
     char * cmd;
     char **flags;
+    char **tempdevider;
+    int twodlen;
 
 } t_prompt;
 
@@ -52,6 +54,13 @@ int closed_double_quotes(char *str);
 char* code_3_quotes(char * str);
 char *special_trim(char * str, char c);
 char *simple_trim(char *str, char c);
+void the_divider(t_prompt *helper ,t_counter *elements, char *str);
+int twodlen(char **tableau);
+void quoter(t_prompt *helper);
+void str_replacement(char *str);
+// void strr_replacement(char *str);
+/*	----	----temp----	-----	*/
+int isQuotesClosed(const char *str);
 /*	----	----free----	-----	*/
 void free_tableau(char** tableau,int lines);
 

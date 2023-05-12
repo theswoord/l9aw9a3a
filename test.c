@@ -118,7 +118,7 @@ void freeTree(struct Node* node) {
 }
 
 int main() {
-    char input[] = "ls -la echo hhhh";
+    char input[] = "ls -la";
     int i =0;
     int j = 0;
     int count;
