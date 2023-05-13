@@ -15,11 +15,11 @@ void tokenisation(char *str)
 
     // printf("fdsfds\n");
     // int i = 0;
-    char *tmp = ft_calloc(ft_strlen(str), 1);
-    ft_strlcpy(tmp, str, ft_strlen(str) + 1);
+    // char *tmp = ft_calloc(ft_strlen(str), 1);
+    // ft_strlcpy(tmp, str, ft_strlen(str) + 1);
 
 
-    str_replacement(tmp);
+    str_replacement(str);
     // strr_replacement(tmp);
 
         // printf("hahya %s\n",tmp);
@@ -93,7 +93,7 @@ void tokenisation(char *str)
         /* code */
     }
     
-    the_divider(helper,elements,tmp);
+    the_divider(helper,elements,str);
     quoter(helper);
     // printf("%s\n", tmp);
     // free(tmp);
@@ -415,7 +415,7 @@ if (elements->pipes != 0)
 
     helper->tempdevider = ft_split(str,'\n');
     helper->twodlen=twodlen(helper->tempdevider);
-    free(str);
+    // free(str);
 }
 void quoter(t_prompt *helper){
 int i = 0;
@@ -424,11 +424,11 @@ while (helper->tempdevider[i])
 
 
     printf("ster [%d] SQ =%d DQ=%d\n",i,closed_quotes(helper->tempdevider[i]), closed_double_quotes(helper->tempdevider[i]));
-// if (closed_quotes(helper->tempdevider[i])==0 || closed_double_quotes(helper->tempdevider[i])==0)
-// {
-//     printf("syntax error !\n");
-//     return;
-// }
+if (closed_quotes(helper->tempdevider[i])==0 || closed_double_quotes(helper->tempdevider[i])==0)
+{
+    printf("syntax error !\n");
+    return;
+}
 if (closed_quotes(helper->tempdevider[i])==1|| closed_double_quotes(helper->tempdevider[i])==1)
 {
     if(closed_quotes(helper->tempdevider[i])==1)
