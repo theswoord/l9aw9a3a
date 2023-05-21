@@ -3,6 +3,7 @@
 void tokenisation(char *str)
 {
     int i = 0;
+    char *sa;
     static t_counter *elements;
     if (!elements)
         elements = (t_counter *)malloc(sizeof(t_counter));
@@ -13,96 +14,42 @@ void tokenisation(char *str)
     
     element_init(elements, str);
 
-    // printf("fdsfds\n");
-    // int i = 0;
-    // char *tmp = ft_calloc(ft_strlen(str), 1);
-    // ft_strlcpy(tmp, str, ft_strlen(str) + 1);
 
-
-    str_replacement(str);
-    // strr_replacement(tmp);
-
-        // printf("hahya %s\n",tmp);
-    // if (syntax_check(elements, str) == 0)
-    //     return;
-
-    // if(closed_quotes(tmp) == 3){
-
-    // }
-    // if( elements->d_quotes != 0)
-    // tmp = quotefixer(tmp,'"');
-    // if(elements->quotes != 0 )
-    // tmp = quotefixer(tmp,'\'');
-    // if (elements->quotes != 0 || elements->d_quotes != 0)
-    // {
-    //     printf("kayn \" %d \n", closed_double_quotes(tmp));
-    //     printf("kayn \'  .%d \n", closed_quotes(tmp));
-    //     // printf("kayn \"  .%d \n", isQuotesClosed(tmp));
-
-    //     // printf("%d\n",closed_quotes(tmp));
-    //     // if(closed_quotes(tmp)==3)
-    //     // printf("%s\n",code_3_quotes(tmp));
-    //     // ------------------------------------------------------------------------ mzyan 9bl rework e"cho" hhf'ds'fsd"qsdf"c"w'x"
-    //     if (closed_quotes(tmp) == 3 || closed_quotes(tmp) == 1)
-    //     {
-    //         if (closed_quotes(tmp) == 1)
-    //         {
-    //             simple_trim(tmp, '\'');
-    //         }
-    //         else
-    //             special_trim(tmp, '\'');
-    //     }
-
-    //     // if (closed_double_quotes(tmp) == 3 || closed_double_quotes(tmp) == 1) // matnsach expand
-    //     // {
-    //     //     if (closed_double_quotes(tmp) == 1)
-    //     //         simple_trim(tmp, '"');
-    //     //     else
-    //     //         special_trim(tmp, '"');
-    //     // }
-    //     // if (closed_double_quotes(tmp) == 1)
-    //     //     simple_trim(tmp, '"');
-    //     // if (closed_quotes(tmp) == 1 || closed_double_quotes(tmp) == 1)
-    //     // {
-    //     //     tmp = simple_trim(tmp, '"');
-    //     // }
-
-    //     // if ((closed_double_quotes(tmp)==3) && elements->d_quotes != 0)
-    //     // {
-    //     //    tmp = special_trim(tmp,'"');
-    //     //     printf("%s\n",tmp);
-    //     // }
-    //     // if ((closed_quotes(tmp)==3 ) && elements->quotes != 0)
-    //     // {
-    //     //    tmp = special_trim(tmp,'\'');
-    //     //     printf("%s\n",tmp);
-    //     // }
-    //     // ------------------------------------------------------------------------
-    //     // else if ((closed_quotes(tmp)==1 ) && elements->quotes != 0)
-    //     // {
-    //     //    tmp = special_trim(tmp,'\'');
-    //     //     printf("%s\n",tmp);
-    //     // }
-    // }
-
-    //***************************************************************************
+    // str_replacement(str);
+   
     if (helper->tempdevider)
     {
     free_tableau(helper->tempdevider,helper->twodlen);
     helper->twodlen=0;
         /* code */
     }
+    sa = ft_strtok(&str);
+    // printf("|%s|\n",sa);
+    // while (sa)
+    // {
+    printf("|%s|\n",sa);
+    sa = ft_strtok(&str);
+    printf("|%s|\n",sa);
+     sa = ft_strtok(&str);
+    printf("|%s|\n",sa);
+     sa = ft_strtok(&str);
+    printf("|%s|\n",sa);
+     sa = ft_strtok(&str);
+    printf("|%s|\n",sa);
+     sa = ft_strtok(&str);
+    printf("|%s|\n",sa);
+     sa = ft_strtok(&str);
+    printf("|%s|\n",sa);
+     sa = ft_strtok(&str);
+    printf("|%s|\n",sa);
+        /* code */
+    // }
     
-    the_divider(helper,elements,str);
-    quoter(helper);
-    // printf("%s\n", tmp);
-    // free(tmp);
-    // free(str);
-    while (helper->tempdevider[i])
-    {
-        printf(" fragments: %s\n", helper->tempdevider[i]);
-        i++;
-    }
+    // the_divider(helper,elements,str);
+
+    // linkwithex(helper->tempdevider);
+    // quoter(helper);
+    
     i =0;
     
 }
@@ -157,11 +104,6 @@ int syntax_check(t_counter *elements, char *str)
 //   '' = "" if no $
 //  '$s' no expand
 
-// while (tmp[i])
-// {
-//     tmp[i]= ft_tolower(tmp[i]);
-//     i++;
-// }
 
 int closed_quotes(char *str)
 {
@@ -417,34 +359,131 @@ if (elements->pipes != 0)
     helper->twodlen=twodlen(helper->tempdevider);
     // free(str);
 }
-void quoter(t_prompt *helper){
-int i = 0;
-while (helper->tempdevider[i])
-{
+// void quoter(t_prompt *helper){
+// int i = 0;
+// while (helper->tempdevider[i])
+// {
 
 
-    printf("ster [%d] SQ =%d DQ=%d\n",i,closed_quotes(helper->tempdevider[i]), closed_double_quotes(helper->tempdevider[i]));
-if (closed_quotes(helper->tempdevider[i])==0 || closed_double_quotes(helper->tempdevider[i])==0)
-{
-    printf("syntax error !\n");
-    return;
-}
-if (closed_quotes(helper->tempdevider[i])==1|| closed_double_quotes(helper->tempdevider[i])==1)
-{
-    if(closed_quotes(helper->tempdevider[i])==1)
-        simple_trim(helper->tempdevider[i],'\'');
-    else if (closed_double_quotes(helper->tempdevider[i])==1)
-        simple_trim(helper->tempdevider[i],'"');
-}
-else if (closed_quotes(helper->tempdevider[i])==3|| closed_double_quotes(helper->tempdevider[i])==3)
-{
-    if(closed_double_quotes(helper->tempdevider[i])==3)
-        special_trim(helper->tempdevider[i],'\'');
-    else if (closed_double_quotes(helper->tempdevider[i])==3)
-        special_trim(helper->tempdevider[i],'"');
-}
-i++;
+//     // printf("ster [%d] SQ =%d DQ=%d\n",i,closed_quotes(helper->tempdevider[i]), closed_double_quotes(helper->tempdevider[i]));
+//     // printf("ster [%d] SQ =%d  DQ=%d\n",i,quotation(helper->tempdevider[i],'\''),quotation(helper->tempdevider[i],'\"'));
 
-}
-}
+// // if (closed_quotes(helper->tempdevider[i])==0 || closed_double_quotes(helper->tempdevider[i])==0)
+// // {
+// //     printf("syntax error !\n");
+// //     return;
+// // }
+// if (closed_quotes(helper->tempdevider[i])==1|| closed_double_quotes(helper->tempdevider[i])==1)
+// {
+//     if(closed_quotes(helper->tempdevider[i])==1)
+//         simple_trim(helper->tempdevider[i],'\'');
+//     else if (closed_double_quotes(helper->tempdevider[i])==1)
+//         simple_trim(helper->tempdevider[i],'"');
+// }
+// // else if (closed_quotes(helper->tempdevider[i])==3|| closed_double_quotes(helper->tempdevider[i])==3)
+// // {
+//     if(quotation(helper->tempdevider[i],'\'')==5)
+//         special_trim(helper->tempdevider[i],'\'');
+//     else if (quotation(helper->tempdevider[i],'\"')==2)
+//         special_trim(helper->tempdevider[i],'\"');
+// // }
+// i++;
 
+// }
+// }
+int special_char(char c){
+
+    if((c == ' '||c == '<' ||c == '>' ||c == '|' || c=='\0')) // ||c == '\"'||c == '\''
+        return (1);
+    return 0;
+}
+// int quotation(char *str,int c){
+
+
+//     int i = 0;
+// int open = 0 ;
+// int li = 0;
+// int s = 0;
+//     while (str[i]!= '\0')
+//     {
+//         if ( open == 0 && str[i] == c)
+//         {
+//             open = 1;
+//             li = c;
+            
+//         }
+//             if (special_char(str[i],li)==1 )
+//             s++;
+//         else if (open == 1 && str[i] == li )
+//         {
+            
+//             open = 0;
+//         }
+//         /* code */
+//         i++;
+//     }
+//     if (open == 1)
+//     return 0;
+//     // else if (s != 0)
+//     // return 3;
+//     else if (li == '\'' && s > 0)
+//     return 5;
+//     else if (li == '\"' && s > 0)
+//     return 2;
+
+//     return 1;
+// }
+
+char* ft_strtok(char **str){
+
+   int i =0;
+   int o = 0;
+   int c = 0;
+    int chkon = 0;
+    char *s1 =*str;
+    
+    while (s1[i])
+    {
+        if (special_char(s1[i])==1)
+        {
+            s1 = ft_substrgnl(*str,0,i);
+            *str += i;
+            // i++;
+            // break;
+            // i++;
+            /* code */
+        }
+        if (special_char(s1[i])==1 && i ==0){
+            i++;
+            s1 = ft_substrgnl(*str,0,i);
+            *str += i;
+
+        }
+        if((s1[i]=='\'' || s1[i]=='\"') && i==0 && o == 0 ){
+            
+                chkon = s1[i];
+            o = 1;
+            c=i;
+            i++;
+            // printf("str = *%s* , s1 = *%s* , %p\n",*str,s1,str);
+        }
+        if ((s1[i]=='\'' || s1[i]=='\"') && o == 1 && chkon == s1[i])
+        {
+            // printf("[%d] .%d",i,c);
+            o=0;
+            chkon = 0;
+            s1 = ft_substrgnl(*str,c,i);
+            *str += i;
+            /* code */
+        }
+        
+        i++;
+        
+
+        /* code */
+    }
+    
+
+
+    return s1;
+}

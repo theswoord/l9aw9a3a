@@ -12,6 +12,12 @@
 
 // };
 
+typedef struct s_tree {
+    char* data;
+    struct s_tree* left;
+    struct s_tree* right;
+}t_tree;
+
 typedef struct s_prompt
 {
     char * command;
@@ -37,10 +43,11 @@ int r_right;
 // {
 // 	char *token;
 // 	char *type;
-// 	t_tre	*left;
-// 	t_tre	*right;
-// 	t_tre	*parent;
-// } t_tre;
+// 	struct s_tre	*left;
+// 	struct s_tre	*right;
+// 	struct s_tre	*parent;
+
+// }t_tre;
 
 /*	----	----lexer----	-----	*/
 void tokenisation(char *str);
@@ -58,10 +65,20 @@ void the_divider(t_prompt *helper ,t_counter *elements, char *str);
 int twodlen(char **tableau);
 void quoter(t_prompt *helper);
 void str_replacement(char *str);
+// int quotation(char *str,int c);
+void linkwithex(char **tableau);
+char* ft_strtok(char **str);
 // void strr_replacement(char *str);
 /*	----	----temp----	-----	*/
 int isQuotesClosed(const char *str);
 /*	----	----free----	-----	*/
 void free_tableau(char** tableau,int lines);
-
+/*	----	----print----	-----	*/
+void printTree(struct s_tree* root);
+void printInOrderIndented(struct s_tree* node, int depth);
+void printBinaryTree(struct s_tree* root, int level, char direction);
+void printSpaces(int count);
+/*	----	----tree----	-----	*/
+void insertNode(struct s_tree** root, char* data);
+void freeTree(struct s_tree* node);
 #endif
