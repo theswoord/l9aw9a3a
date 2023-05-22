@@ -25,6 +25,15 @@ void tokenisation(char *str)
     }
     sa = ft_strtok(&str);
     // printf("|%s|\n",sa);
+    // while (ft_strlen(sa)!= 0)
+    // {
+    //     printf("%d %s\n",(int)ft_strlen(sa),sa);
+    //     // free(sa);
+    //     sa = ft_strtok(&str);
+    //     if (ft_strlen(sa)== 0)
+    //     break;
+    // }
+    
     // while (sa)
     // {
     printf("|%s|\n",sa);
@@ -41,6 +50,14 @@ void tokenisation(char *str)
      sa = ft_strtok(&str);
     printf("|%s|\n",sa);
      sa = ft_strtok(&str);
+    printf("|%s|\n",sa);
+         sa = ft_strtok(&str);
+    printf("|%s|\n",sa);
+         sa = ft_strtok(&str);
+    printf("|%s|\n",sa);
+         sa = ft_strtok(&str);
+    printf("|%s|\n",sa);
+         sa = ft_strtok(&str);
     printf("|%s|\n",sa);
         /* code */
     // }
@@ -393,7 +410,7 @@ if (elements->pipes != 0)
 // }
 int special_char(char c){
 
-    if((c == ' '||c == '<' ||c == '>' ||c == '|' || c=='\0')) // ||c == '\"'||c == '\''
+    if((c == ' '||c == '<' ||c == '>' ||c == '|' ||c == '\"'||c == '\'' || c=='\0')) // ||c == '\"'||c == '\''
         return (1);
     return 0;
 }
@@ -444,14 +461,22 @@ char* ft_strtok(char **str){
     
     while (s1[i])
     {
-        if (special_char(s1[i])==1)
+         if (special_char(s1[i])==1 && (s1[i] == '\"' || s1[i] == '\'') && i ==0 && o==0){
+            o =1;
+            chkon = s1[i];
+            i++;
+            while (s1[i] != chkon)
+            i++;
+            o=0;
+            i++;
+            s1 = ft_substrgnl(*str,0,i);
+            *str += i;
+
+        }
+       else  if (special_char(s1[i])==1)
         {
             s1 = ft_substrgnl(*str,0,i);
             *str += i;
-            // i++;
-            // break;
-            // i++;
-            /* code */
         }
         if (special_char(s1[i])==1 && i ==0){
             i++;
@@ -459,28 +484,7 @@ char* ft_strtok(char **str){
             *str += i;
 
         }
-        if((s1[i]=='\'' || s1[i]=='\"') && i==0 && o == 0 ){
-            
-                chkon = s1[i];
-            o = 1;
-            c=i;
-            i++;
-            // printf("str = *%s* , s1 = *%s* , %p\n",*str,s1,str);
-        }
-        if ((s1[i]=='\'' || s1[i]=='\"') && o == 1 && chkon == s1[i])
-        {
-            // printf("[%d] .%d",i,c);
-            o=0;
-            chkon = 0;
-            s1 = ft_substrgnl(*str,c,i);
-            *str += i;
-            /* code */
-        }
-        
         i++;
-        
-
-        /* code */
     }
     
 

@@ -11,6 +11,14 @@
 // {
 
 // };
+typedef struct s_list{
+
+    int value;
+    char *str;
+    struct s_list* next;
+
+}t_list;
+
 
 typedef struct s_tree {
     char* data;
