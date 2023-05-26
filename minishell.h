@@ -89,4 +89,9 @@ void printSpaces(int count);
 /*	----	----tree----	-----	*/
 void insertNode(struct s_tree** root, char* data);
 void freeTree(struct s_tree* node);
+/*  ----    ----list----    -----   */
+t_list *l_addnode(char* data);
+int list_size(t_list *head);
+void l_addback(t_list*list,char *data);
+void l_print(t_list *list);
 #endif

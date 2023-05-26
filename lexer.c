@@ -8,67 +8,50 @@ void tokenisation(char *str)
     if (!elements)
         elements = (t_counter *)malloc(sizeof(t_counter));
     static t_prompt *helper;
-    if(!helper)
+    if (!helper)
         helper = (t_prompt *)malloc(sizeof(t_prompt));
 
-    
     element_init(elements, str);
 
+    sa = ft_strtok(&str);
+    t_list* list = l_addnode(sa);
+
+    // printf("%p , %s\n",list->next,list->str);
+    // sa = ft_strtok(&str);
+
+    // l_addnode(sa);
+    // l_addnode(list,ft_strtok(&str));
+
+    // i = list_size(list);
+    // printf("ggggd\n" );
+
+    // while (list != 0)
+    // {
+    //     i++;
+
+    //     /* code */
+    // }
 
     // str_replacement(str);
-   
-    if (helper->tempdevider)
-    {
-    free_tableau(helper->tempdevider,helper->twodlen);
-    helper->twodlen=0;
-        /* code */
-    }
-    sa = ft_strtok(&str);
-    // printf("|%s|\n",sa);
-    // while (ft_strlen(sa)!= 0)
-    // {
-    //     printf("%d %s\n",(int)ft_strlen(sa),sa);
-    //     // free(sa);
-    //     sa = ft_strtok(&str);
-    //     if (ft_strlen(sa)== 0)
-    //     break;
-    // }
-    
-    // while (sa)
-    // {
-    printf("|%s|\n",sa);
-    sa = ft_strtok(&str);
-    printf("|%s|\n",sa);
-     sa = ft_strtok(&str);
-    printf("|%s|\n",sa);
-     sa = ft_strtok(&str);
-    printf("|%s|\n",sa);
-     sa = ft_strtok(&str);
-    printf("|%s|\n",sa);
-     sa = ft_strtok(&str);
-    printf("|%s|\n",sa);
-     sa = ft_strtok(&str);
-    printf("|%s|\n",sa);
-     sa = ft_strtok(&str);
-    printf("|%s|\n",sa);
-         sa = ft_strtok(&str);
-    printf("|%s|\n",sa);
-         sa = ft_strtok(&str);
-    printf("|%s|\n",sa);
-         sa = ft_strtok(&str);
-    printf("|%s|\n",sa);
-         sa = ft_strtok(&str);
-    printf("|%s|\n",sa);
-        /* code */
-    // }
-    
-    // the_divider(helper,elements,str);
 
-    // linkwithex(helper->tempdevider);
-    // quoter(helper);
-    
-    i =0;
-    
+    // sa = ft_strtok(&str);
+
+    while (sa)
+    {
+        free(sa);
+        sa = ft_strtok(&str);
+        // printf("9lwa\n");
+        if(sa != NULL)
+        l_addback(list,sa);
+        // printf()
+        // (*sa)++;
+        // printf("%s\n", sa);
+        // x++;
+    }
+    printf("%d\n",list_size(list));
+    l_print(list);
+    // printf("|%s|\n",list->next->next->str);
+   
 }
 char *quotefixer(char *str, char quote)
 {
@@ -121,48 +104,50 @@ int syntax_check(t_counter *elements, char *str)
 //   '' = "" if no $
 //  '$s' no expand
 
-
 int closed_quotes(char *str)
 {
 
     // -------------------------------- working without chat gpt
     int i = 0;
     int o = 0;
-    int s =0;
+    int s = 0;
     int c = 0;
     int start = 0;
     int finish = 0;
-    while (str[i]!= '\0')
+    while (str[i] != '\0')
     {
 
-    if (str[i] == '\'' && o == 0){
-     o=1;
-     start = i;
-     i++;
-    }
-    if (str[i] == '"' ||str[i] == '$')
-    s++;
+        if (str[i] == '\'' && o == 0)
+        {
+            o = 1;
+            start = i;
+            i++;
+        }
+        if (str[i] == '"' || str[i] == '$')
+            s++;
 
-    if(str[i] == '\'' && o == 1){
-    c = 1;
-    finish = i;
-    i++;
+        if (str[i] == '\'' && o == 1)
+        {
+            c = 1;
+            finish = i;
+            i++;
+        }
+
+        if (c == 1 && pos(str + finish, '\'') > finish)
+        {
+            o = 0;
+            c = 0;
+        }
+        i++;
     }
 
-    if(c == 1 && pos(str+finish,'\'') > finish){
-    o = 0;
-    c = 0;
-    }
-    i++;
-    }
+    if (o == 0 && c == 0)
+        return 5;
+    if (o == 1 && c == 0)
+        return 0;
+    if (s != 0) // c == 0 oula 1
+        return 3;
 
-    if (o==0 && c ==0)
-    return 5;
-    if(o == 1 && c == 0)
-    return 0;
-    if (s != 0 ) // c == 0 oula 1  
-    return 3;
-    
     return 1;
     // --------------------------------------- working with chat gpt
     // int i = 0;
@@ -208,39 +193,42 @@ int closed_double_quotes(char *str)
     // -------------------------------- working without chat gpt // dkhel expand
     int i = 0;
     int o = 0;
-    int s =0;
+    int s = 0;
     int c = 0;
     int start = 0;
     int finish = 0;
-    while (str[i]!= '\0')
+    while (str[i] != '\0')
     {
 
-    if (str[i] == '"' && o == 0){
-     o=1;
-     start = i;
-     i++;
-    }
-    if (str[i] == '$'|| str[i] == '\'')
-    s++;
+        if (str[i] == '"' && o == 0)
+        {
+            o = 1;
+            start = i;
+            i++;
+        }
+        if (str[i] == '$' || str[i] == '\'')
+            s++;
 
-    if(str[i] == '"' && o == 1){
-    c = 1;
-    finish = i;
-    i++;
-    }
+        if (str[i] == '"' && o == 1)
+        {
+            c = 1;
+            finish = i;
+            i++;
+        }
 
-    if(c == 1 && pos(str+finish,'"') > finish){
-    o = 0;
-    c = 0;
+        if (c == 1 && pos(str + finish, '"') > finish)
+        {
+            o = 0;
+            c = 0;
+        }
+        i++;
     }
-    i++;
-    }
-    if (o==0 && c ==0)
-    return 5;
-    if(o == 1 && c == 0)
-    return 0;
+    if (o == 0 && c == 0)
+        return 5;
+    if (o == 1 && c == 0)
+        return 0;
     if (s != 0)
-    return 3;
+        return 3;
 
     return 1;
     // --------------------------------------- working with chat gpt
@@ -343,7 +331,6 @@ char *simple_trim(char *str, char c)
 //             // else if (str[i] == '\'')
 //             // which = '\'';
 
-            
 //             openQuotes = !openQuotes; // Toggle the openQuotes flag
 //         }
 //         else if (str[i] == '$' || str[i] == '\'')
@@ -354,33 +341,31 @@ char *simple_trim(char *str, char c)
 //     {
 //         /* code */ return (3);
 //     }
-    
+
 //     return openQuotes == 0; // Return true if all opening quotes are closed
 
-
 // }
 
-void the_divider(t_prompt *helper ,t_counter *elements, char *str){
-
-if (elements->pipes != 0)
+void the_divider(t_prompt *helper, t_counter *elements, char *str)
 {
-    helper->tempdevider = ft_split(str,'|');
 
-}
-// if (/* condition */)
-// {
-//     /* code */
-// }
+    if (elements->pipes != 0)
+    {
+        helper->tempdevider = ft_split(str, '|');
+    }
+    // if (/* condition */)
+    // {
+    //     /* code */
+    // }
 
-    helper->tempdevider = ft_split(str,'\n');
-    helper->twodlen=twodlen(helper->tempdevider);
+    helper->tempdevider = ft_split(str, '\n');
+    helper->twodlen = twodlen(helper->tempdevider);
     // free(str);
 }
 // void quoter(t_prompt *helper){
 // int i = 0;
 // while (helper->tempdevider[i])
 // {
-
 
 //     // printf("ster [%d] SQ =%d DQ=%d\n",i,closed_quotes(helper->tempdevider[i]), closed_double_quotes(helper->tempdevider[i]));
 //     // printf("ster [%d] SQ =%d  DQ=%d\n",i,quotation(helper->tempdevider[i],'\''),quotation(helper->tempdevider[i],'\"'));
@@ -408,14 +393,14 @@ if (elements->pipes != 0)
 
 // }
 // }
-int special_char(char c){
+int special_char(char c)
+{
 
-    if((c == ' '||c == '<' ||c == '>' ||c == '|' ||c == '\"'||c == '\'' || c=='\0')) // ||c == '\"'||c == '\''
+    if ((c == ' ' || c == '<' || c == '>' || c == '|' || c == '\"' || c == '\'' || c == '\0')) // ||c == '\"'||c == '\''
         return (1);
     return 0;
 }
 // int quotation(char *str,int c){
-
 
 //     int i = 0;
 // int open = 0 ;
@@ -427,13 +412,13 @@ int special_char(char c){
 //         {
 //             open = 1;
 //             li = c;
-            
+
 //         }
 //             if (special_char(str[i],li)==1 )
 //             s++;
 //         else if (open == 1 && str[i] == li )
 //         {
-            
+
 //             open = 0;
 //         }
 //         /* code */
@@ -451,43 +436,109 @@ int special_char(char c){
 //     return 1;
 // }
 
-char* ft_strtok(char **str){
+char *ft_strtok(char **str)
+{
 
-   int i =0;
-   int o = 0;
-   int c = 0;
+    int i = 0;
+    int o = 0;
+    int c = 0;
     int chkon = 0;
-    char *s1 =*str;
-    
+    char *s1 = *str;
+    if (!*s1)
+    {
+        // printf(".%s.\n",s1);
+        // printf("salit\n");
+        return NULL;
+        /* code */
+    }
     while (s1[i])
     {
-         if (special_char(s1[i])==1 && (s1[i] == '\"' || s1[i] == '\'') && i ==0 && o==0){
-            o =1;
+        if (special_char(s1[i]) == 1 && (s1[i] == '\"' || s1[i] == '\'') && i == 0 && o == 0)
+        {
+            o = 1;
             chkon = s1[i];
             i++;
             while (s1[i] != chkon)
+                i++;
+            o = 0;
             i++;
-            o=0;
-            i++;
-            s1 = ft_substrgnl(*str,0,i);
+            s1 = ft_substrgnl(*str, 0, i);
             *str += i;
-
         }
-       else  if (special_char(s1[i])==1)
+        else if (special_char(s1[i]) == 1)
         {
-            s1 = ft_substrgnl(*str,0,i);
+            s1 = ft_substrgnl(*str, 0, i);
             *str += i;
         }
-        if (special_char(s1[i])==1 && i ==0){
+        if (special_char(s1[i]) == 1 && i == 0)
+        {
             i++;
-            s1 = ft_substrgnl(*str,0,i);
+            s1 = ft_substrgnl(*str, 0, i);
             *str += i;
-
         }
+
         i++;
     }
-    
-
+    if (s1[i] == '\0' && special_char(s1[i - 1]) != 1)
+    {
+        s1 = ft_substrgnl(*str, 0, i);
+        *str += i;
+    }
 
     return s1;
+}
+t_list *l_addnode(char *data)
+{
+
+    t_list *current = (t_list *)malloc(sizeof(t_list));
+
+    // current->str=data;
+    // ft_strlcpy(current->str,data,ft_strlen(data));
+    current->str = ft_strdup(data);
+    // free(data);
+    current->next = NULL;
+    // printf("%s\n",current->str);
+    return (current);
+}
+int list_size(t_list *head)
+{
+
+    int i = 0;
+    t_list *current;
+    current = head;
+    while (current != 0)
+    {
+        i++;
+        current = current->next;
+        /* code */
+    }
+    return i;
+}
+void l_addback(t_list*list,char *data){
+
+    t_list *search ; 
+    t_list *tmp = malloc(sizeof(t_list));
+    search = list;
+    tmp->str = ft_strdup(data);
+    // free(data);
+    tmp->next = NULL;
+    while (search->next != NULL)
+    {
+        search=search->next;
+        /* code */
+    }
+    search->next=tmp;
+    // t_list* current =(t_list*)
+
+}
+void l_print(t_list *list){
+
+
+     t_list *search ;
+    search = list;
+    while(search != 0){
+        printf("|%s|\n",search->str);
+        search = search->next;
+    }
+    
 }
