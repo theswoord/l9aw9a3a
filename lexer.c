@@ -3,53 +3,51 @@
 void tokenisation(char *str)
 {
     int i = 0;
-    char *sa;
-    static t_counter *elements;
-    if (!elements)
-        elements = (t_counter *)malloc(sizeof(t_counter));
-    static t_prompt *helper;
-    if (!helper)
-        helper = (t_prompt *)malloc(sizeof(t_prompt));
+    char *sa =NULL;
+    // static t_counter *elements;
+    // if (!elements)
+    //     elements = (t_counter *)malloc(sizeof(t_counter));
+    // static t_prompt *helper;
+    // if (!helper)
+    //     helper = (t_prompt *)malloc(sizeof(t_prompt));
 
-    element_init(elements, str);
+    // element_init(elements, str);
 
     sa = ft_strtok(&str);
-    t_list* list = l_addnode(sa);
+    // t_list* list = l_addnode(sa);
+    t_list* list = NULL;
 
-    // printf("%p , %s\n",list->next,list->str);
     // sa = ft_strtok(&str);
 
-    // l_addnode(sa);
-    // l_addnode(list,ft_strtok(&str));
+    // add_list(&list,sa);
 
-    // i = list_size(list);
-    // printf("ggggd\n" );
 
-    // while (list != 0)
-    // {
-    //     i++;
-
-    //     /* code */
-    // }
-
-    // str_replacement(str);
 
     // sa = ft_strtok(&str);
 
     while (sa)
     {
-        free(sa);
+        // add_list(&list,sa);
+        printf("|%s|\n", sa);
         sa = ft_strtok(&str);
-        // printf("9lwa\n");
-        if(sa != NULL)
-        l_addback(list,sa);
-        // printf()
-        // (*sa)++;
-        // printf("%s\n", sa);
-        // x++;
+        // free(sa);
+
+    //     // printf("9lwa\n");
+        // if(sa != NULL)
+        // add_list(&list,sa);
+
+        // free(sa);
+        // l_addback(list,sa);
+    //     // printf()
+    //     // (*sa)++;
+
+    //     // x++;
     }
-    printf("%d\n",list_size(list));
-    l_print(list);
+    // printf("|%s|\n",list->str);
+    // printf("|%s|\n",list->next->str);
+    // printf("|%s|\n",list->next->next->str);
+    // printf("%d\n",list_size(list));
+    // l_print(list);
     // printf("|%s|\n",list->next->next->str);
    
 }
@@ -463,17 +461,24 @@ char *ft_strtok(char **str)
             o = 0;
             i++;
             s1 = ft_substrgnl(*str, 0, i);
+            // free(s1);
             *str += i;
         }
         else if (special_char(s1[i]) == 1)
         {
+            // printf("1st b=%p c=%s \n",s1,s1);
+            // free(s1);
             s1 = ft_substrgnl(*str, 0, i);
+            // printf("1st a=%p c=%s \n",s1,s1);
             *str += i;
         }
         if (special_char(s1[i]) == 1 && i == 0)
         {
             i++;
+            // printf("2nd b=%p c=%s \n",s1,s1);
             s1 = ft_substrgnl(*str, 0, i);
+            // free(s1);
+            // printf("2nd a=%p c=%s \n",s1,s1);
             *str += i;
         }
 
@@ -481,10 +486,13 @@ char *ft_strtok(char **str)
     }
     if (s1[i] == '\0' && special_char(s1[i - 1]) != 1)
     {
+        // printf("final b=%p c=%s \n",s1,s1);
         s1 = ft_substrgnl(*str, 0, i);
+        // printf("final a=%p c=%s \n",s1,s1);
+        // free(s1);
         *str += i;
     }
-
+    free(s1);
     return s1;
 }
 t_list *l_addnode(char *data)
@@ -495,7 +503,11 @@ t_list *l_addnode(char *data)
     // current->str=data;
     // ft_strlcpy(current->str,data,ft_strlen(data));
     current->str = ft_strdup(data);
-    // free(data);
+    free(data);
+    // current->str = ft_strjoingnl(current->str,data);
+    
+    // ft_strlcpy(current->str,data,ft_strlen(data));
+
     current->next = NULL;
     // printf("%s\n",current->str);
     return (current);
@@ -519,8 +531,14 @@ void l_addback(t_list*list,char *data){
     t_list *search ; 
     t_list *tmp = malloc(sizeof(t_list));
     search = list;
+    // printf("data B = %p\n",data);
     tmp->str = ft_strdup(data);
-    // free(data);
+    free(data);
+    // printf("data A = %p\n",tmp->str);
+
+    // ft_strlcpy(tmp->str,data,ft_strlen(data));
+    // tmp->str = ft_strjoingnl(tmp->str,data);
+
     tmp->next = NULL;
     while (search->next != NULL)
     {
@@ -541,4 +559,69 @@ void l_print(t_list *list){
         search = search->next;
     }
     
+}
+void add_list(t_list **head,char *s){
+
+
+    t_list *new_node;
+    t_list *last;
+    if(ft_strlen(s) == 0){
+        free (s);
+        return;
+    }
+    last = *head;
+    new_node =create_node(s);
+    if (*head==NULL)
+    {
+        *head = new_node;
+    
+        /* code */
+    }
+    else
+    {
+        while (last->next)
+        {
+            last=last->next;
+            /* code */
+        }
+        last->next = new_node;
+        
+    }
+    
+}
+t_list *create_node(char* s){
+
+    t_list *new_node;
+    new_node = malloc(sizeof(t_list));
+    new_node->str = ft_strdup(s);
+    // free(s);
+    new_node->next=NULL;
+    return(new_node);
+}
+char	*ft_substrmini(char *s, unsigned int start, size_t len)
+{
+	size_t			b;
+	char			*subs;
+	unsigned int	test;
+
+	if (!s)
+	{
+		return (0);
+	}
+	if (len > ft_strlen(s))
+		len = ft_strlen(s);
+	b = 0;
+	test = ft_strlen(s);
+	subs = malloc(len * sizeof(char) + 1);
+	if (!subs)
+		return (0);
+	while (b < len && test >= start)
+	{
+		subs[b] = s[start];
+		b++;
+		start++;
+	}
+	subs[b] = '\0';
+    free(s);
+	return (subs);
 }

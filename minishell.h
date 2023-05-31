@@ -94,4 +94,7 @@ t_list *l_addnode(char* data);
 int list_size(t_list *head);
 void l_addback(t_list*list,char *data);
 void l_print(t_list *list);
+t_list *create_node(char* s);
+void add_list(t_list **head,char *s);
+char	*ft_substrmini(char *s, unsigned int start, size_t len);
 #endif
