@@ -29,20 +29,21 @@ void tokenisation(char *str)
     {
         // add_list(&list,sa);
         printf("|%s|\n", sa);
+        
         sa = ft_strtok(&str);
-        // free(sa);
 
     //     // printf("9lwa\n");
         // if(sa != NULL)
         // add_list(&list,sa);
 
-        // free(sa);
         // l_addback(list,sa);
     //     // printf()
     //     // (*sa)++;
 
     //     // x++;
     }
+        free(sa);
+    // free(sa);
     // printf("|%s|\n",list->str);
     // printf("|%s|\n",list->next->str);
     // printf("|%s|\n",list->next->next->str);
@@ -466,19 +467,19 @@ char *ft_strtok(char **str)
         }
         else if (special_char(s1[i]) == 1)
         {
-            // printf("1st b=%p c=%s \n",s1,s1);
+            printf("1st b=%p c='%s' \n",s1,s1);
             // free(s1);
             s1 = ft_substrgnl(*str, 0, i);
-            // printf("1st a=%p c=%s \n",s1,s1);
+            printf("1st a=%p c='%s' \n",s1,s1);
             *str += i;
         }
         if (special_char(s1[i]) == 1 && i == 0)
         {
             i++;
-            // printf("2nd b=%p c=%s \n",s1,s1);
+            printf("2nd b=%p c='%s' \n",s1,s1);
             s1 = ft_substrgnl(*str, 0, i);
             // free(s1);
-            // printf("2nd a=%p c=%s \n",s1,s1);
+            printf("2nd a=%p c='%s' \n",s1,s1);
             *str += i;
         }
 
@@ -486,14 +487,16 @@ char *ft_strtok(char **str)
     }
     if (s1[i] == '\0' && special_char(s1[i - 1]) != 1)
     {
-        // printf("final b=%p c=%s \n",s1,s1);
+        printf("final b=%p c=%s \n",s1,s1);
         s1 = ft_substrgnl(*str, 0, i);
-        // printf("final a=%p c=%s \n",s1,s1);
+        printf("final a=%p c=%s \n",s1,s1);
         // free(s1);
         *str += i;
     }
     free(s1);
     return s1;
+    // free(s1);
+
 }
 t_list *l_addnode(char *data)
 {
