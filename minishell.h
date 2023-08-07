@@ -11,13 +11,22 @@
 // {
 
 // };
-typedef struct s_list{
+
+ typedef struct env_vars
+{
+	char *key;
+	char *value;
+	struct env_vars *next;
+} t_var_t;
+
+
+typedef struct s_tlist{
 
     int value;
     char *str;
     struct s_list* next;
 
-}t_list;
+}t_tlist;
 
 
 typedef struct s_tree {
@@ -47,6 +56,18 @@ int r_right;
 
 
 }t_counter;
+
+typedef struct s_shell
+{
+
+    t_tlist *tlist;
+    t_var_t *envlist;
+    
+    int c; // hada test o safi
+
+}t_shell; 
+
+extern t_shell	g_struct;
 // typedef struct s_tre
 // {
 // 	char *token;
@@ -75,7 +96,7 @@ void quoter(t_prompt *helper);
 void str_replacement(char *str);
 // int quotation(char *str,int c);
 void linkwithex(char **tableau);
-char* ft_strtok(char **str);
+char* ft_strtok(char *str);
 // void strr_replacement(char *str);
 /*	----	----temp----	-----	*/
 int isQuotesClosed(const char *str);
@@ -90,11 +111,34 @@ void printSpaces(int count);
 void insertNode(struct s_tree** root, char* data);
 void freeTree(struct s_tree* node);
 /*  ----    ----list----    -----   */
-t_list *l_addnode(char* data);
-int list_size(t_list *head);
-void l_addback(t_list*list,char *data);
-void l_print(t_list *list);
-t_list *create_node(char* s);
-void add_list(t_list **head,char *s);
+// t_list *l_addnode(char* data);
+// int list_size(t_list *head);
+// void l_addback(t_list*list,char *data);
+// void l_print(t_list *list);
+// t_list *create_node(char* s);
+// void add_list(t_list **head,char *s);
 char	*ft_substrmini(char *s, unsigned int start, size_t len);
+char *toktok(char *str);
+/* ENV CATCHING */
+// t_env* makenode(char *data);
+// t_env *catch_env(char **env, t_env* head);
+// void print_env(t_env *head);
+// t_env	*ft_lstnew(char *content);
+// void	ft_lstadd_back(t_env **lst, t_env *new);
+void print_environ(void);
+// void catch_environ(t_env **lenv, char **env);
+// t_env	*ft_lstlast(t_env *lst);
+void print_env(t_var_t *head, int bool);
+void free_env(t_var_t *head);
+void initialize_environment(t_var_t **head, char **env);
+void add_env_var(t_var_t **head, char *key, char *value);
+int ft_strcmp(const char *s1, const char *s2);
+int ft_charfind(const char *str, char c);
+char* env_nav(t_var_t **head,char * key);
+char *better_prompt(void);
+static int	skip_sep(char *s);
+static int	ft_word_len(char *s);
+static int	ft_count(char *s);
+char	**ft_strsplit(char *s);
+
 #endif

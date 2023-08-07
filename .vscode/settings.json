@@ -6,6 +6,7 @@
         "string.h": "c",
         "libft.h": "c",
         "signal.h": "c",
-        "minishell.h": "c"
+        "minishell.h": "c",
+        "unistd.h": "c"
     }
 }
