@@ -6,11 +6,21 @@
 #include <readline/readline.h>
 #include <signal.h>
 
+#define PIPE = 5
 // int g_grlobal;
 // enum tokens
 // {
 
 // };
+
+typedef enum{
+
+// PIPE = 0,
+REDI = 1,
+WORD = 2,
+OPT =3,
+DOC = 4,
+}e_tokenum;
 
  typedef struct env_vars
 {
@@ -24,7 +34,7 @@ typedef struct s_tlist{
 
     int value;
     char *str;
-    struct s_list* next;
+    struct s_tlist* next;
 
 }t_tlist;
 
@@ -62,7 +72,7 @@ typedef struct s_shell
 
     t_tlist *tlist;
     t_var_t *envlist;
-    
+    e_tokenum tokenum;
     int c; // hada test o safi
 
 }t_shell; 
@@ -140,7 +150,7 @@ static int	skip_sep(char *s);
 static int	ft_word_len(char *s);
 static int	ft_count(char *s);
 char	**ft_strsplit(char *s);
-void token_list(t_tlist **head,char *tok, char *type);
+void token_list(t_tlist **head,char *tok, int type);
 void add_token_list(t_tlist **head, char **tab);
 
 #endif

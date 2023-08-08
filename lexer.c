@@ -6,6 +6,7 @@ void tokenisation(char * str)
 
     char **done = ft_strsplit(str); // pit eveyone in a node
 
+	add_token_list(&g_struct.tlist,done);
     int i = 0;
 
     while (done[i])

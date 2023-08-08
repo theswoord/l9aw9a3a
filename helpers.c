@@ -132,7 +132,7 @@ char* env_nav(t_var_t **head,char * key){
 
 
 }
-void token_list(t_tlist **head,char *tok, char *type){
+void token_list(t_tlist **head,char *tok, int type){
 
 	// int i = 0;
 	t_tlist *current;
@@ -158,8 +158,33 @@ void add_token_list(t_tlist **head, char **tab){
 		// {
 		// 	/* code */
 		// }
-		token_list(head,tab[i],NULL); // 7yed had nuull
+		token_list(head,tab[i], REDI); // 7yed had nuull
 		i++;
 	}
+
+}
+void free_tokens(t_tlist *head){
+
+	t_tlist *current;
+	t_tlist *temp;
+
+	current = head ; 
+	while (current != NULL)
+	{
+		temp = current;
+		current = current->next;
+		free(temp->str);
+		// free(temp)
+		/* code */
+	}
+	
+}
+int typefinder (char *line){
+
+	// if (ft_strchr()) hna
+	// {
+		/* code */
+	// }
+
 	
 }
