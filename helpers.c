@@ -132,3 +132,34 @@ char* env_nav(t_var_t **head,char * key){
 
 
 }
+void token_list(t_tlist **head,char *tok, char *type){
+
+	// int i = 0;
+	t_tlist *current;
+	t_tlist *new_node;
+	current = *head;
+	new_node = malloc(sizeof(t_tlist));
+	new_node->str = ft_strdup(tok);
+	// new_node->key = ft_strdup(key);
+		// new_node->value = ft_strdup(value);
+	new_node->next = *head;
+	*head = new_node;
+}
+void add_token_list(t_tlist **head, char **tab){
+
+	int i = 0;
+	char *tok;
+	char *type;
+	*head = NULL;
+
+	while (tab[i]!=NULL)
+	{
+		// if (/* condition */) condition dial word pipe o dakchi 
+		// {
+		// 	/* code */
+		// }
+		token_list(head,tab[i],NULL); // 7yed had nuull
+		i++;
+	}
+	
+}

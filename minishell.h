@@ -140,5 +140,7 @@ static int	skip_sep(char *s);
 static int	ft_word_len(char *s);
 static int	ft_count(char *s);
 char	**ft_strsplit(char *s);
+void token_list(t_tlist **head,char *tok, char *type);
+void add_token_list(t_tlist **head, char **tab);
 
 #endif
