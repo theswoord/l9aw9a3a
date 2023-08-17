@@ -4,7 +4,7 @@ int ft_charfind(const char *str, char c)
 {
 	int i;
 
- 	i = 0;
+	i = 0;
 	while (str[i])
 	{
 		if (c == str[i])
@@ -14,14 +14,14 @@ int ft_charfind(const char *str, char c)
 	return (0);
 }
 
-
 int ft_strcmp(const char *s1, const char *s2)
 {
-    while (*s1 && (*s1 == *s2)) {
-        s1++;
-        s2++;
-    }
-    return *(unsigned char*)s1 - *(unsigned char*)s2;
+	while (*s1 && (*s1 == *s2))
+	{
+		s1++;
+		s2++;
+	}
+	return *(unsigned char *)s1 - *(unsigned char *)s2;
 }
 
 void add_env_var(t_var_t **head, char *key, char *value)
@@ -60,7 +60,7 @@ void initialize_environment(t_var_t **head, char **env)
 	int i;
 	*head = NULL;
 	i = 0;
-    // printf("fsdfsd\n");
+	// printf("fsdfsd\n");
 	while (env[i] != NULL)
 	{
 
@@ -115,60 +115,78 @@ void print_env(t_var_t *head, int bool)
 	}
 }
 
-char* env_nav(t_var_t **head,char * key){
+char *env_nav(t_var_t **head, char *key)
+{
 
 	t_var_t *current;
 	current = *head;
 	char *outsider;
 	while (current != NULL)
 	{
-		if(ft_strcmp(current->key,key)== 0)
+		if (ft_strcmp(current->key, key) == 0)
 		{
 			outsider = ft_strdup(current->value);
 		}
 		current = current->next;
 	}
 	return outsider;
-
-
 }
-void token_list(t_tlist **head,char *tok, int type){
+void token_list(t_tlist **head, char *tok, int type)
+{
 
 	// int i = 0;
 	t_tlist *current;
 	t_tlist *new_node;
+	// t_tlist *current = *head;
 	current = *head;
+	// while (current != NULL)
+	// {
+	// 	current = current->next;
+	// 	/* code */
+	// }
+
 	new_node = malloc(sizeof(t_tlist));
 	new_node->str = ft_strdup(tok);
-	// new_node->key = ft_strdup(key);
-		// new_node->value = ft_strdup(value);
-	new_node->next = *head;
-	*head = new_node;
+	if (type)
+	new_node->value = type;	
+	
+	new_node->next = NULL;
+	if (*head == NULL)
+		*head = new_node;
+	else
+	{
+		while (current->next != NULL)
+			current = current->next;
+		current->next = new_node;
+	}
 }
-void add_token_list(t_tlist **head, char **tab){
+void add_token_list(t_tlist **head, char **tab)
+{
 
 	int i = 0;
 	char *tok;
 	char *type;
 	*head = NULL;
-
-	while (tab[i]!=NULL)
+	// i = twodlen(tab)-1;
+	// printf("before %d\n", i);
+	while (tab[i] != NULL)
 	{
-		// if (/* condition */) condition dial word pipe o dakchi 
+		// if (/* condition */) condition dial word pipe o dakchi
 		// {
 		// 	/* code */
 		// }
-		token_list(head,tab[i], REDI); // 7yed had nuull
+		token_list(head, tab[i], typefinder(tab[i])); // 7yed had nuull
 		i++;
 	}
-
+	// printf("after = %d\n", i);
 }
-void free_tokens(t_tlist *head){
+void free_tokens(t_tlist *head)
+{
 
 	t_tlist *current;
 	t_tlist *temp;
 
-	current = head ; 
+	current = head;
 	while (current != NULL)
 	{
 		temp = current;
@@ -177,14 +195,25 @@ void free_tokens(t_tlist *head){
 		// free(temp)
 		/* code */
 	}
-	
 }
-int typefinder (char *line){
+int typefinder(char *line)
+{
 
-	// if (ft_strchr()) hna
-	// {
+	if (ft_strchr(line, '|'))
+	{
+		// g_struct.tlist->value = PIPE;
+		return (PIPE);
 		/* code */
-	// }
+	}
+}
+void print_tokens(t_tlist *head){
+	t_tlist *current = head;
 
+	while (current != NULL)
+	{
+		printf("%s\n", current->str);
+		current = current->next;
+		/* code */
+	}
 	
 }

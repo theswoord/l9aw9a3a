@@ -7,15 +7,33 @@ void tokenisation(char * str)
     char **done = ft_strsplit(str); // pit eveyone in a node
 
 	add_token_list(&g_struct.tlist,done);
-    int i = 0;
+	
+	free_tableau(done, twodlen(done));
 
-    while (done[i])
-    {
-        printf("|%s|\n",done[i]);
-        i++;
-        /* code */
-    }
-    
+	print_tokens(g_struct.tlist);
+    // int i = 0;
+
+    // while (done[i])
+    // {
+    //     printf("arr[%d] = %s\n",i,done[i]);
+    //     i++;
+    //     /* code */
+    // }
+	// // printf("thankyouuuu \n");
+	// // t_tlist *current;
+	// // current = g_struct.tlist;
+	// printf("node 1 = %s\n",g_struct.tlist->str);
+	// printf("node 2 = %s\n",g_struct.tlist->next->str);
+	// printf("node 3 = %s\n",g_struct.tlist->next->next->str);
+	// printf("node 4 = %s\n",g_struct.tlist->next->next->next->str);
+
+    // while (current != NULL)
+	// {
+	// 	printf("%s %d\n",current->str , current->value);
+	// 	/* code */
+	// 	current = g_struct.tlist->next;
+	// }
+	
 
 }
 static int	skip_sep(char *s)

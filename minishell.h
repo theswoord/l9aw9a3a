@@ -6,7 +6,7 @@
 #include <readline/readline.h>
 #include <signal.h>
 
-#define PIPE = 5
+// #define PIPE = 5
 // int g_grlobal;
 // enum tokens
 // {
@@ -15,11 +15,11 @@
 
 typedef enum{
 
-// PIPE = 0,
-REDI = 1,
-WORD = 2,
-OPT =3,
-DOC = 4,
+PIPE,
+REDI,
+WORD,
+OPT,
+DOC,
 }e_tokenum;
 
  typedef struct env_vars
@@ -152,5 +152,6 @@ static int	ft_count(char *s);
 char	**ft_strsplit(char *s);
 void token_list(t_tlist **head,char *tok, int type);
 void add_token_list(t_tlist **head, char **tab);
-
+int typefinder (char *line);
+void print_tokens(t_tlist *head);
 #endif

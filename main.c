@@ -45,11 +45,11 @@ int main(int ac, char **av, char **env)
     initialize_environment(&g_struct.envlist,env);
     // printf("%s hh",g_struct.envlist->next->next->value);
     // print_env(g_struct.envlist,1);
- char *prompt;
- prompt = better_prompt();
+//  char *prompt;
+//  prompt = better_prompt();
     while (1)
     {
-        test = readline(prompt);
+        test = readline("minishell -> : ");
         // free(prompt);
         // test = get_next_line(0);
         // readline("gggg");
