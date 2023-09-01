@@ -10,6 +10,24 @@ void tokenisation(char * str)
 	
 	free_tableau(done, twodlen(done));
 
+
+	// modify_env(g_struct.tlist,g_struct.envlist);
+
+	// print_env(g_struct.envlist,0);
+
+	//modify manually
+	// printf("-------------------------------------------------------------------------------\n");
+	// add_env_var(&g_struct.envlist,"nabilhhehehehehewiloooo","500 mlyoun");
+	modify_env(g_struct.tlist); // = makaynach o makayzidch token okhra
+	expander_init(g_struct.tlist,NULL);
+
+	// add_env_var(&g_struct.envlist,g_struct.tlist->str,"99");
+	// add_env_var(&g_struct.envlist,"nakbst","500 mlyoun");
+	// add_env_var(&g_struct.envlist,"nabilhgdfgmlmimi","500 mlyoun");
+
+
+	// print_env(g_struct.envlist,0);
+
 	print_tokens(g_struct.tlist);
     // int i = 0;
 
@@ -35,6 +53,96 @@ void tokenisation(char * str)
 	// }
 	
 
+}
+void modify_env(t_tlist *token){
+
+	t_tlist *tmp = token;
+	// t_var_t *currentenv = *env;
+	char *key;
+	char *value;
+	while (tmp != NULL)
+	{
+		if(tmp->value == VAR)
+		{
+		key = ft_substr(tmp->str, 0, ft_charfind(tmp->str, '='));
+		value = ft_strchr(tmp->str, '=') + 1;
+		add_env_var(&g_struct.envlist,key,value);
+		free(key);
+		}
+		tmp = tmp->next;
+	}
+	
+}
+void expander_init(t_tlist *head, t_var_t *env){
+
+	t_tlist *tmp = head;
+	int i = 0;
+	int DQ = 0;
+	while (tmp != NULL) //define type dial expantion /li deja kayna b7al PATH o dakchi 
+	{
+		// if (tmp->value == EXPAND) // checks if the $is inside oula outside o wach kayn f env oula la also wach real oula la
+		// {
+		// 	while (tmp->str[i])
+		// 	{
+		// 		if(tmp->str[i] == '\"' && DQ == 0)
+		// 		{
+		// 			DQ = 1;
+		// 			i++;
+		// 		}
+		// 		if (tmp->str[i] == '$')
+		// 		{
+		// 			/* code */
+		// 		}
+				
+		// 		i++;
+		// 	}
+			
+			if (tmp->value == EXPAND)
+			{
+				tmp->str = expanded(tmp->str);
+				// while (tmp->str[i]) // substr mn $ tal 7ed ' '
+				// {
+
+				// 	/* code */
+
+				// }
+				
+				/* code */
+			}
+			
+			
+		// }
+		tmp = tmp->next;
+	}
+	
+}
+char * expanded(char* str){
+
+	t_var_t *tmp;
+	tmp = g_struct.envlist;
+	char *first;
+	char *later;
+	char *expantion;
+	int found = 0;
+	first = ft_substr(str,0,pos(str,'$'));
+	later = ft_strchr(str,'$')+1;
+	while (tmp != NULL) // ila mal9itoch dir fih NULL
+	{
+
+
+
+		if(ft_strcmp(tmp->key,later)==0)
+		{
+			
+			expantion = ft_strdup(tmp->value);
+		}
+		/* code */
+		tmp = tmp->next;
+	}
+	
+
+	// free(first);
+	return(ft_strjoingnl(first,expantion));
 }
 static int	skip_sep(char *s)
 {

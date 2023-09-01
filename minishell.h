@@ -16,10 +16,14 @@
 typedef enum{
 
 PIPE,
-REDI,
+REDIW,
+REDIR,
 WORD,
 OPT,
 DOC,
+EXPAND,
+VAR,
+APPEND,
 }e_tokenum;
 
  typedef struct env_vars
@@ -154,4 +158,8 @@ void token_list(t_tlist **head,char *tok, int type);
 void add_token_list(t_tlist **head, char **tab);
 int typefinder (char *line);
 void print_tokens(t_tlist *head);
+void add_to_env(t_var_t **head, char *env);
+void modify_env(t_tlist *token);
+char * expanded(char* str);
+void expander_init(t_tlist *head, t_var_t *env);
 #endif

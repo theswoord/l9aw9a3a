@@ -198,20 +198,52 @@ void free_tokens(t_tlist *head)
 }
 int typefinder(char *line)
 {
-
-	if (ft_strchr(line, '|'))
+	int i =0;
+	// printf("%s\n",line);
+	while (line[i])
 	{
-		// g_struct.tlist->value = PIPE;
-		return (PIPE);
-		/* code */
+		// printf("[%c ]\n",line[i]);
+		if(line[i] == '$')
+		return(EXPAND);
+		else if(line[i] == '<' && line[i+1] == '<')
+		return(DOC);
+		else if (line[i] == '>' && line[i+1] == '>')
+		return(APPEND);
+		else if (line[i] == '<' && line[i+1] != '<')
+		return(REDIR);
+		else if (line[i] == '-' && ft_isprint(line[i+1]) == 1)
+		return(OPT);
+		else if (line[i] == '|')
+		return(PIPE);
+		else if (line[i] == '>')
+		return(REDIW);
+		else if (line[i] == '=')
+		return(VAR);
+		i++;
 	}
+		return(WORD);
+	
+
+
+	// if (ft_strchr(line, '|'))
+	// {
+	// 	// g_struct.tlist->value = PIPE;
+	// 	return (PIPE);
+	// 	/* code */
+	// }
+
+	// if (ft_strchr(line,'$'))
+	// {
+	// 	return (EXPAND);
+	// }
+	// return (WORD);
 }
 void print_tokens(t_tlist *head){
 	t_tlist *current = head;
 
 	while (current != NULL)
 	{
-		printf("%s\n", current->str);
+		printf("%s %d\n", current->str,current->value);
 		current = current->next;
 		/* code */
 	}
