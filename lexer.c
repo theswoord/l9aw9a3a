@@ -18,7 +18,10 @@ void tokenisation(char * str)
 	//modify manually
 	// printf("-------------------------------------------------------------------------------\n");
 	// add_env_var(&g_struct.envlist,"nabilhhehehehehewiloooo","500 mlyoun");
+	printf("_%d_\n", g_struct.count);
 	modify_env(g_struct.tlist); // = makaynach o makayzidch token okhra
+	printf("_%d_\n", g_struct.count);
+
 	expander_init(g_struct.tlist,NULL);
 
 	// add_env_var(&g_struct.envlist,g_struct.tlist->str,"99");
@@ -29,6 +32,8 @@ void tokenisation(char * str)
 	// print_env(g_struct.envlist,0);
 
 	print_tokens(g_struct.tlist);
+	if (ft_strcmp(str,"env")==0)
+	print_env(g_struct.envlist,0);
     // int i = 0;
 
     // while (done[i])
@@ -66,7 +71,8 @@ void modify_env(t_tlist *token){
 		{
 		key = ft_substr(tmp->str, 0, ft_charfind(tmp->str, '='));
 		value = ft_strchr(tmp->str, '=') + 1;
-		add_env_var(&g_struct.envlist,key,value);
+		if(add_env_var(&g_struct.envlist,key,value))
+		g_struct.count++; //blati nbdl lik blassa
 		free(key);
 		}
 		tmp = tmp->next;
@@ -123,7 +129,7 @@ char * expanded(char* str){
 	char *first;
 	char *later;
 	char *expantion;
-	int found = 0;
+	int checked = 0;
 	first = ft_substr(str,0,pos(str,'$'));
 	later = ft_strchr(str,'$')+1;
 	while (tmp != NULL) // ila mal9itoch dir fih NULL
@@ -135,14 +141,18 @@ char * expanded(char* str){
 		{
 			
 			expantion = ft_strdup(tmp->value);
+			return(ft_strjoingnl(first,expantion));
 		}
+		checked ++;
+		if (checked == g_struct.count) // i'm here , fix the position $path katmchi
+		expantion = ft_strdup("");
 		/* code */
 		tmp = tmp->next;
 	}
-	
+	return ft_strjoingnl(first,expantion);
 
 	// free(first);
-	return(ft_strjoingnl(first,expantion));
+	
 }
 static int	skip_sep(char *s)
 {

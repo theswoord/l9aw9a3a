@@ -77,7 +77,7 @@ typedef struct s_shell
     t_tlist *tlist;
     t_var_t *envlist;
     e_tokenum tokenum;
-    int c; // hada test o safi
+    int count; // hada test o safi
 
 }t_shell; 
 
@@ -145,7 +145,7 @@ void print_environ(void);
 void print_env(t_var_t *head, int bool);
 void free_env(t_var_t *head);
 void initialize_environment(t_var_t **head, char **env);
-void add_env_var(t_var_t **head, char *key, char *value);
+int add_env_var(t_var_t **head, char *key, char *value);
 int ft_strcmp(const char *s1, const char *s2);
 int ft_charfind(const char *str, char c);
 char* env_nav(t_var_t **head,char * key);
@@ -162,4 +162,5 @@ void add_to_env(t_var_t **head, char *env);
 void modify_env(t_tlist *token);
 char * expanded(char* str);
 void expander_init(t_tlist *head, t_var_t *env);
+int find_in_list(t_var_t *head, char* search);
 #endif

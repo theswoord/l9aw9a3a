@@ -34,7 +34,7 @@ int main(int ac, char **av, char **env)
     sigaction(SIGINT,&minisignols,NULL);
     sigaction(SIGQUIT,&minisignols,NULL);
     // t_env *myenv;
-    g_struct.c = 15;
+    // g_struct.c = 15;
     // printf("hhhhhhhhhhhhhh%s\n",env[5]);
     // catch_env(env,myenv);
     // printf("11%s\n",myenv->next->envir);

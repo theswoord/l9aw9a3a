@@ -24,8 +24,9 @@ int ft_strcmp(const char *s1, const char *s2)
 	return *(unsigned char *)s1 - *(unsigned char *)s2;
 }
 
-void add_env_var(t_var_t **head, char *key, char *value)
+int add_env_var(t_var_t **head, char *key, char *value)
 {
+	// int success;
 	t_var_t *new_node;
 	t_var_t *current;
 
@@ -39,7 +40,7 @@ void add_env_var(t_var_t **head, char *key, char *value)
 				free(current->value);
 				current->value = ft_strdup(value);
 			}
-			return;
+			return 0;
 		}
 		current = current->next;
 	}
@@ -51,6 +52,7 @@ void add_env_var(t_var_t **head, char *key, char *value)
 		new_node->value = ft_strdup(value);
 	new_node->next = *head;
 	*head = new_node;
+	return (1);
 }
 
 void initialize_environment(t_var_t **head, char **env)
@@ -69,6 +71,7 @@ void initialize_environment(t_var_t **head, char **env)
 			key = ft_substr(env[i], 0, ft_charfind(env[i], '='));
 			value = ft_strchr(env[i], '=') + 1;
 			add_env_var(head, key, value);
+			g_struct.count++;
 			free(key);
 		}
 		i++;
@@ -217,7 +220,7 @@ int typefinder(char *line)
 		return(PIPE);
 		else if (line[i] == '>')
 		return(REDIW);
-		else if (line[i] == '=')
+		else if (line[i] == '=' && line[i-1])
 		return(VAR);
 		i++;
 	}
@@ -237,6 +240,18 @@ int typefinder(char *line)
 	// 	return (EXPAND);
 	// }
 	// return (WORD);
+}
+int find_in_list(t_var_t *head, char* search){
+
+	t_var_t *current;
+	current = head;
+	while (current != NULL)
+	{
+		if(ft_strcmp(current->key,search) == 0)
+			return 1;
+		current = current->next;
+	}
+	return 0;
 }
 void print_tokens(t_tlist *head){
 	t_tlist *current = head;
