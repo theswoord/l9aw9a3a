@@ -144,7 +144,7 @@ char * expanded(char* str){
 			return(ft_strjoingnl(first,expantion));
 		}
 		checked ++;
-		if (checked == g_struct.count) // i'm here , fix the position $path katmchi
+		if (checked == g_struct.count) // anbdl random i'm here , fix the position $path katmchi
 		expantion = ft_strdup("");
 		/* code */
 		tmp = tmp->next;
