@@ -24,6 +24,9 @@ DOC,
 EXPAND,
 VAR,
 APPEND,
+QUOTES,
+SQUOTE,
+DQUOTE,
 }e_tokenum;
 
  typedef struct env_vars
@@ -163,4 +166,5 @@ void modify_env(t_tlist *token);
 char * expanded(char* str);
 void expander_init(t_tlist *head, t_var_t *env);
 int find_in_list(t_var_t *head, char* search);
+void qidentify(t_tlist *token);
 #endif

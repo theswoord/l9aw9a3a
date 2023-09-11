@@ -21,7 +21,6 @@ void tokenisation(char * str)
 	printf("_%d_\n", g_struct.count);
 	modify_env(g_struct.tlist); // = makaynach o makayzidch token okhra
 	printf("_%d_\n", g_struct.count);
-
 	expander_init(g_struct.tlist,NULL);
 
 	// add_env_var(&g_struct.envlist,g_struct.tlist->str,"99");
@@ -31,6 +30,7 @@ void tokenisation(char * str)
 
 	// print_env(g_struct.envlist,0);
 
+	qidentify(g_struct.tlist); // here nonini nonini moraja3a H
 	print_tokens(g_struct.tlist);
 	if (ft_strcmp(str,"env")==0)
 	print_env(g_struct.envlist,0);
@@ -59,6 +59,46 @@ void tokenisation(char * str)
 	
 
 }
+void qidentify(t_tlist *token){
+
+t_tlist *tmp = token;
+
+	while (tmp != NULL) //lil moraja3a hh
+	{
+		// printf("+%d \n",ft_charfind(tmp->str,'\"'));
+		if(tmp->value == QUOTES)
+		{
+			if (ft_charfind(tmp->str,'\"') == 0)
+			{
+
+				// printf("iddad\n");
+				if (ft_charfind(tmp->str,'$'))
+				{
+					tmp->str = expanded(tmp->str);
+					/* code */
+				}
+				//remove quotes hh 
+				// find $ then replace and remove 
+				/* code */
+			}
+			
+			else if (ft_charfind(tmp->str,'\'') == 0 )
+			{
+				// only remove
+				// printf("ided\n");
+				ft_memmove(&tmp->str[0], &tmp->str[0 + 1], ft_strlen(tmp->str) - 1);
+				/* code */
+			}
+			
+		}
+
+
+		tmp = tmp->next;
+		/* code */
+	}
+	
+}
+
 void modify_env(t_tlist *token){
 
 	t_tlist *tmp = token;

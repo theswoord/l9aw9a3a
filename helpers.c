@@ -222,6 +222,8 @@ int typefinder(char *line)
 		return(REDIW);
 		else if (line[i] == '=' && line[i-1])
 		return(VAR);
+		else if (line[i]== '\'' || line[i]== '\"')
+		return(QUOTES);
 		i++;
 	}
 		return(WORD);
