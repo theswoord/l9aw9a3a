@@ -84,7 +84,7 @@ typedef struct s_shell
 
 }t_shell; 
 
-extern t_shell	g_struct;
+// extern t_shell	g_struct;
 // typedef struct s_tre
 // {
 // 	char *token;
@@ -96,7 +96,7 @@ extern t_shell	g_struct;
 // }t_tre;
 
 /*	----	----lexer----	-----	*/
-void tokenisation(char *str);
+void tokenisation(char *str,t_shell *g_struct);
 void element_init(t_counter *elements,char *str);
 int syntax_check(t_counter *elements,char *str);
 /*	----	----utils----	-----	*/
@@ -147,7 +147,7 @@ void print_environ(void);
 // t_env	*ft_lstlast(t_env *lst);
 void print_env(t_var_t *head, int bool);
 void free_env(t_var_t *head);
-void initialize_environment(t_var_t **head, char **env);
+void initialize_environment(t_shell *g_struct,t_var_t **head, char **env);
 int add_env_var(t_var_t **head, char *key, char *value);
 int ft_strcmp(const char *s1, const char *s2);
 int ft_charfind(const char *str, char c);
@@ -162,9 +162,9 @@ void add_token_list(t_tlist **head, char **tab);
 int typefinder (char *line);
 void print_tokens(t_tlist *head);
 void add_to_env(t_var_t **head, char *env);
-void modify_env(t_tlist *token);
-char * expanded(char* str);
-void expander_init(t_tlist *head, t_var_t *env);
+void modify_env(t_shell *g_struct,t_tlist *token);
+char * expanded(t_shell *g_struct,char* str);
+void expander_init(t_shell *g_struct,t_tlist *head, t_var_t *env);
 int find_in_list(t_var_t *head, char* search);
-void qidentify(t_tlist *token);
+void qidentify(t_shell g_struct,t_tlist *token);
 #endif

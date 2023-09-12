@@ -1,5 +1,5 @@
 #include "minishell.h"
-    t_shell g_struct;
+    // t_shell g_struct;
 void sig(int signal){
 
     // if (signal == SIGINT){
@@ -20,6 +20,8 @@ void sig(int signal){
 
 int main(int ac, char **av, char **env)
 {
+    t_shell g_struct;
+
     int i = 0;
     char *test;
     (void)ac;
@@ -42,7 +44,16 @@ int main(int ac, char **av, char **env)
     // catch_environ(&myenv,env);
     // print_environ();
     // printf("fsdfsd\n");
-    initialize_environment(&g_struct.envlist,env);
+    // printf("%d\n",g_struct.count);
+    // g_struct.count=0;
+    initialize_environment(&g_struct,&g_struct.envlist,env);
+    // printf("%d\n",g_struct.count);
+    // print_env(g_struct.envlist,0);
+    // while (1)
+    // {
+    //     /* code */
+    // }
+    
     // printf("%s hh",g_struct.envlist->next->next->value);
     // print_env(g_struct.envlist,1);
 //  char *prompt;
@@ -62,29 +73,29 @@ int main(int ac, char **av, char **env)
        if (ft_strlen(test) > 0)
         add_history(test);
        
-       tokenisation(test);
+       tokenisation(test,&g_struct);
        free(test);
     }
 }
 
-char *better_prompt(void){
+// char *better_prompt(void){
 
-    char* user;
-    user =  env_nav(&g_struct.envlist,"USER");
-    char* folder;
-    char* tmp ;
-    tmp = env_nav(&g_struct.envlist,"PWD");
-    folder = ft_strdup(ft_strrchr(tmp,'/'));
-    char* out;
-    out = ft_strjoingnl(user,":");
+//     char* user;
+//     user =  env_nav(&g_struct.envlist,"USER");
+//     char* folder;
+//     char* tmp ;
+//     tmp = env_nav(&g_struct.envlist,"PWD");
+//     folder = ft_strdup(ft_strrchr(tmp,'/'));
+//     char* out;
+//     out = ft_strjoingnl(user,":");
     
-    out = ft_strjoingnl(out,"~");
-    out = ft_strjoingnl(out,folder);
-    out = ft_strjoingnl(out,"$ ");
-    free( tmp );
-    // free( user);
-    free(folder);
-    return out;
+//     out = ft_strjoingnl(out,"~");
+//     out = ft_strjoingnl(out,folder);
+//     out = ft_strjoingnl(out,"$ ");
+//     free( tmp );
+//     // free( user);
+//     free(folder);
+//     return out;
 
-}
+// }
 // void handler(char *string)

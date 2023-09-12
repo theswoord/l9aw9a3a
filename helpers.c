@@ -55,7 +55,7 @@ int add_env_var(t_var_t **head, char *key, char *value)
 	return (1);
 }
 
-void initialize_environment(t_var_t **head, char **env)
+void initialize_environment(t_shell *g_struct,t_var_t **head, char **env)
 {
 	char *key;
 	char *value;
@@ -71,11 +71,12 @@ void initialize_environment(t_var_t **head, char **env)
 			key = ft_substr(env[i], 0, ft_charfind(env[i], '='));
 			value = ft_strchr(env[i], '=') + 1;
 			add_env_var(head, key, value);
-			g_struct.count++;
+			g_struct->count++;
 			free(key);
 		}
 		i++;
 	}
+			// printf("+%d\n",g_struct->count);
 }
 
 void free_env(t_var_t *head)
