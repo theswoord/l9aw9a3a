@@ -2,6 +2,7 @@
 #define MINISHELL_H
 #include "./gnl/get_next_line.h"
 #include "./libft/libft.h"
+#include "./builtins/builtins.h"
 #include <readline/history.h>
 #include <readline/readline.h>
 #include <signal.h>
@@ -96,7 +97,7 @@ typedef struct s_shell
 // }t_tre;
 
 /*	----	----lexer----	-----	*/
-void tokenisation(char *str,t_shell *g_struct);
+void tokenisation(char *str,t_shell *g_struct, char **env);
 void element_init(t_counter *elements,char *str);
 int syntax_check(t_counter *elements,char *str);
 /*	----	----utils----	-----	*/
@@ -167,4 +168,8 @@ char * expanded(t_shell *g_struct,char* str);
 void expander_init(t_shell *g_struct,t_tlist *head, t_var_t *env);
 int find_in_list(t_var_t *head, char* search);
 void qidentify(t_shell g_struct,t_tlist *token);
+void add_to_environ(char *argument, t_var_t **env);
+int list_size(t_tlist *head);
+// void execute_pipelines(array_of_commands *command_list, char **env);
+char **from_list_to_arr(t_tlist *head);
 #endif

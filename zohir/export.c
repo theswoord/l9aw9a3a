@@ -1,11 +1,11 @@
 #include "builtins.h"
 
-env_var_t *global_enviroment;
+t_var_t *g_struct;
 
-void add_env_var(env_var_t **head, char *key, char *value)
+void add_env_var(t_var_t **head, char *key, char *value)
 {
-	env_var_t *new_node;
-	env_var_t *current;
+	t_var_t *new_node;
+	t_var_t *current;
 
 	current = *head;
 	while (current != NULL)
@@ -21,7 +21,7 @@ void add_env_var(env_var_t **head, char *key, char *value)
 		}
 		current = current->next;
 	}
-	new_node = malloc(sizeof(env_var_t));
+	new_node = malloc(sizeof(t_var_t));
 	new_node->key = ft_strdup(key);
 	if (!value)
 		new_node->value = NULL;
@@ -31,7 +31,7 @@ void add_env_var(env_var_t **head, char *key, char *value)
 	*head = new_node;
 }
 
-void initialize_environment(env_var_t **head, char **env)
+void initialize_environment(t_var_t **head, char **env)
 {
 	char *key;
 	char *value;
@@ -51,10 +51,10 @@ void initialize_environment(env_var_t **head, char **env)
 	}
 }
 
-void free_env(env_var_t *head)
+void free_env(t_var_t *head)
 {
-	env_var_t *current;
-	env_var_t *temp;
+	t_var_t *current;
+	t_var_t *temp;
 
 	current = head;
 	while (current != NULL)
@@ -67,9 +67,9 @@ void free_env(env_var_t *head)
 	}
 }
 
-void print_env(env_var_t *head, int bool)
+void print_env(t_var_t *head, int bool)
 {
-	env_var_t *current = head;
+	t_var_t *current = head;
 
 	while (current != NULL)
 	{
@@ -91,7 +91,7 @@ void print_env(env_var_t *head, int bool)
 	}
 }
 
-void add_to_env(char *argument, env_var_t **env)
+void add_to_env(char *argument, t_var_t **env)
 {
 	int i;
 	char *key;
@@ -117,11 +117,11 @@ void export(int ac, char **av, char **env)
 {
 	int i;
 
-	initialize_environment(&global_enviroment, env);
+	initialize_environment(&g_struct, env);
 	i = 0;
 	while (++i < ac)
-		add_to_env(av[i], &global_enviroment);
-	print_env(global_enviroment, 1);
+		add_to_env(av[i], &g_struct);
+	print_env(g_struct, 1);
 	return;
 }
 
@@ -131,5 +131,5 @@ void export(int ac, char **av, char **env)
 // 	return (0);
 // }
 
-// after finishing the export command we need to seperate the command and the creation of global_enviroment list
+// after finishing the export command we need to seperate the command and the creation of g_struct list
 // cuz export only adds or modifies enviroment variables

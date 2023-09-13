@@ -2,7 +2,7 @@
 
 void    ft_env(int ac, char **av)
 {
-    print_env(global_enviroment, 0);
+    print_env(g_struct, 0);
 }
 
 // ez just use the print function from export to print all list of variables without declare -x

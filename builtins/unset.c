@@ -1,4 +1,5 @@
 #include "builtins.h"
+t_shell *g_struct;
 
 void unset_var_env(t_var_t **head, char *key)
 {
@@ -28,8 +29,23 @@ void unset_var_env(t_var_t **head, char *key)
 void ft_unset(int ac, char **av)
 {
     int i;
+    pid_t pid;
 
-    i = 0;
-    while (++i < ac)
-        unset_var_env(&g_struct, av[i]);
+    pid = fork();
+    if (pid == 0)
+    {
+        i = 0;
+        while (++i < ac)
+            unset_var_env(&g_struct->envlist, av[i]);
+    }
+    else if (pid > 0)
+    {
+        waitpid(pid, NULL, 0);
+        exit(0);
+    }
+    else
+    {
+        perror("fork");
+        exit(1);
+    }
 }

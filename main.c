@@ -73,7 +73,7 @@ int main(int ac, char **av, char **env)
        if (ft_strlen(test) > 0)
         add_history(test);
        
-       tokenisation(test,&g_struct);
+       tokenisation(test,&g_struct,env);
        free(test);
     }
 }

@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-void tokenisation(char *str, t_shell *g_struct)
+void tokenisation(char *str, t_shell *g_struct,char** env)
 {
 
 	char **done = ft_strsplit(str); // pit eveyone in a node
@@ -16,11 +16,80 @@ void tokenisation(char *str, t_shell *g_struct)
 	// modify manually
 	//  printf("-------------------------------------------------------------------------------\n");
 	//  add_env_var(&g_struct.envlist,"nabilhhehehehehewiloooo","500 mlyoun");
-	printf("_%d_\n", g_struct->count);
+	// printf("_%d_\n", g_struct->count);
 	modify_env(g_struct,g_struct->tlist); // = makaynach o makayzidch token okhra
-	printf("_%d_\n", g_struct->count);
+	// printf("_%d_\n", g_struct->count);
 	expander_init(g_struct,g_struct->tlist, NULL);
+	// char *test[4];
+	// test[0]="ls";
+	// test[1]="-l";
+	// test[2]="-a";
+	// test[3]=NULL;
+	// print_tokens(g_struct->tlist);
+	// hadchi khdam
+	char **hhhh;
+	hhhh = from_list_to_arr(g_struct->tlist); // this arr howa li aydkhl l function
 
+	// printf("|%s|\n",hhhh[0]);
+	int j = 0;
+	while (hhhh[j])
+	{
+		printf("-%s-\n",hhhh[j]);
+		j++;
+	}
+	
+	execute_commands(hhhh[0],hhhh,env);
+
+	// hadchi khdam
+	//test pipe
+	// array_of_commands *command_list;
+	// // command_list.num_commands=2;
+	// // // command_list.commands[2];
+	// // command_list.commands=(command *)malloc(command_list.num_commands*sizeof(command));
+	// // command_list.commands[0].command="ls";
+	// // command_list.commands[0].args = malloc(1 * sizeof(char*));
+	// // // command_list.commands[0].args[0]="ls";
+
+	// // command_list.commands[0].args[0]="-la";
+	// // // command_list.commands[0].args[1]="-a";
+	// // // command_list.commands.args="-la";
+	// // command_list.commands[1].command=malloc(500);
+	// // // command_list.commands
+	// // command_list.commands[1].command="sort";
+	// // command_list.commands[1].args = malloc(100);
+	// // command_list.commands[1].args[0]=NULL;
+	// // printf("hh\n");
+	// command_list = malloc(sizeof(array_of_commands));
+	// command_list->num_commands = 3;
+	// command_list->commands = (command *)malloc(command_list->num_commands * sizeof(command));
+
+	// command_list->commands[0].command = "ls";
+	// command_list->commands[0].args = (char **)malloc(2 * sizeof(char *));
+	// command_list->commands[0].args[0] = "ls";
+	// command_list->commands[0].args[1] = "-l";
+	// command_list->commands[0].args[2] = NULL;
+
+	// // command_list->commands[1].command = "grep";
+	// // command_list->commands[1].args = (char **)malloc(2 * sizeof(char *));
+	// // command_list->commands[1].args[0] = "grep";
+	// // command_list->commands[1].args[1] = "env";
+	// // command_list->commands[1].args[2] = NULL;
+
+	// command_list->commands[1].command = "sort";
+	// command_list->commands[1].args = (char **)malloc(2 * sizeof(char *));
+	// command_list->commands[1].args[0] = "sort";
+	// command_list->commands[1].args[1] = NULL;
+
+	// command_list->commands[2].command = "wc";
+	// command_list->commands[2].args = (char **)malloc(3 * sizeof(char *));
+	// command_list->commands[2].args[0] = "wc";
+	// command_list->commands[2].args[1] = "-l";
+	// command_list->commands[2].args[2] = NULL;
+
+	// // command_list.commands[1].args[0]=NULL;
+
+	// execute_pipelines(command_list,env);
+	// execute_pipelines()
 	// add_env_var(&g_struct.envlist,g_struct.tlist->str,"99");
 	// add_env_var(&g_struct.envlist,"nakbst","500 mlyoun");
 	// add_env_var(&g_struct.envlist,"nabilhgdfgmlmimi","500 mlyoun");
@@ -28,7 +97,7 @@ void tokenisation(char *str, t_shell *g_struct)
 	// print_env(g_struct.envlist,0);
 
 	// qidentify(g_struct,g_struct.tlist); // here nonini nonini moraja3a H
-	print_tokens(g_struct->tlist);
+	// print_tokens(g_struct->tlist);
 	if (ft_strcmp(str, "env") == 0)
 		print_env(g_struct->envlist, 0);
 	// int i = 0;
@@ -273,4 +342,38 @@ char **ft_strsplit(char *s)
 		i += word_len;
 	}
 	return (splitted);
+}
+int list_size(t_tlist *head){
+
+	t_tlist *current =head;
+	int size =0;
+	while (current != NULL)
+	{
+		size++;
+		current=current->next;
+		/* code */
+	}
+	return size;
+}
+
+char **from_list_to_arr(t_tlist *head){
+
+	int i = 0;
+	int size;
+	size = list_size(head);
+	char **arr;
+	t_tlist *current = head;
+	arr = malloc(size*sizeof(char*)+1);
+	while (current != NULL)
+	{
+		// arr[i]=malloc()
+		// /* code */
+		// i++;
+		arr[i]=ft_strdup(current->str);
+		printf("*%s*\n",arr[i]);
+		i++;
+		current = current->next;
+	}
+	arr[i]=NULL;
+	return arr;
 }
