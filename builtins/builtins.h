@@ -54,7 +54,7 @@ size_t ft_strlen(const char *str);
 // void add_env_var(t_var_t **head, char *key, char *value);
 void execute_commands(char *command, char **args, char **env);
 void execute_pipelines(array_of_commands *command_list, char **env);
-void cd_command(int ac, char **av);
+// void cd_command(int ac, char **av);
 void echo_command(int ac, char **av);
 // void ft_env(t_shell *g_struct, int ac, char **av);
 char *find_executable_command(char *command, char *path);
@@ -71,4 +71,5 @@ void redirect_input(ParsedCommand *data);
 void ft_redirect(ParsedCommand *data);
 // void unset_var_env(t_var_t **head, char *key);
 void ft_unset(int ac, char **av);
+// void cd_command(int ac, char **av, char **env, t_shell *g_struct);
 #endif

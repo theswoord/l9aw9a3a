@@ -135,12 +135,13 @@ char *env_nav(t_var_t **head, char *key)
 	}
 	return outsider;
 }
-void token_list(t_tlist **head, char *tok, int type)
+void token_list(t_tlist **head, char *tok, int type, int queue)
 {
 
 	// int i = 0;
 	t_tlist *current;
 	t_tlist *new_node;
+	// static int queue = 0;
 	// t_tlist *current = *head;
 	current = *head;
 	// while (current != NULL)
@@ -151,8 +152,10 @@ void token_list(t_tlist **head, char *tok, int type)
 
 	new_node = malloc(sizeof(t_tlist));
 	new_node->str = ft_strdup(tok);
+	// free(tok);
 	if (type)
 	new_node->value = type;	
+	new_node->queue = queue;
 	
 	new_node->next = NULL;
 	if (*head == NULL)
@@ -179,7 +182,7 @@ void add_token_list(t_tlist **head, char **tab)
 		// {
 		// 	/* code */
 		// }
-		token_list(head, tab[i], typefinder(tab[i])); // 7yed had nuull
+		token_list(head, tab[i], typefinder(tab[i]),i); // 7yed had nuull
 		i++;
 	}
 	// printf("after = %d\n", i);
@@ -196,6 +199,7 @@ void free_tokens(t_tlist *head)
 		temp = current;
 		current = current->next;
 		free(temp->str);
+		free(temp);
 		// free(temp)
 		/* code */
 	}
@@ -261,7 +265,7 @@ void print_tokens(t_tlist *head){
 
 	while (current != NULL)
 	{
-		printf("%s %d\n", current->str,current->value);
+		printf("%s %d %d\n", current->str,current->value,current->queue);
 		current = current->next;
 		/* code */
 	}

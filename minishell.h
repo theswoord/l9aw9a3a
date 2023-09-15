@@ -42,6 +42,8 @@ typedef struct s_tlist{
 
     int value;
     char *str;
+        int queue;
+
     struct s_tlist* next;
 
 }t_tlist;
@@ -82,6 +84,7 @@ typedef struct s_shell
     t_var_t *envlist;
     e_tokenum tokenum;
     int count; // hada test o safi
+    // int exit_status; //static int
 
 }t_shell; 
 
@@ -158,7 +161,7 @@ static int	skip_sep(char *s);
 static int	ft_word_len(char *s);
 static int	ft_count(char *s);
 char	**ft_strsplit(char *s);
-void token_list(t_tlist **head,char *tok, int type);
+void token_list(t_tlist **head,char *tok, int type,int queue);
 void add_token_list(t_tlist **head, char **tab);
 int typefinder (char *line);
 void print_tokens(t_tlist *head);
@@ -167,9 +170,17 @@ void modify_env(t_shell *g_struct,t_tlist *token);
 char * expanded(t_shell *g_struct,char* str);
 void expander_init(t_shell *g_struct,t_tlist *head, t_var_t *env);
 int find_in_list(t_var_t *head, char* search);
-void qidentify(t_shell g_struct,t_tlist *token);
+void qidentify(t_shell *g_struct,t_tlist *token);
 void add_to_environ(char *argument, t_var_t **env);
 int list_size(t_tlist *head);
 // void execute_pipelines(array_of_commands *command_list, char **env);
 char **from_list_to_arr(t_tlist *head);
+t_var_t *find_value(char *key, t_var_t *head);
+void change_pwd(t_var_t *head);
+void cd_command(int ac, char *directory, char **env, t_shell *g_struct);
+char *expanded_q(t_shell *g_struct, char *str);
+char	*ft_strchrtill(const char *s, int c,int len);
+char *strdelch(char *str, char ch);
+void free_tokens(t_tlist *head);
+void free_env(t_var_t *head);
 #endif

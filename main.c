@@ -1,4 +1,7 @@
 #include "minishell.h"
+
+    // return a static variable and change it's adress
+    
     // t_shell g_struct;
 void sig(int signal){
 
@@ -47,6 +50,11 @@ int main(int ac, char **av, char **env)
     // printf("%d\n",g_struct.count);
     // g_struct.count=0;
     initialize_environment(&g_struct,&g_struct.envlist,env);
+    // while (1)
+    // {
+    //     /* code */
+    // }
+    
     // printf("%d\n",g_struct.count);
     // print_env(g_struct.envlist,0);
     // while (1)
@@ -68,6 +76,7 @@ int main(int ac, char **av, char **env)
         if (!test)
         {
             free(test);
+            free_env(g_struct.envlist);
             return 1;
         }
        if (ft_strlen(test) > 0)

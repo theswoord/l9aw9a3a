@@ -49,26 +49,40 @@ void execute_commands(char *command, char **args, char **env)
 {
     char *path;
     char *executable_path;
+    pid_t pid;
 
-    path = getenv("PATH");
-    executable_path = find_executable_command(command, path);
-    if (executable_path)
+    pid = fork();
+    if (pid == 0)
     {
-        // add args +1 if you want to test the program with command arguments.
-        int pid = fork();
-        if (pid == 0)
-        {
-            execve(executable_path, args, env);
-        }
+        if ((command[0] == '.' && command[1] == '/') || command[0] == '/')
+            executable_path = ft_strdup(command);
         else
         {
-            waitpid(pid, NULL, 0);
-            return ;
+            path = getenv("PATH");
+            executable_path = find_executable_command(command, path);
         }
-        free(executable_path);
+        if (executable_path)
+        {
+            // add args +1 if you want to test the program with command arguments.
+            if (access(executable_path, X_OK) == 0)
+            {
+                execve(executable_path, args, env);
+                free(executable_path);
+            }
+        }
+        else
+            printf("bash: command not found: %s\n", command);
+    }
+    else if (pid > 0)
+    {
+        waitpid(pid, NULL, 0);
+        return ;
     }
     else
-        printf("bash: command not found: %s\n", command);
+    {
+        perror("fork");
+        exit(1);
+    }
 }
 
 // int main(int ac, char **av, char **env)

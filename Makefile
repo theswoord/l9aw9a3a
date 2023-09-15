@@ -13,8 +13,8 @@ msa7 = rm -rf
 obj = ${SRC:.c=.o}
 objb = ${SRCB:.c=.o}
 readflag = -L/Users/nbouhali/.brew/opt/readline/lib 
-readinc = -I/Users/nbouhali/.brew/opt/readline/include/readline
-tarzan = -L$(shell brew --prefix readline)
+readinc = -I/Users/nbouhali/.brew/opt/readline/include/
+# tarzan = -L$(shell brew --prefix readline)
 libraries = ./printf/libftprintf.a ./gnl/gnl.a ./libft/libft.a 
 SUBDIRS = gnl printf libft
 
@@ -22,7 +22,7 @@ SUBDIRS = gnl printf libft
 all : libs ${NAME}
 
 ${NAME} : ${obj}
-	${CC} ${CFLAGS} ${readflag} ${readinc} ${obj} ${tarzan } -lreadline $(libraries) -o $(NAME)
+	${CC} ${readflag} ${CFLAGS}  ${readinc} ${obj} ${tarzan } -lreadline $(libraries) -o $(NAME)
 
 %.o: %.c
 	${CC} -c $< -o $@

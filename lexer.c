@@ -17,7 +17,7 @@ void tokenisation(char *str, t_shell *g_struct,char** env)
 	//  printf("-------------------------------------------------------------------------------\n");
 	//  add_env_var(&g_struct.envlist,"nabilhhehehehehewiloooo","500 mlyoun");
 	// printf("_%d_\n", g_struct->count);
-	modify_env(g_struct,g_struct->tlist); // = makaynach o makayzidch token okhra
+	modify_env(g_struct,g_struct->tlist); // lmochkil ila kan chi 7aja wst param it's not it
 	// printf("_%d_\n", g_struct->count);
 	expander_init(g_struct,g_struct->tlist, NULL);
 	// char *test[4];
@@ -27,18 +27,18 @@ void tokenisation(char *str, t_shell *g_struct,char** env)
 	// test[3]=NULL;
 	// print_tokens(g_struct->tlist);
 	// hadchi khdam
-	char **hhhh;
-	hhhh = from_list_to_arr(g_struct->tlist); // this arr howa li aydkhl l function
+	// char **hhhh; // hadi kmala
+	// hhhh = from_list_to_arr(g_struct->tlist); // this arr howa li aydkhl l function
 
 	// printf("|%s|\n",hhhh[0]);
-	int j = 0;
-	while (hhhh[j])
-	{
-		printf("-%s-\n",hhhh[j]);
-		j++;
-	}
+	// int j = 0;
+	// while (hhhh[j])
+	// {
+	// 	printf("-%s-\n",hhhh[j]);
+	// 	j++;
+	// }
 	
-	execute_commands(hhhh[0],hhhh,env);
+	// execute_commands(hhhh[0],hhhh,env); // hadi hya ki ktexecuti
 
 	// hadchi khdam
 	//test pipe
@@ -60,14 +60,14 @@ void tokenisation(char *str, t_shell *g_struct,char** env)
 	// // command_list.commands[1].args[0]=NULL;
 	// // printf("hh\n");
 	// command_list = malloc(sizeof(array_of_commands));
-	// command_list->num_commands = 3;
+	// command_list->num_commands = 2;
 	// command_list->commands = (command *)malloc(command_list->num_commands * sizeof(command));
 
 	// command_list->commands[0].command = "ls";
 	// command_list->commands[0].args = (char **)malloc(2 * sizeof(char *));
-	// command_list->commands[0].args[0] = "ls";
-	// command_list->commands[0].args[1] = "-l";
-	// command_list->commands[0].args[2] = NULL;
+	// // command_list->commands[0].args[0] = "ls";
+	// command_list->commands[0].args[0] = "-l";
+	// command_list->commands[0].args[1] = NULL;
 
 	// // command_list->commands[1].command = "grep";
 	// // command_list->commands[1].args = (char **)malloc(2 * sizeof(char *));
@@ -76,15 +76,15 @@ void tokenisation(char *str, t_shell *g_struct,char** env)
 	// // command_list->commands[1].args[2] = NULL;
 
 	// command_list->commands[1].command = "sort";
-	// command_list->commands[1].args = (char **)malloc(2 * sizeof(char *));
-	// command_list->commands[1].args[0] = "sort";
-	// command_list->commands[1].args[1] = NULL;
+	// command_list->commands[1].args = (char **)malloc(1 * sizeof(char *));
+	// // command_list->commands[1].args[0] = "sort";
+	// command_list->commands[1].args[0] = NULL;
 
-	// command_list->commands[2].command = "wc";
-	// command_list->commands[2].args = (char **)malloc(3 * sizeof(char *));
-	// command_list->commands[2].args[0] = "wc";
-	// command_list->commands[2].args[1] = "-l";
-	// command_list->commands[2].args[2] = NULL;
+	// // command_list->commands[2].command = "wc";
+	// // command_list->commands[2].args = (char **)malloc(3 * sizeof(char *));
+	// // command_list->commands[2].args[0] = "wc";
+	// // command_list->commands[2].args[1] = "-l";
+	// // command_list->commands[2].args[2] = NULL;
 
 	// // command_list.commands[1].args[0]=NULL;
 
@@ -96,10 +96,22 @@ void tokenisation(char *str, t_shell *g_struct,char** env)
 
 	// print_env(g_struct.envlist,0);
 
-	// qidentify(g_struct,g_struct.tlist); // here nonini nonini moraja3a H
-	// print_tokens(g_struct->tlist);
-	if (ft_strcmp(str, "env") == 0)
-		print_env(g_struct->envlist, 0);
+	qidentify(g_struct,g_struct->tlist); // here nonini nonini moraja3a H
+	// if (strcmp(str,"cd"))
+	// {
+	// 	cd_command()
+	// 	/* code */
+	// }
+	
+	// cd_command(2,"gnl",env,g_struct);
+
+	// execute_commands(hhhh[0],hhhh,env); // hadi hya ki ktexecuti
+
+	print_tokens(g_struct->tlist);
+	free_tokens(g_struct->tlist);
+	// free(str);
+	// if (ft_strcmp(str, "env") == 0)
+		// print_env(g_struct->envlist, 0);
 	// int i = 0;
 
 	// while (done[i])
@@ -123,7 +135,7 @@ void tokenisation(char *str, t_shell *g_struct,char** env)
 	// 	current = g_struct.tlist->next;
 	// }
 }
-void qidentify(t_shell g_struct,t_tlist *token)
+void qidentify(t_shell *g_struct,t_tlist *token)
 {
 
 	t_tlist *tmp = token;
@@ -133,13 +145,30 @@ void qidentify(t_shell g_struct,t_tlist *token)
 		// printf("+%d \n",ft_charfind(tmp->str,'\"'));
 		if (tmp->value == QUOTES)
 		{
-			if (ft_charfind(tmp->str, '\"') == 0)
-			{
 
-				printf("iddad\n");
-				if (ft_charfind(tmp->str, '$'))
+			if (pos(tmp->str,'\'') != -1 ) // had l3jb makhdamch
+			{
+				// only remove
+				tmp->str = strdelch(tmp->str,'\'');
+				printf("ided\n");
+				// ft_memmove(&tmp->str[0], &tmp->str[0 + 1], ft_strlen(tmp->str) - 1);
+				// if (ft_strlen(tmp->str) < 2) {
+    			// *tmp->str = '\0';
+				// } else {
+    			// ft_memmove(tmp->str, tmp->str + 1, ft_strlen(tmp->str) - 2);
+    			// tmp->str[ft_strlen(tmp->str) - 2] = '\0';
+				// }
+				/* code */
+			}
+			
+			else if (pos(tmp->str, '\"') != -1 )
+			{
+				printf("idad\n");
+				if (pos(tmp->str, '$') != -1 )
 				{
-					tmp->str = expanded(&g_struct, tmp->str);
+				// printf("b4 = |%s\n",tmp->str);
+					tmp->str = expanded_q(g_struct, tmp->str);
+				// printf("a4 = |%s\n",tmp->str);
 					/* code */
 				}
 				// remove quotes hh
@@ -147,13 +176,6 @@ void qidentify(t_shell g_struct,t_tlist *token)
 				/* code */
 			}
 
-			// else if (ft_charfind(tmp->str,'\'') == 0 )
-			// {
-			// 	// only remove
-			// 	// printf("ided\n");
-			// 	ft_memmove(&tmp->str[0], &tmp->str[0 + 1], ft_strlen(tmp->str) - 1);
-			// 	/* code */
-			// }
 		}
 
 		tmp = tmp->next;
@@ -170,7 +192,7 @@ void modify_env(t_shell *g_struct,t_tlist *token)
 	char *value;
 	while (tmp != NULL)
 	{
-		if (tmp->value == VAR)
+		if (tmp->value == VAR ) //here gad lyosawi ikoun flwl
 		{
 			key = ft_substr(tmp->str, 0, ft_charfind(tmp->str, '='));
 			value = ft_strchr(tmp->str, '=') + 1;
@@ -233,7 +255,10 @@ char *expanded(t_shell *g_struct, char *str)
 	char *expantion;
 	int checked = 0;
 	first = ft_substr(str, 0, pos(str, '$'));
+	// printf("f= %s\n",first);
 	later = ft_strchr(str, '$') + 1;
+	// printf("l= %s\n",later);
+
 	while (tmp != NULL) // ila mal9itoch dir fih NULL
 	{
 
@@ -370,10 +395,87 @@ char **from_list_to_arr(t_tlist *head){
 		// /* code */
 		// i++;
 		arr[i]=ft_strdup(current->str);
-		printf("*%s*\n",arr[i]);
+		free(current->str);
+		// printf("*%s*\n",arr[i]);
 		i++;
 		current = current->next;
 	}
 	arr[i]=NULL;
+	
 	return arr;
+}
+
+char *expanded_q(t_shell *g_struct, char *str)
+{
+
+	t_var_t *tmp;
+	tmp = g_struct->envlist;
+	char *first;
+	char *later;
+	char *expantion;
+	// char *test = malloc(500);
+	int checked = 0;
+
+	first = ft_substr(str, 0, pos(str, '$')-1);
+	// printf("f= %s\n",first);
+	later = ft_strchr(str, '$') +1 ;
+	// later = ft_substr(str,pos(str, '$'),pos(str, '\"')-1);
+	printf("l= %s\n",later);
+
+	while (tmp != NULL) // ila mal9itoch dir fih NULL
+	{
+
+			// printf("%s\n", ft_strnstr(tmp->key,later,ft_strlen(later)-1));
+		// test=ft_strnstr(tmp->key,"USER\"",4);
+		// printf("%s\n",test);
+		if (ft_strncmp(tmp->key, later, pos(later,'\"')) == 0)
+		{
+			expantion = ft_strdup(tmp->value);
+			return (ft_strjoingnl(first, expantion));
+		}
+		checked++;
+		if (checked == g_struct->count) // anbdl random i'm here , fix the position $path katmchi
+			expantion = ft_strdup("");
+		/* code */
+		tmp = tmp->next;
+	}
+	return ft_strjoingnl(first, expantion);
+}
+// "$USER"
+
+char	*ft_strchrtill(const char *s, int c,int len)
+{
+		size_t	a;
+	char	*mbdla;
+
+	a = 0;
+	mbdla = (char *)s;
+	while (a <= ft_strlen(mbdla))
+	{
+		if (mbdla[a] == (char)c)
+		{
+			return (mbdla + a - len);
+		}
+		a++;
+	}
+	return (0);
+}
+char *strdelch(char *str, char ch)
+{
+    char *current = str;
+    char *tail = str;
+
+    while(*tail)
+    {
+        if(*tail == ch)
+        {
+            tail++;
+        }
+        else
+        {
+            *current++ = *tail++;
+        }
+    }
+    *current = 0;
+    return str;
 }
