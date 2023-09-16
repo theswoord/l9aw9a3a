@@ -95,13 +95,13 @@ void free_env(t_var_t *head)
 	}
 }
 
-void print_env(t_var_t *head, int bool)
+void print_env(t_var_t *head, int boole)
 {
 	t_var_t *current = head;
 
 	while (current != NULL)
 	{
-		if (bool == 1)
+		if (boole == 1)
 		{
 			if (!(current->value))
 				printf("declare -x %s\n", current->key);

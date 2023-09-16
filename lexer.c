@@ -95,8 +95,13 @@ void tokenisation(char *str, t_shell *g_struct,char** env)
 	// add_env_var(&g_struct.envlist,"nabilhgdfgmlmimi","500 mlyoun");
 
 	// print_env(g_struct.envlist,0);
+	if (list_check(g_struct->tlist)){
+	qidentify(g_struct,g_struct->tlist); // here nonini nonini moraja3a H rj3o a nabil
+	print_tokens(g_struct->tlist);
 
-	qidentify(g_struct,g_struct->tlist); // here nonini nonini moraja3a H
+	}
+	else
+		printf("syntax error \n");
 	// if (strcmp(str,"cd"))
 	// {
 	// 	cd_command()
@@ -107,7 +112,6 @@ void tokenisation(char *str, t_shell *g_struct,char** env)
 
 	// execute_commands(hhhh[0],hhhh,env); // hadi hya ki ktexecuti
 
-	print_tokens(g_struct->tlist);
 	free_tokens(g_struct->tlist);
 	// free(str);
 	// if (ft_strcmp(str, "env") == 0)
@@ -230,6 +234,7 @@ void expander_init(t_shell *g_struct,t_tlist *head, t_var_t *env)
 
 		if (tmp->value == EXPAND)
 		{
+			// free(tmp->str);
 			tmp->str = expanded(g_struct,tmp->str);
 			// while (tmp->str[i]) // substr mn $ tal 7ed ' '
 			// {
@@ -266,14 +271,19 @@ char *expanded(t_shell *g_struct, char *str)
 		{
 
 			expantion = ft_strdup(tmp->value);
-			return (ft_strjoingnl(first, expantion));
+			free(str);
+			str = ft_strjoingnl(first, expantion);
+			return (free(expantion), str);
 		}
 		checked++;
-		if (checked == g_struct->count) // anbdl random i'm here , fix the position $path katmchi
+		if (checked == g_struct->count){ // anbdl random i'm here , fix the position $path katmchi
+			free(str);
 			expantion = ft_strdup("");
+		}
 		/* code */
 		tmp = tmp->next;
 	}
+			free(str);
 	return ft_strjoingnl(first, expantion);
 
 	// free(first);
@@ -478,4 +488,40 @@ char *strdelch(char *str, char ch)
     }
     *current = 0;
     return str;
+}
+
+bool quotes_errors(char *str){
+
+	int i =0;
+	bool s_q = true;
+	bool d_q = true;
+
+	while (str[i])
+	{
+		if (str[i]== '\"' && s_q == true)
+		{
+			d_q = !d_q;
+			/* code */
+		}
+		else if (str[i]== '\'' && d_q == true){
+			s_q = !s_q;
+		}
+
+		i++;
+	}
+	return(s_q && d_q);
+}
+bool list_check(t_tlist *head){
+
+	t_tlist *current = head;
+	while (current != NULL)
+	{
+		if (quotes_errors(current->str)== false)
+			return (false);
+			
+		// if ()
+		current=current->next;
+		/* code */
+	}
+	return true;
 }

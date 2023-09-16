@@ -6,7 +6,7 @@
 #include <readline/history.h>
 #include <readline/readline.h>
 #include <signal.h>
-
+#include <stdbool.h>
 // #define PIPE = 5
 // int g_grlobal;
 // enum tokens
@@ -149,7 +149,7 @@ char *toktok(char *str);
 void print_environ(void);
 // void catch_environ(t_env **lenv, char **env);
 // t_env	*ft_lstlast(t_env *lst);
-void print_env(t_var_t *head, int bool);
+void print_env(t_var_t *head, int boole);
 void free_env(t_var_t *head);
 void initialize_environment(t_shell *g_struct,t_var_t **head, char **env);
 int add_env_var(t_var_t **head, char *key, char *value);
@@ -183,4 +183,6 @@ char	*ft_strchrtill(const char *s, int c,int len);
 char *strdelch(char *str, char ch);
 void free_tokens(t_tlist *head);
 void free_env(t_var_t *head);
+bool quotes_errors(char *str);
+bool list_check(t_tlist *head);
 #endif
