@@ -186,4 +186,5 @@ void free_env(t_var_t *head);
 bool quotes_errors(char *str);
 bool list_check(t_tlist *head);
 char *delete_pos(char *str, int pos);
+char *recombinator(char *first , char *later, char *rest);
 #endif

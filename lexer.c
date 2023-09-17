@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-void tokenisation(char *str, t_shell *g_struct,char** env)
+void tokenisation(char *str, t_shell *g_struct, char **env)
 {
 
 	char **done = ft_strsplit(str); // pit eveyone in a node
@@ -17,9 +17,9 @@ void tokenisation(char *str, t_shell *g_struct,char** env)
 	//  printf("-------------------------------------------------------------------------------\n");
 	//  add_env_var(&g_struct.envlist,"nabilhhehehehehewiloooo","500 mlyoun");
 	// printf("_%d_\n", g_struct->count);
-	modify_env(g_struct,g_struct->tlist); // lmochkil ila kan chi 7aja wst param it's not it
+	modify_env(g_struct, g_struct->tlist); // lmochkil ila kan chi 7aja wst param it's not it
 	// printf("_%d_\n", g_struct->count);
-	expander_init(g_struct,g_struct->tlist, NULL);
+	expander_init(g_struct, g_struct->tlist, NULL);
 	// char *test[4];
 	// test[0]="ls";
 	// test[1]="-l";
@@ -37,11 +37,11 @@ void tokenisation(char *str, t_shell *g_struct,char** env)
 	// 	printf("-%s-\n",hhhh[j]);
 	// 	j++;
 	// }
-	
+
 	// execute_commands(hhhh[0],hhhh,env); // hadi hya ki ktexecuti
 
 	// hadchi khdam
-	//test pipe
+	// test pipe
 	// array_of_commands *command_list;
 	// // command_list.num_commands=2;
 	// // // command_list.commands[2];
@@ -99,10 +99,10 @@ void tokenisation(char *str, t_shell *g_struct,char** env)
 	// add_env_var(&g_struct.envlist,"nabilhgdfgmlmimi","500 mlyoun");
 
 	// print_env(g_struct.envlist,0);
-	if (list_check(g_struct->tlist)){
-	qidentify(g_struct,g_struct->tlist); // here nonini nonini moraja3a H rj3o a nabil
-	print_tokens(g_struct->tlist);
-
+	if (list_check(g_struct->tlist))
+	{
+		qidentify(g_struct, g_struct->tlist); // here nonini nonini moraja3a H rj3o a nabil
+		print_tokens(g_struct->tlist);
 	}
 	else
 		printf("syntax error \n");
@@ -111,7 +111,7 @@ void tokenisation(char *str, t_shell *g_struct,char** env)
 	// 	cd_command()
 	// 	/* code */
 	// }
-	
+
 	// cd_command(2,"gnl",env,g_struct);
 
 	// execute_commands(hhhh[0],hhhh,env); // hadi hya ki ktexecuti
@@ -119,7 +119,7 @@ void tokenisation(char *str, t_shell *g_struct,char** env)
 	free_tokens(g_struct->tlist);
 	// free(str);
 	// if (ft_strcmp(str, "env") == 0)
-		// print_env(g_struct->envlist, 0);
+	// print_env(g_struct->envlist, 0);
 	// int i = 0;
 
 	// while (done[i])
@@ -143,7 +143,7 @@ void tokenisation(char *str, t_shell *g_struct,char** env)
 	// 	current = g_struct.tlist->next;
 	// }
 }
-void qidentify(t_shell *g_struct,t_tlist *token)
+void qidentify(t_shell *g_struct, t_tlist *token)
 {
 
 	t_tlist *tmp = token;
@@ -154,36 +154,42 @@ void qidentify(t_shell *g_struct,t_tlist *token)
 		if (tmp->value == QUOTES)
 		{
 
-			if (pos(tmp->str,'\'') != -1 ) // had l3jb makhdamch
+			if (pos(tmp->str, '\'') != -1) // had l3jb makhdamch
 			{
 				// only remove
-				tmp->str = strdelch(tmp->str,'\'');
+				tmp->str = strdelch(tmp->str, '\'');
 				printf("ided\n");
 				// ft_memmove(&tmp->str[0], &tmp->str[0 + 1], ft_strlen(tmp->str) - 1);
 				// if (ft_strlen(tmp->str) < 2) {
-    			// *tmp->str = '\0';
+				// *tmp->str = '\0';
 				// } else {
-    			// ft_memmove(tmp->str, tmp->str + 1, ft_strlen(tmp->str) - 2);
-    			// tmp->str[ft_strlen(tmp->str) - 2] = '\0';
+				// ft_memmove(tmp->str, tmp->str + 1, ft_strlen(tmp->str) - 2);
+				// tmp->str[ft_strlen(tmp->str) - 2] = '\0';
 				// }
 				/* code */
 			}
-			
-			else if (pos(tmp->str, '\"') != -1 )
+
+			else if (pos(tmp->str, '\"') != -1)
 			{
 				printf("idad\n");
-				if (pos(tmp->str, '$') != -1 )
+				if (pos(tmp->str, '$') != -1)
 				{
-				// printf("b4 = |%s\n",tmp->str);
+					// printf("b4 = |%s\n",tmp->str);
+					// free(tmp->str);
 					tmp->str = expanded_q(g_struct, tmp->str);
-				// printf("a4 = |%s\n",tmp->str);
+					tmp->str = delete_pos(tmp->str,pos(tmp->str,'\"'));
+					// printf("a4 = |%s\n",tmp->str);
 					/* code */
 				}
+				else{
+					tmp->str = delete_pos(tmp->str,pos(tmp->str,'\"'));
+					tmp->str = delete_pos(tmp->str,pos(tmp->str,'\"'));
+				}
+
 				// remove quotes hh
 				//  find $ then replace and remove
 				/* code */
 			}
-
 		}
 
 		tmp = tmp->next;
@@ -191,7 +197,7 @@ void qidentify(t_shell *g_struct,t_tlist *token)
 	}
 }
 
-void modify_env(t_shell *g_struct,t_tlist *token)
+void modify_env(t_shell *g_struct, t_tlist *token)
 {
 
 	t_tlist *tmp = token;
@@ -200,7 +206,7 @@ void modify_env(t_shell *g_struct,t_tlist *token)
 	char *value;
 	while (tmp != NULL)
 	{
-		if (tmp->value == VAR ) //here gad lyosawi ikoun flwl
+		if (tmp->value == VAR) // here gad lyosawi ikoun flwl
 		{
 			key = ft_substr(tmp->str, 0, ft_charfind(tmp->str, '='));
 			value = ft_strchr(tmp->str, '=') + 1;
@@ -211,7 +217,7 @@ void modify_env(t_shell *g_struct,t_tlist *token)
 		tmp = tmp->next;
 	}
 }
-void expander_init(t_shell *g_struct,t_tlist *head, t_var_t *env)
+void expander_init(t_shell *g_struct, t_tlist *head, t_var_t *env)
 {
 
 	t_tlist *tmp = head;
@@ -239,7 +245,7 @@ void expander_init(t_shell *g_struct,t_tlist *head, t_var_t *env)
 		if (tmp->value == EXPAND)
 		{
 			// free(tmp->str);
-			tmp->str = expanded(g_struct,tmp->str);
+			tmp->str = expanded(g_struct, tmp->str);
 			// while (tmp->str[i]) // substr mn $ tal 7ed ' '
 			// {
 
@@ -280,14 +286,15 @@ char *expanded(t_shell *g_struct, char *str)
 			return (free(expantion), str);
 		}
 		checked++;
-		if (checked == g_struct->count){ // anbdl random i'm here , fix the position $path katmchi
+		if (checked == g_struct->count)
+		{ // anbdl random i'm here , fix the position $path katmchi
 			free(str);
 			expantion = ft_strdup("");
 		}
 		/* code */
 		tmp = tmp->next;
 	}
-			free(str);
+	free(str);
 	return ft_strjoingnl(first, expantion);
 
 	// free(first);
@@ -382,40 +389,42 @@ char **ft_strsplit(char *s)
 	}
 	return (splitted);
 }
-int list_size(t_tlist *head){
+int list_size(t_tlist *head)
+{
 
-	t_tlist *current =head;
-	int size =0;
+	t_tlist *current = head;
+	int size = 0;
 	while (current != NULL)
 	{
 		size++;
-		current=current->next;
+		current = current->next;
 		/* code */
 	}
 	return size;
 }
 
-char **from_list_to_arr(t_tlist *head){
+char **from_list_to_arr(t_tlist *head)
+{
 
 	int i = 0;
 	int size;
 	size = list_size(head);
 	char **arr;
 	t_tlist *current = head;
-	arr = malloc(size*sizeof(char*)+1);
+	arr = malloc(size * sizeof(char *) + 1);
 	while (current != NULL)
 	{
 		// arr[i]=malloc()
 		// /* code */
 		// i++;
-		arr[i]=ft_strdup(current->str);
+		arr[i] = ft_strdup(current->str);
 		free(current->str);
 		// printf("*%s*\n",arr[i]);
 		i++;
 		current = current->next;
 	}
-	arr[i]=NULL;
-	
+	arr[i] = NULL;
+
 	return arr;
 }
 
@@ -430,37 +439,60 @@ char *expanded_q(t_shell *g_struct, char *str)
 	// char *test = malloc(500);
 	int checked = 0;
 
-	first = ft_substr(str, 0, pos(str, '$')-1);
+	first = ft_substr(str, 0, pos(str, '$') - 1); // malloced
 	// printf("f= %s\n",first);
-	later = ft_strchr(str, '$') +1 ;
+	later = ft_strchr(str, '$') + 1; // NM
+	char *rest;
+	rest = ft_strrchr(str, '"'); // NM
+	char *final;
 	// later = ft_substr(str,pos(str, '$'),pos(str, '\"')-1);
 	// printf("l= %s\n",later);
 
 	while (tmp != NULL) // ila mal9itoch dir fih NULL
 	{
 
-			// printf("%s\n", ft_strnstr(tmp->key,later,ft_strlen(later)-1));
+		// printf("%s\n", ft_strnstr(tmp->key,later,ft_strlen(later)-1));
 		// test=ft_strnstr(tmp->key,"USER\"",4);
 		// printf("%s\n",test);
-		if (ft_strncmp(tmp->key, later, pos(later,'\"')) == 0)
+		if (ft_strncmp(tmp->key, later, pos(later, '\"')) == 0)
 		{
 			expantion = ft_strdup(tmp->value);
-			return (ft_strjoingnl(first, expantion));
+			final = recombinator(first, expantion, rest);
+			// free(first);
+			// free(expantion);
+			// free(rest);
+			free(str);
+			return (final);
 		}
 		checked++;
-		if (checked == g_struct->count) // anbdl random i'm here , fix the position $path katmchi
+		if (checked == g_struct->count){ // anbdl random i'm here , fix the position $path katmchi
 			expantion = ft_strdup("");
+		final = recombinator(first, expantion, rest);
+		}
+
 		/* code */
 		tmp = tmp->next;
 	}
-	return ft_strjoingnl(first, expantion);
+			free(str);
+
+	return final;
 }
 // "$USER"
-
-char	*ft_strchrtill(const char *s, int c,int len)
+char *recombinator(char *first, char *later, char *rest)
 {
-		size_t	a;
-	char	*mbdla;
+	char *result;
+
+	result = ft_strjoingnl(first, later);
+	result = ft_strjoingnl(result, rest);
+
+	free(later);
+	// free(rest);
+	return result;
+}
+char *ft_strchrtill(const char *s, int c, int len)
+{
+	size_t a;
+	char *mbdla;
 
 	a = 0;
 	mbdla = (char *)s;
@@ -476,61 +508,65 @@ char	*ft_strchrtill(const char *s, int c,int len)
 }
 char *strdelch(char *str, char ch)
 {
-    char *current = str;
-    char *tail = str;
+	char *current = str;
+	char *tail = str;
 
-    while(*tail)
-    {
-        if(*tail == ch)
-        {
-            tail++;
-        }
-        else
-        {
-            *current++ = *tail++;
-        }
-    }
-    *current = 0;
-    return str;
+	while (*tail)
+	{
+		if (*tail == ch)
+		{
+			tail++;
+		}
+		else
+		{
+			*current++ = *tail++;
+		}
+	}
+	*current = 0;
+	return str;
 }
 
-bool quotes_errors(char *str){
+bool quotes_errors(char *str)
+{
 
-	int i =0;
+	int i = 0;
 	bool s_q = true;
 	bool d_q = true;
 
 	while (str[i])
 	{
-		if (str[i]== '\"' && s_q == true)
+		if (str[i] == '\"' && s_q == true)
 		{
 			d_q = !d_q;
 			/* code */
 		}
-		else if (str[i]== '\'' && d_q == true){
+		else if (str[i] == '\'' && d_q == true)
+		{
 			s_q = !s_q;
 		}
 
 		i++;
 	}
-	return(s_q && d_q);
+	return (s_q && d_q);
 }
-bool list_check(t_tlist *head){
+bool list_check(t_tlist *head)
+{
 
 	t_tlist *current = head;
 	while (current != NULL)
 	{
-		if (quotes_errors(current->str)== false)
+		if (quotes_errors(current->str) == false)
 			return (false);
-			
+
 		// if ()
-		current=current->next;
+		current = current->next;
 		/* code */
 	}
 	return true;
 }
 
-char *delete_pos(char *str, int pos){
+char *delete_pos(char *str, int pos)
+{
 
 	int i = 0;
 	int j = 0;
@@ -546,12 +582,12 @@ char *delete_pos(char *str, int pos){
 			// continue;
 			/* code */
 		}
-		result[j]=str[i];
+		result[j] = str[i];
 		j++;
 		i++;
 		/* code */
 	}
-	result[j]='\0';
+	result[j] = '\0';
 	free(str);
-	return(result);
+	return (result);
 }
