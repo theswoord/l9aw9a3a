@@ -185,4 +185,5 @@ void free_tokens(t_tlist *head);
 void free_env(t_var_t *head);
 bool quotes_errors(char *str);
 bool list_check(t_tlist *head);
+char *delete_pos(char *str, int pos);
 #endif

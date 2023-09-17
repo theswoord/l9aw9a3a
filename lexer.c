@@ -90,6 +90,10 @@ void tokenisation(char *str, t_shell *g_struct,char** env)
 
 	// execute_pipelines(command_list,env);
 	// execute_pipelines()
+	// char *test;
+	// test = ft_strdup("3ayn 3owda");
+	// test = delete_pos(test,pos(test,' '));
+	// printf("%s\n",test);
 	// add_env_var(&g_struct.envlist,g_struct.tlist->str,"99");
 	// add_env_var(&g_struct.envlist,"nakbst","500 mlyoun");
 	// add_env_var(&g_struct.envlist,"nabilhgdfgmlmimi","500 mlyoun");
@@ -430,7 +434,7 @@ char *expanded_q(t_shell *g_struct, char *str)
 	// printf("f= %s\n",first);
 	later = ft_strchr(str, '$') +1 ;
 	// later = ft_substr(str,pos(str, '$'),pos(str, '\"')-1);
-	printf("l= %s\n",later);
+	// printf("l= %s\n",later);
 
 	while (tmp != NULL) // ila mal9itoch dir fih NULL
 	{
@@ -524,4 +528,30 @@ bool list_check(t_tlist *head){
 		/* code */
 	}
 	return true;
+}
+
+char *delete_pos(char *str, int pos){
+
+	int i = 0;
+	int j = 0;
+	char *result;
+	result = malloc(ft_strlen(str));
+
+	while (str[i])
+	{
+		// printf(".%s.\n",result);
+		if (j == pos)
+		{
+			i++;
+			// continue;
+			/* code */
+		}
+		result[j]=str[i];
+		j++;
+		i++;
+		/* code */
+	}
+	result[j]='\0';
+	free(str);
+	return(result);
 }

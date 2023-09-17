@@ -22,10 +22,10 @@ SUBDIRS = gnl printf libft
 all : libs ${NAME}
 
 ${NAME} : ${obj}
-	${CC} ${readflag} ${CFLAGS}  ${readinc} ${obj} ${tarzan } -lreadline $(libraries) -o $(NAME)
+	${CC} ${readflag} ${CFLAGS}  ${readinc} ${obj} -lreadline $(libraries) -o $(NAME)
 
 %.o: %.c
-	${CC} -c $< -o $@
+	${CC} -I ~/.brew/opt/readline/include/ -c $< -o $@
 
 libs: $(SUBDIRS)
 	# @echo "\033[1;32mmaking the libs ...\033[0m"
