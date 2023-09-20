@@ -49,45 +49,31 @@ void execute_commands(char *command, char **args, char **env)
 {
     char *path;
     char *executable_path;
-    pid_t pid;
 
-    pid = fork();
-    if (pid == 0)
-    {
-        if ((command[0] == '.' && command[1] == '/') || command[0] == '/')
-            executable_path = ft_strdup(command);
-        else
-        {
-            path = getenv("PATH");
-            executable_path = find_executable_command(command, path);
-        }
-        if (executable_path)
-        {
-            // add args +1 if you want to test the program with command arguments.
-            if (access(executable_path, X_OK) == 0)
-            {
-                execve(executable_path, args, env);
-                free(executable_path);
-            }
-        }
-        else
-            printf("bash: command not found: %s\n", command);
-    }
-    else if (pid > 0)
-    {
-        waitpid(pid, NULL, 0);
-        return ;
-    }
+    if ((command[0] == '.' && command[1] == '/') || command[0] == '/')
+        executable_path = ft_strdup(command);
     else
     {
-        perror("fork");
-        exit(1);
+        path = getenv("PATH");
+        executable_path = find_executable_command(command, path);
     }
+    if (executable_path)
+    {
+        // add args +1 if you want to test the program with command arguments.
+        if (access(executable_path, X_OK) == 0)
+        {
+            execve(executable_path, args, env);
+            free(executable_path);
+        }
+    }
+    else
+        printf("bash: command not found: %s\n", command);
+    return;
 }
 
 // int main(int ac, char **av, char **env)
 // {
 //     if (av[1])
-//         execute_commands(av[1], av, env);
+//         execute_commands(av[1], av + 1, env);
 //     return (0);
 // }

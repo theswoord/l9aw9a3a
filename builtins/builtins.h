@@ -37,6 +37,21 @@ typedef struct
     int num_commands;
 } array_of_commands;
 
+
+typedef struct s_redi_node
+{
+    char *file;
+    char *type;
+    struct s_redi_node *next;
+} t_redi_node;
+
+typedef struct s_node
+{
+    char **args;
+    t_redi_node *redirect;
+    struct s_node *next;
+} t_node;
+
 // extern t_var_t *g_struct;
 
 int ft_charfind(const char *str, char c);
@@ -53,7 +68,8 @@ size_t ft_strlen(const char *str);
 // void	initialize_environment(t_var_t **head, char **env);
 // void add_env_var(t_var_t **head, char *key, char *value);
 void execute_commands(char *command, char **args, char **env);
-void execute_pipelines(array_of_commands *command_list, char **env);
+// void execute_pipelines(array_of_commands *command_list, char **env);
+void execute_pipelines(t_node *command_node, char **env);
 // void cd_command(int ac, char **av);
 void echo_command(int ac, char **av);
 // void ft_env(t_shell *g_struct, int ac, char **av);

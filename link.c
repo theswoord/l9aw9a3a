@@ -36,3 +36,8 @@ void linkwithex(char **tableau){
     // freeTree(root);
     
 }
+// int start_builtins(char *str, t_shell *g_struct , char **env){
+
+//     if(ft_strcmp(str,"echo"))
+    
+// }

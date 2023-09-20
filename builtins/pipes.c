@@ -1,116 +1,140 @@
 #include "builtins.h"
 
-void execute_pipelines(array_of_commands *command_list, char **env)
+void execute_pipelines(t_node *command_node, char **env)
 {
 	int i;
-	int j;
-	int num_pipes;
-	int pipes[command_list->num_commands - 1][2];
+	int temp_fd;
+	int pipes[2];
+	t_node *current_node;
 
-	num_pipes = command_list->num_commands - 1;
-	i = -1;
-	while (++i < num_pipes)
-	{
-		if (pipe(pipes[i]) == -1)
-		{
-			printf("pipe error has occured!\n");
-			return;
-		}
-	}
+	if (command_node == NULL)
+		return;
 	i = 0;
-	while (i < num_pipes + 1)
+	current_node = command_node;
+	temp_fd = -1;
+	while (current_node)
 	{
+		// printf("%s\n", current_node->args[0]);
+		pipe(pipes);
 		pid_t pid = fork();
 		if (pid == 0)
 		{
-			if (i != 0)
+			if (temp_fd != -1)
 			{
-				close(pipes[i - 1][1]);
-				dup2(pipes[i - 1][0], STDIN_FILENO);
+				dup2(temp_fd, STDIN_FILENO);
+				close(temp_fd);
 			}
-
-			if (i != num_pipes)
-			{
-				close(pipes[i][0]);
-				dup2(pipes[i][1], STDOUT_FILENO);
-			}
-
-			execute_commands(command_list->commands[i].command, command_list->commands[i].args, env);
-			perror(" error");
-			if (i != 0)
-				close(pipes[i - 1][0]);
-			if (i != num_pipes)
-				close(pipes[i][1]);
+			if (current_node->next != NULL)
+				dup2(pipes[1], STDOUT_FILENO);
+			close(pipes[0]);
+			close(pipes[1]);
+			execute_commands(current_node->args[0], current_node->args, env);
 			exit(0);
 		}
-		else if (pid > 0)
-		{
-			if (i != 0)
-			{
-				close(pipes[i - 1][0]);
-				close(pipes[i - 1][1]);
-			}
-			i++;
-		}
-		else
-		{
-			perror("fork error");
-			exit(1);
-		}
+		if (temp_fd != -1)
+			close(temp_fd);
+		temp_fd = pipes[0];
+		close(pipes[1]);
+		current_node = current_node->next;
 	}
-	j = -1;
-	while (++j < num_pipes)
-	{
-		close(pipes[j][0]);
-		close(pipes[j][1]);
-	}
-	j = -1;
-	while (++j < num_pipes + 1)
-	{
-		// printf("pepepeppee\n");
-		if (wait(NULL) == -1)
-			perror("waitpid error");
-	}
-	j = -1;
-	while (++j < num_pipes + 1)
-		free(command_list->commands[j].args);
-	free(command_list->commands);
-	free(command_list);
+	close(temp_fd);
+	current_node = command_node;
+	while (wait(NULL) > 0) {};
+	// free :D
 	return;
+}
+
+t_node *new_command_node(t_node **list, char **args)
+{
+	t_node *node;
+	int i;
+	t_node *current;
+
+	node = (t_node *)malloc(sizeof(t_node));
+	if (node == NULL)
+		return (NULL);
+	node->args = args;
+	node->redirect = NULL;
+	node->next = NULL;
+
+	if (*list == NULL)
+		*list = node;
+	else
+	{
+		current = *list;
+		while (current->next != NULL)
+			current = current->next;
+		current->next = node;
+	}
+	return (node);
+}
+
+t_node	*new_tiz(char **arr, t_redi_node *redirect)
+{
+	t_node	*new;
+
+	new = malloc(sizeof(t_node));
+	new->args = arr;
+	new->redirect = redirect;
+	new->next = NULL;
+	return (new);
+}
+
+void	head_tiz(t_node **node, t_node *new)
+{
+	t_node	*head;
+
+	if (!*node)
+	{
+		*node = new;
+		return ;
+	}
+	head = *node;
+	while (head->next)
+		 head = head->next;
+	head->next = new;
 }
 
 // int main(int ac, char **av, char **env)
 // {
-// 	array_of_commands *command_list;
+// 	t_node *command_node;
 
-// 	command_list = malloc(sizeof(array_of_commands));
-// 	command_list->num_commands = 4;
-// 	command_list->commands = (command *)malloc(command_list->num_commands * sizeof(command));
+// 	command_node = NULL;
+	
+// 	char *args[] = {"ls", "-l", NULL};
+// 	char *args1[] = {"sort", NULL};
+// 	char *args2[] = {"cat", "-e", NULL};
 
-// 	command_list->commands[0].command = "ls";
-// 	command_list->commands[0].args = (char **)malloc(2 * sizeof(char *));
-// 	command_list->commands[0].args[0] = "ls";
-// 	command_list->commands[0].args[1] = "-l";
-// 	command_list->commands[0].args[2] = NULL;
+// 	// command_node.
+// 	// char *args[] = {"ls", "-l", NULL};
+// 	// char *args1[] = {"wc", "-l", NULL};
+// 	// char *args2[] = {"cat", "-e", NULL};
+// 	// you can pass the linked list directly or get the node from the return value
+// 	// t_node *command1 = new_command_node(&command_node, args);
 
-// 	command_list->commands[1].command = "grep";
-// 	command_list->commands[1].args = (char **)malloc(2 * sizeof(char *));
-// 	command_list->commands[1].args[0] = "grep";
-// 	command_list->commands[1].args[1] = "env";
-// 	command_list->commands[1].args[2] = NULL;
+// 	// char *args2[] = {"grep", "env", NULL};
+// 	// t_node *command2 = new_command_node(&command_node, args2);
 
-// 	command_list->commands[2].command = "sort";
-// 	command_list->commands[2].args = (char **)malloc(2 * sizeof(char *));
-// 	command_list->commands[2].args[0] = "sort";
-// 	command_list->commands[2].args[1] = NULL;
+// 	// char *args3[] = {"sort", NULL};
+// 	// new_command_node(&command_node, args3);
 
-// 	command_list->commands[3].command = "wc";
-// 	command_list->commands[3].args = (char **)malloc(3 * sizeof(char *));
-// 	command_list->commands[3].args[0] = "wc";
-// 	command_list->commands[3].args[1] = "-l";
-// 	command_list->commands[3].args[2] = NULL;
+// 	// char *args4[] = {"wc", "-w", NULL};
+// 	// new_command_node(&command_node, args4);
 
-// 	execute_pipelines(command_list, env);
+// 	// char *args5[] = {"cat", "-e", NULL};
+// 	// new_command_node(&command_node, args5);
+// 	// command_node->*args[0]={"ls", "-l", NULL}
+
+// 	 t_redi_node	*redirect = NULL;
+// 	head_tiz(&command_node, new_tiz(args, redirect));
+// 	printf("%s\n",command_node->args[0]);
+// 	head_tiz(&command_node, new_tiz(args1, redirect));
+// 	printf("%s\n",command_node->args[0]);
+// 	head_tiz(&command_node, new_tiz(args2, redirect));
+// 	printf("%s\n",command_node->args[0]);
+
+// 	// f declaration dyal linked list khod li bghiti, ya ima head_tiz w new_tiz wla rir new_command_node
+// 	execute_pipelines(command_node, env);
 
 // 	return (0);
 // }

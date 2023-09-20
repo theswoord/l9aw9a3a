@@ -20,13 +20,22 @@ void tokenisation(char *str, t_shell *g_struct, char **env)
 	modify_env(g_struct, g_struct->tlist); // lmochkil ila kan chi 7aja wst param it's not it
 	// printf("_%d_\n", g_struct->count);
 	expander_init(g_struct, g_struct->tlist, NULL);
+
+	if (command_id(g_struct->tlist)== PIPE)
+	{
+		pipes_divider(g_struct->tlist);
+		/* code */
+	}
+	
 	// char *test[4];
 	// test[0]="ls";
 	// test[1]="-l";
 	// test[2]="-a";
 	// test[3]=NULL;
 	// print_tokens(g_struct->tlist);
+
 	// hadchi khdam
+
 	// char **hhhh; // hadi kmala
 	// hhhh = from_list_to_arr(g_struct->tlist); // this arr howa li aydkhl l function
 
@@ -102,7 +111,7 @@ void tokenisation(char *str, t_shell *g_struct, char **env)
 	if (list_check(g_struct->tlist))
 	{
 		qidentify(g_struct, g_struct->tlist); // here nonini nonini moraja3a H rj3o a nabil
-		print_tokens(g_struct->tlist);
+		// print_tokens(g_struct->tlist);
 	}
 	else
 		printf("syntax error \n");
@@ -116,7 +125,7 @@ void tokenisation(char *str, t_shell *g_struct, char **env)
 
 	// execute_commands(hhhh[0],hhhh,env); // hadi hya ki ktexecuti
 
-	free_tokens(g_struct->tlist);
+	// free_tokens(g_struct->tlist); // hadi mzyana ghir ila knt ankhdm b array it needs to go
 	// free(str);
 	// if (ft_strcmp(str, "env") == 0)
 	// print_env(g_struct->envlist, 0);
@@ -142,6 +151,62 @@ void tokenisation(char *str, t_shell *g_struct, char **env)
 	// 	/* code */
 	// 	current = g_struct.tlist->next;
 	// }
+}
+int command_id(t_tlist *head)
+{
+	t_tlist *current = head;
+
+	while (current != NULL)
+	{
+		/* code */
+		if(current->value == PIPE)
+		return PIPE;
+		if(current->value == REDIW)
+		return REDIW;
+		if(current->value == REDIR)
+		return REDIR;
+		if(current->value == APPEND)
+		return APPEND;
+
+		current = current->next;
+	}
+	
+	return 99;
+}
+int nodes_count(t_tlist *head){
+
+	static t_tlist *current; // statick split , using pipies on list
+	current = head;
+	int nodes = 0;
+	while (current != NULL)
+	{
+		/* code */
+		nodes++;
+		if (current->value == PIPE)
+		{
+			return nodes;
+			/* code */
+		}
+		
+		current = current->next;
+	}
+	
+}
+
+char** pipes_divider(t_tlist *head){
+
+	t_tlist *current = head;
+	char **out;
+
+	while (current != NULL) // hh
+	{
+
+		/* code */
+		
+
+		current = current->next;
+	}
+	
 }
 void qidentify(t_shell *g_struct, t_tlist *token)
 {
