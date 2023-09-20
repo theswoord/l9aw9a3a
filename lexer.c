@@ -173,10 +173,10 @@ int command_id(t_tlist *head)
 	
 	return 99;
 }
-int nodes_count(t_tlist *head){
+int nodes_count(t_tlist **head){
 
 	static t_tlist *current; // statick split , using pipies on list
-	current = head;
+	current = *head;
 	int nodes = 0;
 	while (current != NULL)
 	{
@@ -184,6 +184,7 @@ int nodes_count(t_tlist *head){
 		nodes++;
 		if (current->value == PIPE)
 		{
+			current = current->next;
 			return nodes;
 			/* code */
 		}
@@ -193,19 +194,22 @@ int nodes_count(t_tlist *head){
 	
 }
 
-char** pipes_divider(t_tlist *head){
+char** pipes_divider(t_tlist *head){ // it needs to show 3 3 2 
 
 	t_tlist *current = head;
 	char **out;
 
-	while (current != NULL) // hh
-	{
+		printf("%d\n",nodes_count(&head));
+		printf("%d\n",nodes_count(&head));
+		printf("%d\n",nodes_count(&head));
 
-		/* code */
+	// while (current != NULL) // hh
+	// {
+	// 	/* code */
 		
 
-		current = current->next;
-	}
+	// 	current = current->next;
+	// }
 	
 }
 void qidentify(t_shell *g_struct, t_tlist *token)
