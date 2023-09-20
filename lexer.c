@@ -111,7 +111,7 @@ void tokenisation(char *str, t_shell *g_struct, char **env)
 	if (list_check(g_struct->tlist))
 	{
 		qidentify(g_struct, g_struct->tlist); // here nonini nonini moraja3a H rj3o a nabil
-		// print_tokens(g_struct->tlist);
+		print_tokens(g_struct->tlist);
 	}
 	else
 		printf("syntax error \n");
@@ -212,6 +212,41 @@ char** pipes_divider(t_tlist *head){ // it needs to show 3 3 2
 	// }
 	
 }
+char *quotes_moncef(char *str)
+{
+
+    int i = 0;
+	int j = 0;
+    bool s_q = true;
+    bool d_q = true;
+	char *result;
+	result = ft_calloc(ft_strlen(str)-1,1);
+    while (str[i])
+    {
+        if (str[i] == '\"' && s_q == true)
+        {
+            d_q = !d_q;
+			i++;
+			// check = true;
+            /* code */
+        }
+        else if (str[i] == '\'' && d_q == true)
+        {
+            s_q = !s_q;
+			i++;
+			// check = true;
+        }
+        
+		
+		result[j]=str[i];
+		j++;
+        i++;
+		printf("%d %d %s\n",i,j,result);
+    }
+
+	free(str);
+    return (result);
+}
 void qidentify(t_shell *g_struct, t_tlist *token)
 {
 
@@ -222,11 +257,10 @@ void qidentify(t_shell *g_struct, t_tlist *token)
 		// printf("+%d \n",ft_charfind(tmp->str,'\"'));
 		if (tmp->value == QUOTES)
 		{
-
 			if (pos(tmp->str, '\'') != -1) // had l3jb makhdamch
 			{
 				// only remove
-				tmp->str = strdelch(tmp->str, '\'');
+				// tmp->str = strdelch(tmp->str, '\'');
 				printf("ided\n");
 				// ft_memmove(&tmp->str[0], &tmp->str[0 + 1], ft_strlen(tmp->str) - 1);
 				// if (ft_strlen(tmp->str) < 2) {
@@ -246,19 +280,16 @@ void qidentify(t_shell *g_struct, t_tlist *token)
 					// printf("b4 = |%s\n",tmp->str);
 					// free(tmp->str);
 					tmp->str = expanded_q(g_struct, tmp->str);
-					tmp->str = delete_pos(tmp->str,pos(tmp->str,'\"'));
 					// printf("a4 = |%s\n",tmp->str);
 					/* code */
-				}
-				else{
-					tmp->str = delete_pos(tmp->str,pos(tmp->str,'\"'));
-					tmp->str = delete_pos(tmp->str,pos(tmp->str,'\"'));
 				}
 
 				// remove quotes hh
 				//  find $ then replace and remove
 				/* code */
 			}
+			// printf("|%s|\n",tmp->str);
+			tmp->str = quotes_moncef(tmp->str);
 		}
 
 		tmp = tmp->next;
@@ -508,8 +539,8 @@ char *expanded_q(t_shell *g_struct, char *str)
 	// char *test = malloc(500);
 	int checked = 0;
 
-	first = ft_substr(str, 0, pos(str, '$') - 1); // malloced
-	// printf("f= %s\n",first);
+	first = ft_substr(str, 0, pos(str, '$')); // malloced
+	printf("f= %s\n",first);
 	later = ft_strchr(str, '$') + 1; // NM
 	char *rest;
 	rest = ft_strrchr(str, '"'); // NM
@@ -523,7 +554,7 @@ char *expanded_q(t_shell *g_struct, char *str)
 		// printf("%s\n", ft_strnstr(tmp->key,later,ft_strlen(later)-1));
 		// test=ft_strnstr(tmp->key,"USER\"",4);
 		// printf("%s\n",test);
-		if (ft_strncmp(tmp->key, later, pos(later, '\"')) == 0)
+		if (ft_strncmp(tmp->key, later, pos(later, ' ')) == 0)
 		{
 			expantion = ft_strdup(tmp->value);
 			final = recombinator(first, expantion, rest);

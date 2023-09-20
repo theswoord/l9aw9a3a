@@ -189,4 +189,6 @@ char *delete_pos(char *str, int pos);
 char *recombinator(char *first , char *later, char *rest);
 int command_id(t_tlist *head);
 char** pipes_divider(t_tlist *head);
+char *quotes_moncef(char *str);
+
 #endif
