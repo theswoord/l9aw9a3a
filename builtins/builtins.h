@@ -38,19 +38,7 @@ typedef struct
 } array_of_commands;
 
 
-typedef struct s_redi_node
-{
-    char *file;
-    char *type;
-    struct s_redi_node *next;
-} t_redi_node;
 
-typedef struct s_node
-{
-    char **args;
-    t_redi_node *redirect;
-    struct s_node *next;
-} t_node;
 
 // extern t_var_t *g_struct;
 

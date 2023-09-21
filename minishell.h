@@ -2,7 +2,7 @@
 #define MINISHELL_H
 #include "./gnl/get_next_line.h"
 #include "./libft/libft.h"
-#include "./builtins/builtins.h"
+// #include "./builtins/builtins.h"
 #include <readline/history.h>
 #include <readline/readline.h>
 #include <signal.h>
@@ -29,6 +29,20 @@ QUOTES,
 SQUOTE,
 DQUOTE,
 }e_tokenum;
+
+typedef struct s_redi_node
+{
+    char *file;
+    char *type;
+    struct s_redi_node *next;
+} t_redi_node;
+
+typedef struct s_node
+{
+    char **args;
+    t_redi_node *redirect;
+    struct s_node *next;
+} t_node;
 
  typedef struct env_vars
 {
@@ -189,7 +203,7 @@ bool list_check(t_tlist *head);
 char *delete_pos(char *str, int pos);
 char *recombinator(char *first , char *later, char *rest);
 int command_id(t_tlist *head);
-char** pipes_divider(t_tlist *head);
+char** pipes_divider(t_shell *g_struct);
 char *quotes_moncef(char *str);
 
 #endif

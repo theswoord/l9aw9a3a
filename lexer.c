@@ -23,7 +23,7 @@ void tokenisation(char *str, t_shell *g_struct, char **env)
 
 	if (command_id(g_struct->tlist)== PIPE)
 	{
-		pipes_divider(g_struct->tlist);
+		pipes_divider(g_struct);
 		/* code */
 	}
 	
@@ -210,44 +210,63 @@ while (current != NULL)
 return count;
 
 }
-// void pipes_list(t_tlist *head, t_node **){
+// void pipes_list(t_shell *g_struct,int count){ fix this it's ez 9lb f dftark uncomment
 
-// }
-// char** pipes_divider(t_tlist *head){ // it needs to show 3 3 2 anpushi to save
-
-// 	static t_tlist *current;
-
-// 	current = head;
-// 	char **out;
-// 	int i = 0;
-// 	t_node *commandnode;
-
-// 	// commandnode->args
-// 	// out = (char **)malloc(element_counter(head,PIPE)*sizeof(char *)+1);
-
-// 	while (i < element_counter(head,PIPE)+1)
+// int i = 0;
+// int j = 0;
+// t_tlist *current = g_struct->tlist;
+// // while (i < count)
+// // {
+// 	while (current->queue < count)
 // 	{
-// 	commandnode = malloc(sizeof(t_node*));
-		
+// 		/* code */
+// 		g_struct->pipes_list->args[j] = current->str;
 
-// 		i++;
+// 		current->next;
 // 	}
 	
-// 	out[i]
-// 	// out = 
-// 		// printf("%d\n",nodes_count(&current));
-// 		// printf("%d\n",nodes_count(&current));
-// 		// printf("%d\n",nodes_count(&current));
+// // g_struct->pipes_list->args[i] = g_struct->tlist->str; 
+// // i++;
+// 	/* code */
+// // }
 
-// 	// while (current != NULL) // hh
-// 	// {
-// 	// 	/* code */
+
+// }
+char** pipes_divider(t_shell *g_struct){ // it needs to show 3 3 2 
+
+	static t_tlist *current;
+
+	current = g_struct->tlist;
+	char **out;
+	int i = 0;
+	// t_node *commandnode;
+
+	// commandnode->args
+	// out = (char **)malloc(element_counter(head,PIPE)*sizeof(char *)+1);
+
+	while (i < element_counter(g_struct->tlist,PIPE)+1)
+	{
+	// commandnode = malloc(sizeof(t_node*));
+		pipes_list(g_struct,nodes_count(&current));
+
+		i++;
+	}
+	
+	// out[i]
+	// out = 
+		// printf("%d\n",nodes_count(&current));
+		// printf("%d\n",nodes_count(&current));
+		// printf("%d\n",nodes_count(&current));
+
+	// while (current != NULL) // hh
+	// {
+	// 	/* code */
 		
 
-// 	// 	current = current->next;
-// 	// }
-// 	return out;
-// }
+	// 	current = current->next;
+	// }
+	return out;
+}
 char *quotes_moncef(char *str)
 {
 
