@@ -95,46 +95,47 @@ void	head_tiz(t_node **node, t_node *new)
 	head->next = new;
 }
 
-// int main(int ac, char **av, char **env)
-// {
-// 	t_node *command_node;
+int main(int ac, char **av, char **env)
+{
+	t_node *command_node;
 
-// 	command_node = NULL;
+	command_node = NULL;
 	
-// 	char *args[] = {"ls", "-l", NULL};
-// 	char *args1[] = {"sort", NULL};
-// 	char *args2[] = {"cat", "-e", NULL};
+	char *args[] = {"ls", "-l", NULL};
+	char *args1[] = {"sort", NULL};
+	char *args2[] = {"cat", "-e", NULL};
 
-// 	// command_node.
-// 	// char *args[] = {"ls", "-l", NULL};
-// 	// char *args1[] = {"wc", "-l", NULL};
-// 	// char *args2[] = {"cat", "-e", NULL};
-// 	// you can pass the linked list directly or get the node from the return value
-// 	// t_node *command1 = new_command_node(&command_node, args);
+	// command_node.
+	// command_node.
+	// char *args[] = {"ls", "-l", NULL};
+	// char *args1[] = {"wc", "-l", NULL};
+	// char *args2[] = {"cat", "-e", NULL};
+	// you can pass the linked list directly or get the node from the return value
+	// t_node *command1 = new_command_node(&command_node, args);
 
-// 	// char *args2[] = {"grep", "env", NULL};
-// 	// t_node *command2 = new_command_node(&command_node, args2);
+	// char *args2[] = {"grep", "env", NULL};
+	// t_node *command2 = new_command_node(&command_node, args2);
 
-// 	// char *args3[] = {"sort", NULL};
-// 	// new_command_node(&command_node, args3);
+	// char *args3[] = {"sort", NULL};
+	// new_command_node(&command_node, args3);
 
-// 	// char *args4[] = {"wc", "-w", NULL};
-// 	// new_command_node(&command_node, args4);
+	// char *args4[] = {"wc", "-w", NULL};
+	// new_command_node(&command_node, args4);
 
-// 	// char *args5[] = {"cat", "-e", NULL};
-// 	// new_command_node(&command_node, args5);
-// 	// command_node->*args[0]={"ls", "-l", NULL}
+	// char *args5[] = {"cat", "-e", NULL};
+	// new_command_node(&command_node, args5);
+	// command_node->*args[0]={"ls", "-l", NULL}
 
-// 	 t_redi_node	*redirect = NULL;
-// 	head_tiz(&command_node, new_tiz(args, redirect));
-// 	printf("%s\n",command_node->args[0]);
-// 	head_tiz(&command_node, new_tiz(args1, redirect));
-// 	printf("%s\n",command_node->args[0]);
-// 	head_tiz(&command_node, new_tiz(args2, redirect));
-// 	printf("%s\n",command_node->args[0]);
+	 t_redi_node	*redirect = NULL;
+	head_tiz(&command_node, new_tiz(args, redirect));
+	printf("%s\n",command_node->args[0]);
+	head_tiz(&command_node, new_tiz(args1, redirect));
+	printf("%s\n",command_node->args[0]);
+	head_tiz(&command_node, new_tiz(args2, redirect));
+	printf("%s\n",command_node->args[0]);
 
-// 	// f declaration dyal linked list khod li bghiti, ya ima head_tiz w new_tiz wla rir new_command_node
-// 	execute_pipelines(command_node, env);
+	// f declaration dyal linked list khod li bghiti, ya ima head_tiz w new_tiz wla rir new_command_node
+	execute_pipelines(command_node, env);
 
-// 	return (0);
-// }
+	return (0);
+}

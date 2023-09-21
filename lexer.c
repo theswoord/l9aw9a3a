@@ -111,7 +111,7 @@ void tokenisation(char *str, t_shell *g_struct, char **env)
 	if (list_check(g_struct->tlist))
 	{
 		qidentify(g_struct, g_struct->tlist); // here nonini nonini moraja3a H rj3o a nabil
-		print_tokens(g_struct->tlist);
+		// print_tokens(g_struct->tlist);
 	}
 	else
 		printf("syntax error \n");
@@ -173,45 +173,81 @@ int command_id(t_tlist *head)
 	
 	return 99;
 }
-int nodes_count(t_tlist **head){
+int nodes_count(t_tlist **current) {
+    int nodes = 0;
+    
+    while (*current != NULL) {
+        
+        if ((*current)->value == PIPE) {
+            (*current) = (*current)->next;
+            // printf("%s\n", (*current)->str);
+            return nodes;
+        }
+        nodes++;
+        
+        (*current) = (*current)->next;
+    }
+    
+    return nodes;
+}
+int element_counter(t_tlist * head , int what)
+{
+int count = 0;
+t_tlist *current = head;
 
-	static t_tlist *current; // statick split , using pipies on list
-	current = *head;
-	int nodes = 0;
-	while (current != NULL)
+while (current != NULL)
+{
+	/* code */
+	if (current->value == what)
 	{
+		count++;
 		/* code */
-		nodes++;
-		if (current->value == PIPE)
-		{
-			current = current->next;
-			return nodes;
-			/* code */
-		}
-		
-		current = current->next;
 	}
 	
+
+	current = current->next;
 }
+return count;
 
-char** pipes_divider(t_tlist *head){ // it needs to show 3 3 2 
+}
+// void pipes_list(t_tlist *head, t_node **){
 
-	t_tlist *current = head;
-	char **out;
+// }
+// char** pipes_divider(t_tlist *head){ // it needs to show 3 3 2 anpushi to save
 
-		printf("%d\n",nodes_count(&head));
-		printf("%d\n",nodes_count(&head));
-		printf("%d\n",nodes_count(&head));
+// 	static t_tlist *current;
 
-	// while (current != NULL) // hh
-	// {
-	// 	/* code */
+// 	current = head;
+// 	char **out;
+// 	int i = 0;
+// 	t_node *commandnode;
+
+// 	// commandnode->args
+// 	// out = (char **)malloc(element_counter(head,PIPE)*sizeof(char *)+1);
+
+// 	while (i < element_counter(head,PIPE)+1)
+// 	{
+// 	commandnode = malloc(sizeof(t_node*));
 		
 
-	// 	current = current->next;
-	// }
+// 		i++;
+// 	}
 	
-}
+// 	out[i]
+// 	// out = 
+// 		// printf("%d\n",nodes_count(&current));
+// 		// printf("%d\n",nodes_count(&current));
+// 		// printf("%d\n",nodes_count(&current));
+
+// 	// while (current != NULL) // hh
+// 	// {
+// 	// 	/* code */
+		
+
+// 	// 	current = current->next;
+// 	// }
+// 	return out;
+// }
 char *quotes_moncef(char *str)
 {
 
@@ -241,7 +277,7 @@ char *quotes_moncef(char *str)
 		result[j]=str[i];
 		j++;
         i++;
-		printf("%d %d %s\n",i,j,result);
+		// printf("%d %d %s\n",i,j,result);
     }
 
 	free(str);
@@ -279,7 +315,7 @@ void qidentify(t_shell *g_struct, t_tlist *token)
 				{
 					// printf("b4 = |%s\n",tmp->str);
 					// free(tmp->str);
-					tmp->str = expanded_q(g_struct, tmp->str);
+					tmp->str = expanded_q(g_struct, tmp->str); // try this first mn '"to $' dollars '$PATH $USER' mn $tal ' ' later mn ' ' tal " oula ghir tal "
 					// printf("a4 = |%s\n",tmp->str);
 					/* code */
 				}
@@ -289,7 +325,7 @@ void qidentify(t_shell *g_struct, t_tlist *token)
 				/* code */
 			}
 			// printf("|%s|\n",tmp->str);
-			tmp->str = quotes_moncef(tmp->str);
+			tmp->str = quotes_moncef(tmp->str); // NABIL FIX LEAKS O FIX
 		}
 
 		tmp = tmp->next;

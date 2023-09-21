@@ -82,6 +82,7 @@ typedef struct s_shell
 
     t_tlist *tlist;
     t_var_t *envlist;
+    t_node *pipes_list;
     e_tokenum tokenum;
     int count; // hada test o safi
     // int exit_status; //static int
