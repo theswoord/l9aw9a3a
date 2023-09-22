@@ -23,10 +23,15 @@ void tokenisation(char *str, t_shell *g_struct, char **env)
 
 	if (command_id(g_struct->tlist) == PIPE)
 	{
+		// printf("ha wa7d\n");
+
 		pipes_divider(g_struct);
+		// printf("ha jouj\n");
 		execute_pipelines(g_struct->pipes_list,env);
+		// printf("ha tlata\n");
+
 		// printf("hello\n");
-		free_pipes(g_struct->pipes_list);
+		// free_pipes(g_struct->pipes_list); // hadi fiha machakil n3l jdha
 		// free
 		/* code */
 	}
@@ -284,6 +289,7 @@ void pipes_divider(t_shell *g_struct)
 	current = g_struct->tlist;
 	char **out;
 	int i = 0;
+	int b ;
 	// t_node *commandnode;
 
 	// commandnode->args
@@ -291,7 +297,9 @@ void pipes_divider(t_shell *g_struct)
 	int a = element_counter(g_struct->tlist, PIPE);
 	while (i <  a + 1)
 	{
-		int b = nodes_count(&current);
+		 b = nodes_count(&current);
+		// printf("hada%d\n",b);
+	// printf("ha wa7d\n");
 		// printf("%d\n",b);
 		// commandnode = malloc(sizeof(t_node*));
 		// printf("dkhlt %d\n", i);

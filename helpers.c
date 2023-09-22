@@ -198,10 +198,11 @@ void free_pipes(t_node *head){
 	{
 		temp = current;
 		current = current->next;
-		// printf("%d\n",current->total);
+		// printf("%d\n",temp->total);
 		/* code */
-		free_tableau(temp->args,temp->total);
-		free(temp);
+		// free_tableau(temp->args,temp->total);
+		// free_tableauv2(temp->args);
+		// free(temp);
 
 
 	}
