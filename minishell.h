@@ -15,7 +15,7 @@
 // };
 
 typedef enum{
-
+ANTI0,
 PIPE,
 REDIW,
 REDIR,
@@ -33,7 +33,7 @@ DQUOTE,
 typedef struct s_redi_node
 {
     char *file;
-    char *type;
+    char type;
     struct s_redi_node *next;
 } t_redi_node;
 
@@ -42,6 +42,7 @@ typedef struct s_node
     char **args;
     t_redi_node *redirect;
     struct s_node *next;
+    int total;
 } t_node;
 
  typedef struct env_vars
@@ -203,7 +204,10 @@ bool list_check(t_tlist *head);
 char *delete_pos(char *str, int pos);
 char *recombinator(char *first , char *later, char *rest);
 int command_id(t_tlist *head);
-char** pipes_divider(t_shell *g_struct);
+void pipes_divider(t_shell *g_struct);
 char *quotes_moncef(char *str);
-
+t_tlist *pipes_copy(t_tlist *head, t_tlist *current);
+void free_tableauv2(char **tableau);
+void execute_pipelines(t_node *command_node, char **env);
+void free_pipes(t_node *head);
 #endif

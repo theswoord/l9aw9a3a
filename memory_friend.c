@@ -12,3 +12,15 @@ void free_tableau(char **tableau, int lines)
     }
     free(tableau);
 }
+void free_tableauv2(char **tableau)
+{
+
+    int i;
+    i = 0;
+    while (tableau[i])
+    {
+        free(tableau[i]);
+        i++;
+    }
+    free(tableau);
+}

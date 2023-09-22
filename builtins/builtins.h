@@ -1,6 +1,13 @@
 #ifndef BUILTINS_H
 #define BUILTINS_H
 
+
+#define OUT 1
+#define APPEAND 2
+#define IN 3
+#define HEREDOC 4
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -76,4 +83,15 @@ void ft_redirect(ParsedCommand *data);
 // void unset_var_env(t_var_t **head, char *key);
 void ft_unset(int ac, char **av);
 // void cd_command(int ac, char **av, char **env, t_shell *g_struct);
+void output_out(int fd);
+void output_in(int fd);
+void file_out(char *file);
+void file_append(char *file);
+void file_in(char *file);
+void redirections(t_redi_node *redirect_node);
+t_redi_node *new_redi(char *file, int type);
+t_node	*new_node(char **arr, t_redi_node *redirect);
+void add_redi(t_redi_node **node, t_redi_node *new);
+void	add_node(t_node **node, t_node *new);
+void execute_commands_pipes(char *command, char **args, char **env);
 #endif

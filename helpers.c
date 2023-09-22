@@ -187,6 +187,28 @@ void add_token_list(t_tlist **head, char **tab)
 	}
 	// printf("after = %d\n", i);
 }
+void free_pipes(t_node *head){
+
+	t_node *current;
+	t_node *temp;
+	current = head;
+		// printf("%d\n",current->total);
+
+	while (current != NULL)
+	{
+		temp = current;
+		current = current->next;
+		// printf("%d\n",current->total);
+		/* code */
+		free_tableau(temp->args,temp->total);
+		free(temp);
+
+
+	}
+	
+
+
+}
 void free_tokens(t_tlist *head)
 {
 
