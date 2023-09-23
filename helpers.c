@@ -197,16 +197,18 @@ void free_pipes(t_node *head){
 	while (current != NULL)
 	{
 		temp = current;
+		printf("%d\n",temp->total);
 		current = current->next;
-		// printf("%d\n",temp->total);
-		/* code */
 		// free_tableau(temp->args,temp->total);
-		// free_tableauv2(temp->args);
-		// free(temp);
+		/* code */
+		free_tableauv2(temp->args);
+		// free(temp->redirect);
+		// temp = NULL;
+		free(temp);
 
 
 	}
-	
+	free(current);
 
 
 }

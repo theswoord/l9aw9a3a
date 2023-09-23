@@ -28,10 +28,17 @@ void tokenisation(char *str, t_shell *g_struct, char **env)
 		pipes_divider(g_struct);
 		// printf("ha jouj\n");
 		execute_pipelines(g_struct->pipes_list,env);
+		// while (1)
+		// {
+		// 	/* code */
+		// }
+		
 		// printf("ha tlata\n");
 
 		// printf("hello\n");
-		// free_pipes(g_struct->pipes_list); // hadi fiha machakil n3l jdha
+		free_pipes(g_struct->pipes_list); // hadi fiha machakil n3l jdha
+	free_tokens(g_struct->tlist); // hadi mzyana ghir ila knt ankhdm b array it needs to go
+
 		// free
 		/* code */
 	}
@@ -134,7 +141,7 @@ void tokenisation(char *str, t_shell *g_struct, char **env)
 
 	// execute_commands(hhhh[0],hhhh,env); // hadi hya ki ktexecuti
 
-	free_tokens(g_struct->tlist); // hadi mzyana ghir ila knt ankhdm b array it needs to go
+	// free_tokens(g_struct->tlist); // hadi mzyana ghir ila knt ankhdm b array it needs to go
 	// free(str);
 	// if (ft_strcmp(str, "env") == 0)
 	// print_env(g_struct->envlist, 0);
@@ -247,39 +254,36 @@ int element_counter(t_tlist *head, int what)
 // }
 void pipes_list(t_shell *g_struct, int count)
 {
-	int i = 0;
-	int j = count;
-	t_tlist *current = g_struct->tlist;
-	t_node *node = (t_node *)malloc(sizeof(t_node));
-	// printf("3nd alloc %d\n",count);
-	node->next = NULL;
-	node->args = (char **)malloc((count + 1) * sizeof(char *));
+    t_node *node = (t_node *)ft_calloc(1,sizeof(t_node));
+    if (!node) return;  // Handle memory allocation error if needed
 
-	while (i < count )
-	{
-		node->args[i++] = ft_strdup(current->str);
-		node->total++;
-		current = current->next;
-	}
-	node->redirect =NULL;
-	node->args[i] = NULL;
-	// print_arr(node->args,count);
-	if (!g_struct->pipes_list){
-		g_struct->pipes_list = node;
-	}
-	else
-	{
-		t_node *last = g_struct->pipes_list;
-		while (last->next)
-			last = last->next;
-		last->next = node;
-	// printf("%s lol\n",node->args[0]);
-	}
-	// printf("waaaaa   %p\n", current);
-	if (current == NULL)
-		return;
+    node->next = NULL;
+    node->args = (char **)ft_calloc((count + 1) , sizeof(char *));
+    if (!node->args) {
+        free(node); // Handle memory allocation error if needed
+        return;
+    }
 
-	g_struct->tlist = current->next;
+    int i = 0;
+    t_tlist *current = g_struct->tlist;
+
+    while (i < count && current) {
+        node->args[i++] = ft_strdup(current->str);
+        current = current->next;
+    }
+
+    node->total = i;
+    node->redirect = NULL;
+    // node->args[i] = NULL;
+
+    if (!g_struct->pipes_list) g_struct->pipes_list = node;
+    else {
+        t_node *last = g_struct->pipes_list;
+        while (last->next) last = last->next;
+        last->next = node;
+    }
+
+    if (current) g_struct->tlist = current->next;
 }
 void pipes_divider(t_shell *g_struct)
 { // it needs to show 3 3 2
@@ -289,7 +293,7 @@ void pipes_divider(t_shell *g_struct)
 	current = g_struct->tlist;
 	char **out;
 	int i = 0;
-	int b ;
+	int b = 0;
 	// t_node *commandnode;
 
 	// commandnode->args
@@ -307,6 +311,7 @@ void pipes_divider(t_shell *g_struct)
 
 		i++;
 	}
+	
 	// prin
 	// printf("%p 111%s\n", g_struct->pipes_list, g_struct->pipes_list->args[0]);
 	// printf("%p 111%s\n", g_struct->pipes_list, g_struct->pipes_list->args[1]);
