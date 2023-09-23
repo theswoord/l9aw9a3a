@@ -36,7 +36,7 @@ void tokenisation(char *str, t_shell *g_struct, char **env)
 		// printf("ha tlata\n");
 
 		// printf("hello\n");
-		free_pipes(g_struct->pipes_list); // hadi fiha machakil n3l jdha
+		// free_pipes(g_struct->pipes_list); // hadi fiha machakil n3l jdha
 	free_tokens(g_struct->tlist); // hadi mzyana ghir ila knt ankhdm b array it needs to go
 
 		// free
