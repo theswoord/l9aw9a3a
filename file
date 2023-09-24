@@ -1,1 +1,122 @@
-echo
+==34191== Memcheck, a memory error detector
+==34191== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==34191== Using Valgrind-3.22.0.GIT-lbmacos and LibVEX; rerun with -h for copyright info
+==34191== Command: ./minishell
+==34191== Parent PID: 8240
+==34191== 
+--34191-- run: /usr/bin/dsymutil "./minishell"
+==34191== Conditional jump or move depends on uninitialised value(s)
+==34191==    at 0x1000024AE: pipes_list (in ./minishell)
+==34191==    by 0x100002245: pipes_divider (in ./minishell)
+==34191==    by 0x100001CED: tokenisation (in ./minishell)
+==34191==    by 0x100001C09: main (in ./minishell)
+==34191== 
+==34191== 
+==34191== HEAP SUMMARY:
+==34191==     in use at exit: 25,405 bytes in 299 blocks
+==34191==   total heap usage: 383 allocs, 84 frees, 31,139 bytes allocated
+==34191== 
+==34191== 12 bytes in 1 blocks are still reachable in loss record 1 of 51
+==34191==    at 0x100117B55: malloc (in /Users/nbouhali/.brew/Cellar/valgrind/HEAD-99f1028/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==34191==    by 0x10014BC44: xmalloc (in /Users/nbouhali/.brew/Cellar/readline/8.2.1/lib/libreadline.8.2.dylib)
+==34191==    by 0x100145F30: add_history (in /Users/nbouhali/.brew/Cellar/readline/8.2.1/lib/libreadline.8.2.dylib)
+==34191==    by 0x100001BF8: main (in ./minishell)
+==34191== 
+==34191== 24 bytes in 1 blocks are still reachable in loss record 7 of 51
+==34191==    at 0x100117B55: malloc (in /Users/nbouhali/.brew/Cellar/valgrind/HEAD-99f1028/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==34191==    by 0x10014BC44: xmalloc (in /Users/nbouhali/.brew/Cellar/readline/8.2.1/lib/libreadline.8.2.dylib)
+==34191==    by 0x100145D48: alloc_history_entry (in /Users/nbouhali/.brew/Cellar/readline/8.2.1/lib/libreadline.8.2.dylib)
+==34191==    by 0x100145F51: add_history (in /Users/nbouhali/.brew/Cellar/readline/8.2.1/lib/libreadline.8.2.dylib)
+==34191==    by 0x100001BF8: main (in ./minishell)
+==34191== 
+==34191== 26 bytes in 10 blocks are indirectly lost in loss record 9 of 51
+==34191==    at 0x100117B55: malloc (in /Users/nbouhali/.brew/Cellar/valgrind/HEAD-99f1028/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==34191==    by 0x100004667: ft_strdup (in ./minishell)
+==34191==    by 0x1000015B7: token_list (in ./minishell)
+==34191==    by 0x1000016B2: add_token_list (in ./minishell)
+==34191==    by 0x100001C4D: tokenisation (in ./minishell)
+==34191==    by 0x100001C09: main (in ./minishell)
+==34191== 
+==34191== 32 bytes in 1 blocks are still reachable in loss record 18 of 51
+==34191==    at 0x100117B55: malloc (in /Users/nbouhali/.brew/Cellar/valgrind/HEAD-99f1028/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==34191==    by 0x10014BC44: xmalloc (in /Users/nbouhali/.brew/Cellar/readline/8.2.1/lib/libreadline.8.2.dylib)
+==34191==    by 0x100145D61: alloc_history_entry (in /Users/nbouhali/.brew/Cellar/readline/8.2.1/lib/libreadline.8.2.dylib)
+==34191==    by 0x100145F51: add_history (in /Users/nbouhali/.brew/Cellar/readline/8.2.1/lib/libreadline.8.2.dylib)
+==34191==    by 0x100001BF8: main (in ./minishell)
+==34191== 
+==34191== 160 bytes in 5 blocks are still reachable in loss record 30 of 51
+==34191==    at 0x100117B55: malloc (in /Users/nbouhali/.brew/Cellar/valgrind/HEAD-99f1028/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==34191==    by 0x100005B78: create_node (in ./minishell)
+==34191==    by 0x1000058BE: allocate_memory (in ./minishell)
+==34191==    by 0x1000057EE: ft_malloc (in ./minishell)
+==34191==    by 0x1000023F9: pipes_list (in ./minishell)
+==34191==    by 0x100002245: pipes_divider (in ./minishell)
+==34191==    by 0x100001CED: tokenisation (in ./minishell)
+==34191==    by 0x100001C09: main (in ./minishell)
+==34191== 
+==34191== 160 bytes in 5 blocks are still reachable in loss record 31 of 51
+==34191==    at 0x100117B55: malloc (in /Users/nbouhali/.brew/Cellar/valgrind/HEAD-99f1028/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==34191==    by 0x100005B78: create_node (in ./minishell)
+==34191==    by 0x1000058BE: allocate_memory (in ./minishell)
+==34191==    by 0x1000057EE: ft_malloc (in ./minishell)
+==34191==    by 0x10000243C: pipes_list (in ./minishell)
+==34191==    by 0x100002245: pipes_divider (in ./minishell)
+==34191==    by 0x100001CED: tokenisation (in ./minishell)
+==34191==    by 0x100001C09: main (in ./minishell)
+==34191== 
+==34191== 288 bytes in 9 blocks are indirectly lost in loss record 37 of 51
+==34191==    at 0x100117B55: malloc (in /Users/nbouhali/.brew/Cellar/valgrind/HEAD-99f1028/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==34191==    by 0x1000015AA: token_list (in ./minishell)
+==34191==    by 0x1000016B2: add_token_list (in ./minishell)
+==34191==    by 0x100001C4D: tokenisation (in ./minishell)
+==34191==    by 0x100001C09: main (in ./minishell)
+==34191== 
+==34191== 346 (32 direct, 314 indirect) bytes in 1 blocks are definitely lost in loss record 39 of 51
+==34191==    at 0x100117B55: malloc (in /Users/nbouhali/.brew/Cellar/valgrind/HEAD-99f1028/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==34191==    by 0x1000015AA: token_list (in ./minishell)
+==34191==    by 0x1000016B2: add_token_list (in ./minishell)
+==34191==    by 0x100001C4D: tokenisation (in ./minishell)
+==34191==    by 0x100001C09: main (in ./minishell)
+==34191== 
+==34191== 464 bytes in 34 blocks are indirectly lost in loss record 40 of 51
+==34191==    at 0x100117B55: malloc (in /Users/nbouhali/.brew/Cellar/valgrind/HEAD-99f1028/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==34191==    by 0x100004667: ft_strdup (in ./minishell)
+==34191==    by 0x10000124E: add_env_var (in ./minishell)
+==34191==    by 0x100001371: initialize_environment (in ./minishell)
+==34191==    by 0x100001BA3: main (in ./minishell)
+==34191== 
+==34191== 792 bytes in 33 blocks are indirectly lost in loss record 41 of 51
+==34191==    at 0x100117B55: malloc (in /Users/nbouhali/.brew/Cellar/valgrind/HEAD-99f1028/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==34191==    by 0x100001241: add_env_var (in ./minishell)
+==34191==    by 0x100001371: initialize_environment (in ./minishell)
+==34191==    by 0x100001BA3: main (in ./minishell)
+==34191== 
+==34191== 1,367 bytes in 34 blocks are indirectly lost in loss record 42 of 51
+==34191==    at 0x100117B55: malloc (in /Users/nbouhali/.brew/Cellar/valgrind/HEAD-99f1028/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==34191==    by 0x100004667: ft_strdup (in ./minishell)
+==34191==    by 0x10000127A: add_env_var (in ./minishell)
+==34191==    by 0x100001371: initialize_environment (in ./minishell)
+==34191==    by 0x100001BA3: main (in ./minishell)
+==34191== 
+==34191== 2,647 (24 direct, 2,623 indirect) bytes in 1 blocks are definitely lost in loss record 49 of 51
+==34191==    at 0x100117B55: malloc (in /Users/nbouhali/.brew/Cellar/valgrind/HEAD-99f1028/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==34191==    by 0x100001241: add_env_var (in ./minishell)
+==34191==    by 0x100001371: initialize_environment (in ./minishell)
+==34191==    by 0x100001BA3: main (in ./minishell)
+==34191== 
+==34191== 4,016 bytes in 1 blocks are still reachable in loss record 50 of 51
+==34191==    at 0x100117B55: malloc (in /Users/nbouhali/.brew/Cellar/valgrind/HEAD-99f1028/libexec/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==34191==    by 0x10014BC44: xmalloc (in /Users/nbouhali/.brew/Cellar/readline/8.2.1/lib/libreadline.8.2.dylib)
+==34191==    by 0x100145EEE: add_history (in /Users/nbouhali/.brew/Cellar/readline/8.2.1/lib/libreadline.8.2.dylib)
+==34191==    by 0x100001BF8: main (in ./minishell)
+==34191== 
+==34191== LEAK SUMMARY:
+==34191==    definitely lost: 56 bytes in 2 blocks
+==34191==    indirectly lost: 2,937 bytes in 120 blocks
+==34191==      possibly lost: 0 bytes in 0 blocks
+==34191==    still reachable: 4,404 bytes in 14 blocks
+==34191==         suppressed: 18,008 bytes in 163 blocks
+==34191== 
+==34191== Use --track-origins=yes to see where uninitialised values come from
+==34191== For lists of detected and suppressed errors, rerun with: -s
+==34191== ERROR SUMMARY: 3 errors from 3 contexts (suppressed: 5 from 5)

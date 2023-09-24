@@ -2,6 +2,7 @@
 #define MINISHELL_H
 #include "./gnl/get_next_line.h"
 #include "./libft/libft.h"
+#include "./ft_malloc/ft_malloc.h"
 // #include "./builtins/builtins.h"
 #include <readline/history.h>
 #include <readline/readline.h>
@@ -208,6 +209,10 @@ void pipes_divider(t_shell *g_struct);
 char *quotes_moncef(char *str);
 t_tlist *pipes_copy(t_tlist *head, t_tlist *current);
 void free_tableauv2(char **tableau);
-void execute_pipelines(t_node *command_node, char **env);
+void execute_pipelines(t_node **command_node, char **env);
 void free_pipes(t_node *head);
+void free_pipes_node(t_node **command_node);
+t_node *new_command_node(t_node **list, char **args);
+t_node *new_node(char **arr, t_redi_node *redirect);
+void add_node(t_node **node, t_node *new);
 #endif
