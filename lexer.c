@@ -11,11 +11,14 @@ void tokenisation(char *str, t_shell *g_struct, char **env)
 
 	// printf("_%d_\n", g_struct->count);
 	modify_env(g_struct, g_struct->tlist); // lmochkil ila kan chi 7aja wst param it's not it
-	expander_init(g_struct, g_struct->tlist, NULL);
+	// expander_init(g_struct, g_struct->tlist, NULL);
 	// hadchi khdam
-	// char **hhhh; // hadi kmala
-	// hhhh = from_list_to_arr(g_struct->tlist); // this arr howa li aydkhl l function
-	// execute_commands(hhhh[0],hhhh,env); // hadi hya ki ktexecuti
+
+	// while (1)
+	// {
+	// 	/* code */
+	// }
+
 	if (list_check(g_struct->tlist))
 	{
 		qidentify(g_struct, g_struct->tlist); // here nonini nonini moraja3a H rj3o a nabil
@@ -30,8 +33,20 @@ void tokenisation(char *str, t_shell *g_struct, char **env)
 
 		// ft_malloc(0,g_struct->pipes_list,FREE_ALL,NULL);
 	}
+	else
+	{
+		char **single_comm;								 // hadi kmala
+		single_comm = from_list_to_arr(g_struct->tlist); // this arr howa li aydkhl l function
 
-	free_tokens(g_struct->tlist); // hadi mzyana ghir ila knt ankhdm b array it needs to go
+		execute_commands(single_comm[0], single_comm, env); // hadi hya ki ktexecuti
+		free(single_comm);
+		// free_tableauv2(hhhh);
+	}
+	// free_tokens(g_struct->tlist); // hadi mzyana ghir ila knt ankhdm b array it needs to go
+								  // while (1)
+								  // {
+								  // 	/* code */
+								  // }
 }
 int command_id(t_tlist *head)
 {
@@ -126,23 +141,21 @@ void pipes_list(t_shell *g_struct, int count)
 	int j = count;
 	t_tlist *current = g_struct->tlist;
 	// t_node *node = (t_node *)ft_malloc(sizeof(t_node), NULL, ALLOC, NULL);
-	t_node *node = (t_node *)ft_calloc(1,sizeof(t_node));
+	t_node *node = (t_node *)ft_calloc(1, sizeof(t_node));
 
 	// printf("3nd alloc %d\n",count);
 	node->next = NULL;
 	// printf("|%d|\n", count);
 	// node->args = ft_malloc((count + 1) * sizeof(char *), NULL, ALLOC, NULL);
-	node->args = ft_calloc((count + 1) , sizeof(char *));
-
-
+	node->args = ft_calloc((count + 1), sizeof(char *));
 	while (i < count)
 	{
-		node->args[i] = ft_strdup(current->str);
+		node->args[i] = current->str;
+		free(current);
 		// node->total++;
 		i++;
 		// free(current->str);
 		current = current->next;
-
 	}
 	node->redirect = NULL;
 	// node->args[i] = NULL;
@@ -150,10 +163,19 @@ void pipes_list(t_shell *g_struct, int count)
 	// print_arr(node->args,count);
 	if (!g_struct->pipes_list)
 	{
+		// printf("%p before %p\n",g_struct->pipes_list,node->args);
+
 		g_struct->pipes_list = node;
+		// printf("%p after %p\n",g_struct->pipes_list,node->args);
 	}
 	else
 	{
+	// 	while (1)
+	// {
+	// 	/* code */
+	// }
+		// printf("%p after 2 %p\n",g_struct->pipes_list->args,node->args[1]);
+
 		t_node *last = g_struct->pipes_list;
 		while (last->next != NULL)
 		{
@@ -165,9 +187,46 @@ void pipes_list(t_shell *g_struct, int count)
 	// printf("waaaaa   %p\n", current);
 	if (current == NULL)
 		return;
-
+	// free(g_struct->tlist->str);
+	// free(g_struct->tlist->next->str);
+	// free(g_struct->tlist->next);
+	// free(g_struct->tlist);
+	// special_free(g_struct);
+	// print_pointers(g_struct->tlist);
+	// printf("%p\n", current);
+	free(current->str);
+	free(current);
 	g_struct->tlist = current->next;
 }
+void print_pointers(t_tlist *head){
+	t_tlist *current;
+	current = head;
+	while (current != NULL)
+	{
+		printf ("ptr |%p| str |%s| strptr |%p| \n",current,current->str,current->str);
+		current = current->next;
+		/* code */
+	}
+	
+}
+void special_free(t_shell *g_struct) {
+	t_tlist *current;
+	current = g_struct->tlist;
+	while (current != NULL) {
+    if (current->str) {
+        free(current->str);
+    }
+    
+    if (current->next) {
+        free(current->next->str);
+        free(current->next);
+    }
+    
+    free(current);
+    current = NULL; // Set to NULL to indicate that the memory has been freed
+}
+}
+
 void pipes_divider(t_shell *g_struct)
 { // it needs to show 3 3 2
 
@@ -181,11 +240,13 @@ void pipes_divider(t_shell *g_struct)
 	while (i < a)
 	{
 		b = nodes_count(&current);
+	
 		pipes_list(g_struct, b);
+
 
 		i++;
 	}
-
+	// free(current-);
 	// prin
 	// printf("%p 111%s\n", g_struct->pipes_list, g_struct->pipes_list->args[0]);
 	// printf("%p 111%s\n", g_struct->pipes_list, g_struct->pipes_list->args[1]);
@@ -524,8 +585,8 @@ char **from_list_to_arr(t_tlist *head)
 		// arr[i]=malloc()
 		// /* code */
 		// i++;
-		arr[i] = ft_strdup(current->str);
-		free(current->str);
+		arr[i] = current->str;
+		// free(current->str);
 		// printf("*%s*\n",arr[i]);
 		i++;
 		current = current->next;

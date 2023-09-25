@@ -61,6 +61,7 @@ typedef struct s_tlist{
         int queue;
 
     struct s_tlist* next;
+    struct s_tlist* prev;
 
 }t_tlist;
 
@@ -215,4 +216,9 @@ void free_pipes_node(t_node **command_node);
 t_node *new_command_node(t_node **list, char **args);
 t_node *new_node(char **arr, t_redi_node *redirect);
 void add_node(t_node **node, t_node *new);
+void execute_commands(char *command, char **args, char **env);
+void special_free(t_shell *g_struct);
+void special_free_recursive(t_shell *g_struct, t_tlist *current);
+void special_freex(t_shell *g_struct);
+void print_pointers(t_tlist *head);
 #endif
