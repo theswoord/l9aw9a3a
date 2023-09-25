@@ -41,8 +41,8 @@ void tokenisation(char *str, t_shell *g_struct, char **env)
 		execute_commands(single_comm[0], single_comm, env); // hadi hya ki ktexecuti
 		free(single_comm);
 		// free_tableauv2(hhhh);
+	free_tokens(g_struct->tlist); // hadi mzyana ghir ila knt ankhdm b array it needs to go
 	}
-	// free_tokens(g_struct->tlist); // hadi mzyana ghir ila knt ankhdm b array it needs to go
 								  // while (1)
 								  // {
 								  // 	/* code */
