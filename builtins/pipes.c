@@ -143,8 +143,8 @@ void add_node(t_node **node, t_node *new)
 
 // 	command_node = NULL;
 
-// 	char *args[] = {"ls", "-l", NULL};
-// 	char *args1[] = {"wc", "-l", NULL};
+// 	char *args[] = {"ls", NULL};
+// 	// char *args1[] = {"ls", NULL};
 // 	// char *args2[] = {"cat", "-e", NULL};
 // 	// char *args[] = {"ls", "-l", NULL};
 // 	// char *args1[] = {"wc", "-l", NULL};
@@ -163,25 +163,30 @@ void add_node(t_node **node, t_node *new)
 
 // 	// char *args5[] = {"cat", "-e", NULL};
 // 	// new_command_node(&command_node, args5);
-// 	// t_redi_node	*redirect1 = NULL;
-// 	// char file1[] = "text";
-// 	// int type1 = OUT;
-// 	// add_redi(&redirect1, new_redi(file1, type1));
+// 	t_redi_node	*redirect1 = NULL;
+// 	char file1[] = "text";
+// 	int type1 = OUT;
+// 	add_redi(&redirect1, new_redi(file1, type1));
 
-// 	// char file2[] = "tasty";
-// 	// int type2 = APPEND;
-// 	// add_redi(&redirect1, new_redi(file2, type2));
+// 	char file2[] = "tasty";
+// 	int type2 = OUT;
+// 	add_redi(&redirect1, new_redi(file2, type2));
 
 // 	// t_redi_node	*redirect2 = NULL;
 // 	// add_node(&command_node, new_node(args, redirect1));
 // 	// char file3[] = "tasty";
 // 	// int type3 = IN;
 // 	// add_redi(&redirect2, new_redi(file3, type3));
-// 	add_node(&command_node, new_node(args, NULL));
-// 	add_node(&command_node, new_node(args1, NULL));
+// 	add_node(&command_node, new_node(args, redirect1));
+// 	// add_node(&command_node, new_node(args1, NULL));
 
 // 	// f declaration dyal linked list khod li bghiti, ya ima head_tiz w new_tiz wla rir new_command_node
 // 	execute_pipelines(&command_node, env);
+// 	// char *args2[] = {"ls", NULL};
+// 	// char *args3[] = {"ls","-l", NULL};
+// 	// add_node(&command_node, new_node(args2, NULL));
+// 	// add_node(&command_node, new_node(args3, NULL));
+// 	// execute_pipelines(&command_node, env);
 
 // 	return (0);
 // }

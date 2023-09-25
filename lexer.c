@@ -9,16 +9,9 @@ void tokenisation(char *str, t_shell *g_struct, char **env)
 
 	free_tableau(done, twodlen(done));
 
-	// printf("_%d_\n", g_struct->count);
 	modify_env(g_struct, g_struct->tlist); // lmochkil ila kan chi 7aja wst param it's not it
-	// expander_init(g_struct, g_struct->tlist, NULL);
+	expander_init(g_struct, g_struct->tlist, NULL);
 	// hadchi khdam
-
-	// while (1)
-	// {
-	// 	/* code */
-	// }
-
 	if (list_check(g_struct->tlist))
 	{
 		qidentify(g_struct, g_struct->tlist); // here nonini nonini moraja3a H rj3o a nabil
@@ -30,8 +23,10 @@ void tokenisation(char *str, t_shell *g_struct, char **env)
 	{
 		pipes_divider(g_struct);
 		execute_pipelines(&g_struct->pipes_list, env);
-
-		// ft_malloc(0,g_struct->pipes_list,FREE_ALL,NULL);
+	}
+	else if (command_id(g_struct->tlist) == REDIW || command_id(g_struct->tlist) == REDIR || command_id(g_struct->tlist) == APPEND)
+	{
+		
 	}
 	else
 	{
@@ -43,11 +38,9 @@ void tokenisation(char *str, t_shell *g_struct, char **env)
 		// free_tableauv2(hhhh);
 	free_tokens(g_struct->tlist); // hadi mzyana ghir ila knt ankhdm b array it needs to go
 	}
-								  // while (1)
-								  // {
-								  // 	/* code */
-								  // }
 }
+
+
 int command_id(t_tlist *head)
 {
 	t_tlist *current = head;
@@ -79,7 +72,6 @@ int nodes_count(t_tlist **current)
 		if ((*current)->value == PIPE)
 		{
 			(*current) = (*current)->next;
-			// printf("%s\n", (*current)->str);
 			return nodes;
 		}
 		nodes++;
@@ -114,67 +106,37 @@ int element_counter(t_tlist *head, int what)
 
 	while (current != NULL)
 	{
-		/* code */
 		if (current->value == what)
 		{
 			count++;
-			/* code */
 		}
 
 		current = current->next;
 	}
 	return count;
 }
-// void print_arr(char** arr){
-// 	int i = 0;
-// 	while (arr[i])
-// 	{
-// 		printf("|%s|\n",arr[i]);
-// 		i++;
-// 		/* code */
-// 	}
-
-// }
 void pipes_list(t_shell *g_struct, int count)
 {
 	int i = 0;
 	int j = count;
 	t_tlist *current = g_struct->tlist;
-	// t_node *node = (t_node *)ft_malloc(sizeof(t_node), NULL, ALLOC, NULL);
 	t_node *node = (t_node *)ft_calloc(1, sizeof(t_node));
-
-	// printf("3nd alloc %d\n",count);
 	node->next = NULL;
-	// printf("|%d|\n", count);
-	// node->args = ft_malloc((count + 1) * sizeof(char *), NULL, ALLOC, NULL);
 	node->args = ft_calloc((count + 1), sizeof(char *));
 	while (i < count)
 	{
 		node->args[i] = current->str;
 		free(current);
-		// node->total++;
 		i++;
-		// free(current->str);
 		current = current->next;
 	}
 	node->redirect = NULL;
-	// node->args[i] = NULL;
-
-	// print_arr(node->args,count);
 	if (!g_struct->pipes_list)
 	{
-		// printf("%p before %p\n",g_struct->pipes_list,node->args);
-
 		g_struct->pipes_list = node;
-		// printf("%p after %p\n",g_struct->pipes_list,node->args);
 	}
 	else
 	{
-	// 	while (1)
-	// {
-	// 	/* code */
-	// }
-		// printf("%p after 2 %p\n",g_struct->pipes_list->args,node->args[1]);
 
 		t_node *last = g_struct->pipes_list;
 		while (last->next != NULL)
@@ -182,18 +144,9 @@ void pipes_list(t_shell *g_struct, int count)
 			last = last->next;
 		}
 		last->next = node;
-		// printf("%s lol\n",node->args[0]);
 	}
-	// printf("waaaaa   %p\n", current);
 	if (current == NULL)
 		return;
-	// free(g_struct->tlist->str);
-	// free(g_struct->tlist->next->str);
-	// free(g_struct->tlist->next);
-	// free(g_struct->tlist);
-	// special_free(g_struct);
-	// print_pointers(g_struct->tlist);
-	// printf("%p\n", current);
 	free(current->str);
 	free(current);
 	g_struct->tlist = current->next;
@@ -246,40 +199,6 @@ void pipes_divider(t_shell *g_struct)
 
 		i++;
 	}
-	// free(current-);
-	// prin
-	// printf("%p 111%s\n", g_struct->pipes_list, g_struct->pipes_list->args[0]);
-	// printf("%p 111%s\n", g_struct->pipes_list, g_struct->pipes_list->args[1]);
-	// // printf("%p 111%s\n", g_struct->pipes_list, g_struct->pipes_list->args[2]);
-
-	// printf("%p 222%s\n", g_struct->pipes_list->next, g_struct->pipes_list->next->args[0]);
-	// printf("%p 222%s\n", g_struct->pipes_list->next, g_struct->pipes_list->next->args[0]);
-	// printf("%p 222%s\n", g_struct->pipes_list->next, g_struct->pipes_list->next->args[0]);
-
-	// printf("%p 333%s\n", g_struct->pipes_list->next->next, g_struct->pipes_list->next->next->args[0]);
-	// printf("%p 333%s\n", g_struct->pipes_list->next->next, g_struct->pipes_list->next->next->args[1]);
-	// printf("%p 333%s\n", g_struct->pipes_list->next->next, g_struct->pipes_list->next->next->args[2]);
-	// printf("%p 333%s\n", g_struct->pipes_list->next->next, g_struct->pipes_list->next->next->args[3]);
-
-	// printf("%p 333%s\n", g_struct->pipes_list->next->next, g_struct->pipes_list->next->next->args[0]);
-
-	// print_arr(g_struct->pipes_list->args);
-	// print_arr(g_struct->pipes_list->next->args);
-	// print_arr(g_struct->pipes_list->next->next->args);
-
-	// out[i]
-	// out =
-	// printf("%d\n",nodes_count(&current));
-	// printf("%d\n",nodes_count(&current));
-	// printf("%d\n",nodes_count(&current));
-
-	// while (current != NULL) // hh
-	// {
-	// 	/* code */
-
-	// 	current = current->next;
-	// }
-	// return out;
 }
 char *quotes_moncef(char *str)
 {

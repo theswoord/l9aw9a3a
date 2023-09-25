@@ -45,7 +45,7 @@ void redirections(t_redi_node *redirect_node)
     {
         if (current->type == OUT)
             file_out(current->file);
-        else if (current->type == APPEND)
+        else if (current->type == APPEAND)
             file_append(current->file);
         else if (current->type == IN)
             file_in(current->file);
@@ -80,6 +80,7 @@ void add_redi(t_redi_node **node, t_redi_node *new)
         head = head->next;
     head->next = new;
 }
+
 
 // int main()
 // {

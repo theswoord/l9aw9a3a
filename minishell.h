@@ -31,6 +31,23 @@ SQUOTE,
 DQUOTE,
 }e_tokenum;
 
+typedef enum s_shell_error
+{
+    SYNTAX_ERROR,             // Syntax error in the command
+    COMMAND_NOT_FOUND,        // Command not found in the system's PATH
+    PROGRAM_NOT_FOUND,        // Program or binary file not found
+    PERMISSION_DENIED_PROGRAM,// Permission denied for executing a program
+    FILE_NOT_FOUND,           // File not found
+    PERMISSION_DENIED_FILE,   // Permission denied for a file operation
+    TOO_MANY_ARGUMENTS,       // Too many arguments provided
+    NUMERIC_ARG_REQUIRED,     // Numeric argument required (e.g., for the "exit" command)
+    HOME_NOT_SET,             // HOME environment variable not set
+    INVALID_UNSET_IDENTIFIER, // Invalid identifier for the "unset" command
+    INVALID_EXPORT_IDENTIFIER,// Invalid identifier for the "export" command
+    SUCCESS                   // Successful execution (no error)
+
+} t_shell_error;
+
 typedef struct s_redi_node
 {
     char *file;
@@ -103,7 +120,8 @@ typedef struct s_shell
     e_tokenum tokenum;
     int count; // hada test o safi
     // int exit_status; //static int
-
+        int exit_status;
+    t_shell_error error_name;
 }t_shell; 
 
 // extern t_shell	g_struct;
