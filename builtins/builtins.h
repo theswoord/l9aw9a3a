@@ -2,8 +2,8 @@
 #define BUILTINS_H
 
 
-#define OUT 1
-#define APPEAND 2
+#define OUT 2
+#define APPEAND 9
 #define IN 3
 #define HEREDOC 4
 

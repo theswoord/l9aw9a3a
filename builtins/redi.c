@@ -60,7 +60,7 @@ t_redi_node *new_redi(char *file, int type)
     t_redi_node *new;
 
     new = malloc(sizeof(t_redi_node));
-    new->file = file;
+    new->file = ft_strdup(file);
     new->type = type;
     new->next = NULL;
     return (new);

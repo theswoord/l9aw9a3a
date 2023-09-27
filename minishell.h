@@ -29,6 +29,7 @@ APPEND,
 QUOTES,
 SQUOTE,
 DQUOTE,
+ISFILE,
 }e_tokenum;
 
 typedef enum s_shell_error
@@ -51,7 +52,7 @@ typedef enum s_shell_error
 typedef struct s_redi_node
 {
     char *file;
-    char type;
+    int type;
     struct s_redi_node *next;
 } t_redi_node;
 
@@ -76,6 +77,7 @@ typedef struct s_tlist{
     int value;
     char *str;
         int queue;
+    bool is_file;
 
     struct s_tlist* next;
     struct s_tlist* prev;
@@ -122,6 +124,7 @@ typedef struct s_shell
     // int exit_status; //static int
         int exit_status;
     t_shell_error error_name;
+    t_redi_node *redi_list;
 }t_shell; 
 
 // extern t_shell	g_struct;
@@ -239,4 +242,13 @@ void special_free(t_shell *g_struct);
 void special_free_recursive(t_shell *g_struct, t_tlist *current);
 void special_freex(t_shell *g_struct);
 void print_pointers(t_tlist *head);
+void versatile_divider(t_shell *g_struct);
+int versatile_nodes_count(t_tlist **current);
+void versatile_pipes_list(t_shell *g_struct, int count, bool detected);
+int versatile_counter(t_tlist *head);
+void files_finder(t_tlist *head);
+void add_redi(t_redi_node **node, t_redi_node *new);
+t_redi_node *new_redi(char *file, int type);
+void add_node(t_node **node, t_node *new);
+void redi_set(t_shell *g_struct);
 #endif

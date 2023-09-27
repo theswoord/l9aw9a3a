@@ -19,14 +19,21 @@ void tokenisation(char *str, t_shell *g_struct, char **env)
 	}
 	else
 		printf("syntax error \n");
-	if (command_id(g_struct->tlist) == PIPE)
+	if (command_id(g_struct->tlist) == PIPE ||command_id(g_struct->tlist) == REDIW || command_id(g_struct->tlist) == REDIR || command_id(g_struct->tlist) == APPEND)
+	{
+		files_finder(g_struct->tlist);
+		// printf(" zqqq\n");
+		redi_set(g_struct);
+		pipes_divider(g_struct);
+		// printf("arg = %s point redi = %p file = %s type = %d \n",g_struct->pipes_list->args[1],g_struct->pipes_list->redirect,g_struct->pipes_list->redirect->file,g_struct->pipes_list->redirect->type);
+		// printf("%s  %d %s\n",g_struct->redi_list->file,g_struct->redi_list->type,g_struct->redi_list->next->next->file);
+		execute_pipelines(&g_struct->pipes_list, env);
+
+	}
+	else if (command_id(g_struct->tlist) == PIPE)
 	{
 		pipes_divider(g_struct);
 		execute_pipelines(&g_struct->pipes_list, env);
-	}
-	else if (command_id(g_struct->tlist) == REDIW || command_id(g_struct->tlist) == REDIR || command_id(g_struct->tlist) == APPEND)
-	{
-		
 	}
 	else
 	{
@@ -38,6 +45,7 @@ void tokenisation(char *str, t_shell *g_struct, char **env)
 		// free_tableauv2(hhhh);
 	free_tokens(g_struct->tlist); // hadi mzyana ghir ila knt ankhdm b array it needs to go
 	}
+	// print_tokens(g_struct->tlist);
 }
 
 
@@ -62,6 +70,35 @@ int command_id(t_tlist *head)
 
 	return 99;
 }
+void files_finder(t_tlist *head){
+	t_tlist *current;
+
+	while (current != NULL && current->next)
+	{
+
+		if (current->value == REDIR || current->value == APPEND || current->value == REDIW)
+		{
+			current->next->value = current->value; // temp
+			current->next->is_file = true;
+			// current->is_file = false;
+			// continue;
+			// printf("%d %d\n", current->value, current->next->value);
+			/* code */
+		}
+		if (ft_strcmp(current->str, ">") == 0 ||ft_strcmp(current->str, ">>") == 0 ||ft_strcmp(current->str, "<") == 0)
+		{
+			current->is_file = false;
+		}
+			// printf("file finder = |%s| is file ? |%d| \n",current->next->str,current->next->is_file);
+		
+			
+		current = current->next;
+		/* code */
+	}
+	
+
+}
+
 int nodes_count(t_tlist **current)
 {
 	int nodes = 0;
@@ -69,7 +106,7 @@ int nodes_count(t_tlist **current)
 	while (*current != NULL)
 	{
 
-		if ((*current)->value == PIPE)
+		if ((*current)->value == PIPE || (*current)->value == REDIR ||(*current)->value == REDIW ||(*current)->value == APPEND )
 		{
 			(*current) = (*current)->next;
 			return nodes;
@@ -115,6 +152,7 @@ int element_counter(t_tlist *head, int what)
 	}
 	return count;
 }
+
 void pipes_list(t_shell *g_struct, int count)
 {
 	int i = 0;
@@ -134,6 +172,7 @@ void pipes_list(t_shell *g_struct, int count)
 	if (!g_struct->pipes_list)
 	{
 		g_struct->pipes_list = node;
+	// printf("%s\n",current->str);
 	}
 	else
 	{
@@ -147,10 +186,37 @@ void pipes_list(t_shell *g_struct, int count)
 	}
 	if (current == NULL)
 		return;
+	printf("hh = %s\n", current->str);
 	free(current->str);
 	free(current);
 	g_struct->tlist = current->next;
 }
+void redi_set(t_shell *g_struct){
+
+	t_tlist *current;
+
+	current = g_struct->tlist;
+
+	while (current != NULL)
+	{
+
+		if (current->is_file == true)
+		{
+			add_redi(&g_struct->redi_list,new_redi(current->str,current->value));
+		printf("%s %d\n",current->str,current->is_file);
+			/* code */
+
+			current = current->next;
+		}
+		else
+		current = current->next;
+
+		/* code */
+	}
+	
+}
+
+
 void print_pointers(t_tlist *head){
 	t_tlist *current;
 	current = head;
@@ -180,9 +246,11 @@ void special_free(t_shell *g_struct) {
 }
 }
 
+
 void pipes_divider(t_shell *g_struct)
 { // it needs to show 3 3 2
-
+	g_struct->pipes_list = NULL;
+	// g_struct->redi_list = NU
 	static t_tlist *current;
 
 	current = g_struct->tlist;
@@ -194,11 +262,29 @@ void pipes_divider(t_shell *g_struct)
 	{
 		b = nodes_count(&current);
 	
+		// printf(" hh \n");
 		pipes_list(g_struct, b);
 
 
 		i++;
 	}
+	if (g_struct->redi_list != NULL)
+	{
+		t_node *cu;
+		cu = g_struct->pipes_list;
+		while (cu && cu->next)
+		{
+			/* code */
+			// if(cu->next)
+			cu = cu->next;
+		}
+		
+		// printf("%p %p\n",cu,g_struct->pipes_list);
+		cu->redirect = g_struct->redi_list;
+		// printf("%s %s %d\n",cu->args[0],cu->redirect->file,cu->redirect->type);
+		/* code */
+	}
+	
 }
 char *quotes_moncef(char *str)
 {

@@ -156,6 +156,7 @@ void token_list(t_tlist **head, char *tok, int type, int queue)
 	if (type)
 	new_node->value = type;	
 	new_node->queue = queue;
+	new_node->is_file = false;
 	
 	new_node->next = NULL;
 	if (*head == NULL)
@@ -290,6 +291,7 @@ void print_tokens(t_tlist *head){
 
 	while (current != NULL)
 	{
+		
 		printf("%s %d %d\n", current->str,current->value,current->queue);
 		current = current->next;
 		/* code */
