@@ -27,15 +27,10 @@ void echo_command(int ac, char **av)
 
         exit(0);
     }
-    else if (pid > 0)
-    {
-        waitpid(pid, NULL, 0);
-        exit(0);
-    }
     else
     {
-        perror("fork");
-        exit(1);
+        waitpid(pid, NULL, 0);
+        return;
     }
 }
 

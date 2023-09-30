@@ -41,7 +41,7 @@ void free_pipes_node(t_node **command_node)
 	*command_node = NULL;
 }
 
-void execute_pipelines(t_node **command_node, char **env)
+void execute_pipelines(t_node **command_node, char **env, t_shell* g_struct)
 {
 	int i;
 	int temp_fd;
@@ -70,7 +70,7 @@ void execute_pipelines(t_node **command_node, char **env)
 			close(pipes[0]);
 			close(pipes[1]);
 			redirections(current_node->redirect);
-			execute_commands_pipes(current_node->args[0], current_node->args, env);
+			execute_commands_pipes(current_node->args[0], current_node->args, env,g_struct);
 			exit(0);
 		}
 		if (temp_fd != -1)

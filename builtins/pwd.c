@@ -1,31 +1,18 @@
 #include "builtins.h"
 
-void pwd_command(void)
-{
-    pid_t pid;
 
-    pid = fork();
-    if (pid == 0)
-    {
+void pwd_command(t_shell *g_shell)
+{
         char cwd[1024];
 
         if (getcwd(cwd, sizeof(cwd)) != NULL)
-            ft_printf("Current Directory: %s\n");
+            printf("%s\n",cwd);
         else
         {
-            ft_printf("getcwd() error\n");
-            return (1);
+            g_shell->error_name = PERMISSION_DENIED_FILE;
+            exit_status_error(g_shell);
+            print_error_message(g_shell);
+            return;
         }
-        return (0);
-    }
-    else if (pid > 0)
-    {
-        waitpid(pid, NULL, 0);
-        exit(0);
-    }
-    else
-    {
-        perror("fork");
-        exit(1);
-    }
+        return;
 }

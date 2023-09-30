@@ -29,7 +29,7 @@ void tokenisation(char *str, t_shell *g_struct, char **env)
 	// cd_command()
 	if(ft_strcmp(single_comm[0],"cd") == 0)
 	{
-		cd_command(2,single_comm[1],env,g_struct);
+		cd_command(single_comm[1],env,g_struct);
 	}
 	else if (ft_strcmp(single_comm[0],"env") == 0)
 	{
@@ -59,6 +59,11 @@ void tokenisation(char *str, t_shell *g_struct, char **env)
 		ft_exit(single_comm,g_struct);
 
 	}
+		else if (ft_strcmp(single_comm[0],"pwd") == 0)
+	{
+		pwd_command(g_struct);
+
+	}
 
 
 	if (command_id(g_struct->tlist) == PIPE ||command_id(g_struct->tlist) == REDIW || command_id(g_struct->tlist) == REDIR || command_id(g_struct->tlist) == APPEND)
@@ -70,14 +75,14 @@ void tokenisation(char *str, t_shell *g_struct, char **env)
 		// print_pointers2(g_struct->redi_list);
 		// printf("arg = %s point redi = %p file = %s type = %d \n",g_struct->pipes_list->args[1],g_struct->pipes_list->redirect,g_struct->pipes_list->redirect->file,g_struct->pipes_list->redirect->type);
 		// printf("%s  %d %s\n",g_struct->redi_list->file,g_struct->redi_list->type,g_struct->redi_list->next->next->file);
-		execute_pipelines(&g_struct->pipes_list, env);
+		execute_pipelines(&g_struct->pipes_list, env,g_struct);
 		g_struct->redi_list = NULL;
 
 	}
 	else if (command_id(g_struct->tlist) == PIPE)
 	{
 		pipes_divider(g_struct);
-		execute_pipelines(&g_struct->pipes_list, env);
+		execute_pipelines(&g_struct->pipes_list, env,g_struct);
 	}
 	else
 	{

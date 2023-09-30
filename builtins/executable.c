@@ -76,7 +76,8 @@ void execute_commands(char *command, char **args, char **env)
     }
 }
 
-void execute_commands_pipes(char *command, char **args, char **env)
+// zedt strcute l kbir hna bach ypassi l error msg
+void execute_commands_pipes(char *command, char **args, char **env, t_shell *g_shell)
 {
     char *path;
     char *executable_path;
@@ -93,15 +94,9 @@ void execute_commands_pipes(char *command, char **args, char **env)
         // add args +1 if you want to test the program with command arguments.
         if (access(executable_path, X_OK) == 0)
             execve(executable_path, args, env);
-        printf("bash: command not found: %s\n", command);
     }
+    // print to fd 2 instead of fd 1
+    g_shell->error_name = COMMAND_NOT_FOUND;
+    print_error_message(g_shell);
     return;
 }
-
-
-// int main(int ac, char **av, char **env)
-// {
-//     if (av[1])
-//         execute_commands(av[1], av + 1, env);
-//     return (0);
-// }
