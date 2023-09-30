@@ -251,4 +251,6 @@ void add_redi(t_redi_node **node, t_redi_node *new);
 t_redi_node *new_redi(char *file, int type);
 void add_node(t_node **node, t_node *new);
 void redi_set(t_shell *g_struct);
+char *expander_qv2(t_shell *g_struct , char * str);
+char *env_expander(t_shell * g_struct,t_var_t *head, char * key);
 #endif

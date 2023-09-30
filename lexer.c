@@ -19,33 +19,35 @@ void tokenisation(char *str, t_shell *g_struct, char **env)
 	}
 	else
 		printf("syntax error \n");
-	if (command_id(g_struct->tlist) == PIPE ||command_id(g_struct->tlist) == REDIW || command_id(g_struct->tlist) == REDIR || command_id(g_struct->tlist) == APPEND)
-	{
-		files_finder(g_struct->tlist);
-		// printf(" zqqq\n");
-		redi_set(g_struct);
-		pipes_divider(g_struct);
-		// printf("arg = %s point redi = %p file = %s type = %d \n",g_struct->pipes_list->args[1],g_struct->pipes_list->redirect,g_struct->pipes_list->redirect->file,g_struct->pipes_list->redirect->type);
-		// printf("%s  %d %s\n",g_struct->redi_list->file,g_struct->redi_list->type,g_struct->redi_list->next->next->file);
-		execute_pipelines(&g_struct->pipes_list, env);
+	// if (command_id(g_struct->tlist) == PIPE ||command_id(g_struct->tlist) == REDIW || command_id(g_struct->tlist) == REDIR || command_id(g_struct->tlist) == APPEND)
+	// {
+	// 	files_finder(g_struct->tlist);
+	// 	// printf(" zqqq\n");
+	// 	redi_set(g_struct);
+	// 	pipes_divider(g_struct);
+	// 	// printf("arg = %s point redi = %p file = %s type = %d \n",g_struct->pipes_list->args[1],g_struct->pipes_list->redirect,g_struct->pipes_list->redirect->file,g_struct->pipes_list->redirect->type);
+	// 	// printf("%s  %d %s\n",g_struct->redi_list->file,g_struct->redi_list->type,g_struct->redi_list->next->next->file);
+	// 	execute_pipelines(&g_struct->pipes_list, env);
 
-	}
-	else if (command_id(g_struct->tlist) == PIPE)
-	{
-		pipes_divider(g_struct);
-		execute_pipelines(&g_struct->pipes_list, env);
-	}
-	else
-	{
-		char **single_comm;								 // hadi kmala
-		single_comm = from_list_to_arr(g_struct->tlist); // this arr howa li aydkhl l function
+	// }
+	// else if (command_id(g_struct->tlist) == PIPE)
+	// {
+	// 	pipes_divider(g_struct);
+	// 	execute_pipelines(&g_struct->pipes_list, env);
+	// }
+	// else
+	// {
+	// 	char **single_comm;								 // hadi kmala
+	// 	single_comm = from_list_to_arr(g_struct->tlist); // this arr howa li aydkhl l function
 
-		execute_commands(single_comm[0], single_comm, env); // hadi hya ki ktexecuti
-		free(single_comm);
-		// free_tableauv2(hhhh);
-	free_tokens(g_struct->tlist); // hadi mzyana ghir ila knt ankhdm b array it needs to go
-	}
-	// print_tokens(g_struct->tlist);
+	// 	execute_commands(single_comm[0], single_comm, env); // hadi hya ki ktexecuti
+	// 	free(single_comm);
+	// 	// free_tableauv2(hhhh);
+	// free_tokens(g_struct->tlist); // hadi mzyana ghir ila knt ankhdm b array it needs to go
+	// }
+	print_tokens(g_struct->tlist);
+	// free_tokens(g_struct->tlist); // hadi mzyana ghir ila knt ankhdm b array it needs to go
+
 }
 
 
@@ -347,14 +349,16 @@ void qidentify(t_shell *g_struct, t_tlist *token)
 
 			else if (pos(tmp->str, '\"') != -1)
 			{
-				printf("idad\n");
+				// printf("idad\n");
 				if (pos(tmp->str, '$') != -1)
 				{
 					// printf("b4 = |%s\n",tmp->str);
 					// free(tmp->str);
-					tmp->str = expanded_q(g_struct, tmp->str); // try this first mn '"to $' dollars '$PATH $USER' mn $tal ' ' later mn ' ' tal " oula ghir tal "
-															   // printf("a4 = |%s\n",tmp->str);
-															   /* code */
+					tmp->str = expander_qv2(g_struct, tmp->str); // try this first mn '"to $' dollars '$PATH $USER' mn $tal ' ' later mn ' ' tal " oula ghir tal "
+					// tmp->str = expander_qv2(g_struct, &tmp->str); // try this first mn '"to $' dollars '$PATH $USER' mn $tal ' ' later mn ' ' tal " oula ghir tal "
+
+				
+					printf("%s\n", tmp->str);
 				}
 
 				// remove quotes hh
@@ -613,7 +617,7 @@ char *expanded_q(t_shell *g_struct, char *str)
 	int checked = 0;
 
 	first = ft_substr(str, 0, pos(str, '$')); // malloced
-	printf("f= %s\n", first);
+	// printf("f= %s\n", first);
 	later = ft_strchr(str, '$') + 1; // NM
 	char *rest;
 	rest = ft_strrchr(str, '"'); // NM
@@ -651,6 +655,76 @@ char *expanded_q(t_shell *g_struct, char *str)
 
 	return final;
 }
+char *env_expander(t_shell * g_struct,t_var_t *head, char * key){
+
+	t_var_t *current;
+	current = head;
+	int checked = 0;
+	while (current != NULL)
+	{
+		if (ft_strcmp(current->key, key)==0)
+		{
+			// free(key);
+			return(ft_strdup(current->value));
+		}
+		checked++;
+		if (checked == g_struct->count)
+		{
+			// free(key);
+			return(ft_strdup(""));
+		}
+
+		current = current->next;
+		/* code */
+	}
+	return (NULL);
+}
+char *expander_qv2(t_shell *g_struct, char *str)
+{
+    int i = 0;
+    int j = 0;
+    char *first = NULL;
+	first = ft_substr(str, 0, pos(str, '$'));
+    char *exp = NULL;
+    char *req = NULL;
+    char *out = ft_strdup(first);
+
+    while (str[i])
+    {
+        if (str[i] == '$')
+        {
+            i++;
+            j = i;
+            while (ft_isalnum(str[i]) == 1)
+            {
+                i++;
+            }
+            req = ft_substr(str, j, i - j);
+            exp = env_expander(g_struct, g_struct->envlist, req);
+            // Concatenate the expanded variable to the output string
+            out = ft_strjoingnl(out, exp);
+            // Free memory allocated for temporary variables
+            free(req);
+            free(exp);
+        }
+        else
+        {
+            // Add non-alphanumeric characters to the output string directly
+			
+            out = ft_strjoin(out, ft_substr(str, i, 1));
+
+			printf(";%s;\n",out);
+            i++;
+        }
+    }
+
+    free(first); // Free the initial substring
+
+    return out;
+}
+
+
+
 // "$USER"
 char *recombinator(char *first, char *later, char *rest)
 {

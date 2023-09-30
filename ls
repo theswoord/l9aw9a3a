@@ -23,6 +23,7 @@ lexic_utils.o
 libft
 link.c
 link.o
+ls
 main.c
 main.o
 memory_friend.c
