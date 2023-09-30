@@ -45,11 +45,12 @@ char *find_executable_command(char *command, char *path)
     return (NULL);
 }
 
-void execute_commands(char *command, char **args, char **env)
+void execute_commands(char *command, char **args, char **env, t_shell *g_shell)
 {
     char *path;
     char *executable_path;
     int pid;
+    int status;
 
     pid = fork();
     if (pid == 0)
@@ -67,12 +68,22 @@ void execute_commands(char *command, char **args, char **env)
             if (access(executable_path, X_OK) == 0)
                 execve(executable_path, args, env);
         }
-        printf("bash: command not found: %s\n", command);
-        exit(1);
+        g_shell->error_name = COMMAND_NOT_FOUND;
+        exit_status_error(g_shell);
+        print_error_message(g_shell);
+        exit(g_shell->exit_status);
     }
     else
     {
-        wait(NULL);
+        // Parent process
+        // Wait for the child process to complete and get its exit status
+        waitpid(pid, &status, 0);
+
+        if (WIFEXITED(status))
+        {
+            // Child process exited normally, retrieve its exit status
+            g_shell->exit_status = WEXITSTATUS(status);
+        }
     }
 }
 
@@ -97,6 +108,7 @@ void execute_commands_pipes(char *command, char **args, char **env, t_shell *g_s
     }
     // print to fd 2 instead of fd 1
     g_shell->error_name = COMMAND_NOT_FOUND;
+    exit_status_error(g_shell);
     print_error_message(g_shell);
     return;
 }

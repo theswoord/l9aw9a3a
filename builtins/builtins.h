@@ -62,7 +62,7 @@ size_t ft_strlen(const char *str);
 // void print_env(t_var_t *head, int bool);
 // void	initialize_environment(t_var_t **head, char **env);
 // void add_env_var(t_var_t **head, char *key, char *value);
-void execute_commands(char *command, char **args, char **env);
+void execute_commands(char *command, char **args, char **env, t_shell *g_shell);
 // void execute_pipelines(array_of_commands *command_list, char **env);
 // void execute_pipelines(t_node **command_node, char **env);
 void execute_pipelines(t_node **command_node, char **env, t_shell* g_struct);
