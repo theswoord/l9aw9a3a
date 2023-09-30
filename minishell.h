@@ -253,4 +253,10 @@ void add_node(t_node **node, t_node *new);
 void redi_set(t_shell *g_struct);
 char *expander_qv2(t_shell *g_struct , char * str);
 char *env_expander(t_shell * g_struct,t_var_t *head, char * key);
+void print_pointers2(t_redi_node* head);
+void cd_command(int ac, char *directory, char **env, t_shell *g_struct);
+void execute_commands_pipes(char *command, char **args, char **env);
+void export(t_shell *g_struct, int ac, char **av, char **env);
+void ft_unset(int ac, char **av, t_shell *g_struct);
+void ft_exit(char **args, t_shell *g_struct);
 #endif

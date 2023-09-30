@@ -19,33 +19,81 @@ void tokenisation(char *str, t_shell *g_struct, char **env)
 	}
 	else
 		printf("syntax error \n");
-	// if (command_id(g_struct->tlist) == PIPE ||command_id(g_struct->tlist) == REDIW || command_id(g_struct->tlist) == REDIR || command_id(g_struct->tlist) == APPEND)
-	// {
-	// 	files_finder(g_struct->tlist);
-	// 	// printf(" zqqq\n");
-	// 	redi_set(g_struct);
-	// 	pipes_divider(g_struct);
-	// 	// printf("arg = %s point redi = %p file = %s type = %d \n",g_struct->pipes_list->args[1],g_struct->pipes_list->redirect,g_struct->pipes_list->redirect->file,g_struct->pipes_list->redirect->type);
-	// 	// printf("%s  %d %s\n",g_struct->redi_list->file,g_struct->redi_list->type,g_struct->redi_list->next->next->file);
-	// 	execute_pipelines(&g_struct->pipes_list, env);
 
-	// }
-	// else if (command_id(g_struct->tlist) == PIPE)
+		char **single_comm;								 // hadi kmala
+		single_comm = from_list_to_arr(g_struct->tlist); // this arr howa li aydkhl l function
+	// if ()
 	// {
-	// 	pipes_divider(g_struct);
-	// 	execute_pipelines(&g_struct->pipes_list, env);
+	// 	/* code */
 	// }
-	// else
-	// {
-	// 	char **single_comm;								 // hadi kmala
-	// 	single_comm = from_list_to_arr(g_struct->tlist); // this arr howa li aydkhl l function
+	// cd_command()
+	if(ft_strcmp(single_comm[0],"cd") == 0)
+	{
+		cd_command(2,single_comm[1],env,g_struct);
+	}
+	else if (ft_strcmp(single_comm[0],"env") == 0)
+	{
+		print_env(g_struct->envlist,0);
 
-	// 	execute_commands(single_comm[0], single_comm, env); // hadi hya ki ktexecuti
-	// 	free(single_comm);
-	// 	// free_tableauv2(hhhh);
-	// free_tokens(g_struct->tlist); // hadi mzyana ghir ila knt ankhdm b array it needs to go
-	// }
-	print_tokens(g_struct->tlist);
+	}
+	else if (ft_strcmp(single_comm[0],"export") == 0)
+	{
+		if (twodlen(single_comm)==1)
+		print_env(g_struct->envlist, 1);
+		
+		export(g_struct,twodlen(single_comm),single_comm,env);
+
+
+	}
+	else if (ft_strcmp(single_comm[0],"unset") == 0)
+	{
+		// if (twodlen(single_comm)==1)
+		// print_env(g_struct->envlist, 1);
+		ft_unset(twodlen(single_comm),single_comm,g_struct);
+		// export(g_struct,twodlen(single_comm),single_comm,env);
+
+
+	}
+		else if (ft_strcmp(single_comm[0],"exit") == 0)
+	{
+		ft_exit(single_comm,g_struct);
+
+	}
+
+
+	if (command_id(g_struct->tlist) == PIPE ||command_id(g_struct->tlist) == REDIW || command_id(g_struct->tlist) == REDIR || command_id(g_struct->tlist) == APPEND)
+	{
+		files_finder(g_struct->tlist);
+		// printf(" zqqq\n");
+		redi_set(g_struct);
+		pipes_divider(g_struct);
+		// print_pointers2(g_struct->redi_list);
+		// printf("arg = %s point redi = %p file = %s type = %d \n",g_struct->pipes_list->args[1],g_struct->pipes_list->redirect,g_struct->pipes_list->redirect->file,g_struct->pipes_list->redirect->type);
+		// printf("%s  %d %s\n",g_struct->redi_list->file,g_struct->redi_list->type,g_struct->redi_list->next->next->file);
+		execute_pipelines(&g_struct->pipes_list, env);
+		g_struct->redi_list = NULL;
+
+	}
+	else if (command_id(g_struct->tlist) == PIPE)
+	{
+		pipes_divider(g_struct);
+		execute_pipelines(&g_struct->pipes_list, env);
+	}
+	else
+	{
+		// char **single_comm;								 // hadi kmala
+		// single_comm = from_list_to_arr(g_struct->tlist); // this arr howa li aydkhl l function
+		if (ft_strcmp(single_comm[0],"cd") != 0 && ft_strcmp(single_comm[0],"export") != 0 && ft_strcmp(single_comm[0],"env") != 0 && ft_strcmp(single_comm[0],"pwd") != 0 && ft_strcmp(single_comm[0],"echo") != 0&& ft_strcmp(single_comm[0],"unset") != 0&& ft_strcmp(single_comm[0],"exit") != 0) // temp
+		{
+		execute_commands(single_comm[0], single_comm, env); // hadi hya ki ktexecuti
+			/* code */
+		}
+		
+		free(single_comm);
+		// free_tableauv2(hhhh);
+	free_tokens(g_struct->tlist); // hadi mzyana ghir ila knt ankhdm b array it needs to go
+	}
+	// print_tokens(g_struct->tlist);
 	// free_tokens(g_struct->tlist); // hadi mzyana ghir ila knt ankhdm b array it needs to go
 
 }
@@ -218,7 +266,17 @@ void redi_set(t_shell *g_struct){
 	
 }
 
-
+void print_pointers2(t_redi_node* head){
+	t_redi_node* current;
+	current = head;
+	while (current != NULL)
+	{
+		printf ("ptr |%p| strptr |%p| \n",current,current->file);
+		current = current->next;
+		/* code */
+	}
+	
+}
 void print_pointers(t_tlist *head){
 	t_tlist *current;
 	current = head;

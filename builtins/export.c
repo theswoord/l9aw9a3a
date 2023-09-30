@@ -125,7 +125,7 @@ void export(t_shell *g_struct, int ac, char **av, char **env)
 		i = 0;
 		while (++i < ac)
 			add_to_environ(av[i], &g_struct->envlist);
-		print_env(g_struct->envlist, 1);
+		// print_env(g_struct->envlist, 1);
 		return;
 	}
 	else if (pid > 0)

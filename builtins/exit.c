@@ -137,7 +137,7 @@ int valid_arg(char *arg)
 	return (0);
 }
 
-void ft_exit(char **args)
+void ft_exit(char **args, t_shell *g_struct)
 {
 	int exit_status;
 
@@ -151,7 +151,10 @@ void ft_exit(char **args)
 			ft_exit_error(1, NULL);
 		exit_status = ft_atoi(args[1]);
 	}
+	else
+		exit_status = g_struct->exit_status;
 	// ft_clear_all();
+	printf("%i\n", exit_status);
 	exit(exit_status);
 }
 

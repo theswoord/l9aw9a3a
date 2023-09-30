@@ -26,7 +26,7 @@ void unset_var_env(t_var_t **head, char *key)
     }
 }
 
-void ft_unset(int ac, char **av)
+void ft_unset(int ac, char **av, t_shell *g_struct)
 {
     int i;
     pid_t pid;

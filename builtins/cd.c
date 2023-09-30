@@ -46,13 +46,9 @@ void change_pwd(t_var_t *head)
 
 void cd_command(int ac, char *directory, char **env, t_shell *g_struct)
 {
-    pid_t pid;
 
     char *pwd;
     // pwd = find_value("PWD", g_struct->envlist);
-    pid = fork();
-    if (pid == 0)
-    {
         if (ac != 2)
         {
             perror("Usage: <directory>");
@@ -63,23 +59,12 @@ void cd_command(int ac, char *directory, char **env, t_shell *g_struct)
 
     pwd = ft_strjoin(pwd, directory);
     printf("%s|\n",pwd);
-        if (chdir(pwd) != 0)
+        if (chdir(directory) != 0)
         {
             perror("chdir");
             exit(1);
         }
         // enviroment can be changed anytime.
-        change_pwd(g_struct->envlist);
-        // exit(0);    
-        }
-    else if (pid > 0)
-    {
-        waitpid(pid, NULL, 0);
-        return;
-    }
-    else
-    {
-        perror("fork");
-        exit(1);
-    }
+        // change_pwd(g_struct->envlist);
+        // exit(0);
 }
