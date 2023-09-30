@@ -1,41 +1,52 @@
 #include "builtins.h"
 
-void echo_command(int ac, char **av)
+int check_n(char *str)
 {
-    pid_t pid;
+    int i;
+
+    i = 0;
+    if (!str)
+        return (0);
+    if (str[0] == '-')
+        i++;
+    while (str[i])
+    {
+        if (str[i] != 'n')
+            return (0);
+        i++;
+    }
+    return (1);
+}
+
+void echo_command(int size, char **args)
+{
     int i;
     int skip_newline;
 
-    pid = fork();
-    if (pid == 0)
+    i = skip_newline = 0;
+    
+    skip_newline = check_n(args[1]);
+    i = skip_newline + 1;
+    while (args && args[i])
     {
-        i = skip_newline = 0;
-
-        if (ac > 1 && ft_strncmp(av[1], "-n", 2) == 0)
-            skip_newline = 1;
-        i = skip_newline + 1;
-
-        while (i < ac)
-        {
-            printf("%s", av[i]);
-            if (i < ac - 1)
-                printf(" ");
+        if (check_n(args[i]))
             i++;
-        }
-        if (!skip_newline)
-            printf("\n");
-
-        exit(0);
+        else
+            break;
     }
-    else
+    while (i < size)
     {
-        waitpid(pid, NULL, 0);
-        return;
+        printf("%s", args[i]);
+        if (i < size - 1)
+            printf(" ");
+        i++;
     }
+    if (!skip_newline)
+        printf("\n");
 }
 
-// int main(int argc, char **argv)
-// {
-//     echo_command(argc, argv);
-//     return 0;
-// }
+int main(int argc, char **argv)
+{
+    echo_command(argc, argv);
+    return 0;
+}
