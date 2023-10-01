@@ -64,6 +64,11 @@ void tokenisation(char *str, t_shell *g_struct, char **env)
 		pwd_command(g_struct);
 
 	}
+			else if (ft_strcmp(single_comm[0],"echo") == 0)
+	{
+		echo_command(twodlen(single_comm),single_comm);
+
+	}
 
 
 	if (command_id(g_struct->tlist) == PIPE ||command_id(g_struct->tlist) == REDIW || command_id(g_struct->tlist) == REDIR || command_id(g_struct->tlist) == APPEND)
@@ -750,8 +755,8 @@ char *expander_qv2(t_shell *g_struct, char *str)
 	first = ft_substr(str, 0, pos(str, '$'));
     char *exp = NULL;
     char *req = NULL;
-    char *out = ft_strdup(first);
-
+    char *out = NULL;
+	int p = 0;
     while (str[i])
     {
         if (str[i] == '$')
@@ -765,7 +770,15 @@ char *expander_qv2(t_shell *g_struct, char *str)
             req = ft_substr(str, j, i - j);
             exp = env_expander(g_struct, g_struct->envlist, req);
             // Concatenate the expanded variable to the output string
-            out = ft_strjoingnl(out, exp);
+			if (p == 0)
+			{
+            out = ft_strjoin(first, exp);
+			p = 1;
+			continue;
+				/* code */
+			}
+            out = ft_strjoin(out, exp);
+			
             // Free memory allocated for temporary variables
             free(req);
             free(exp);
@@ -776,7 +789,7 @@ char *expander_qv2(t_shell *g_struct, char *str)
 			
             out = ft_strjoin(out, ft_substr(str, i, 1));
 
-			printf(";%s;\n",out);
+			// printf(";%s;\n",out);
             i++;
         }
     }
