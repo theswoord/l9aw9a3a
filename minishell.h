@@ -265,6 +265,8 @@ void ft_exit(char **args, t_shell *g_struct);
 void exit_status_error(t_shell *g_shell);
 void print_error_message(t_shell *g_shell);
 void pwd_command(t_shell *g_shell);
-void echo_command(int ac, char **av);
+// void echo_command(int ac, char **av);
 char * extract_from_in_list(t_shell * g_struct ,t_var_t *tlist, char * key);
+void ft_env(t_shell *g_struct,int ac, char **av);
+void echo_command(int size, char **args, t_shell* g_struct);
 #endif

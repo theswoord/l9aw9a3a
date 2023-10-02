@@ -15,7 +15,7 @@ void sig(int signal){
         // printf("sig engaged %d ",signal);
         printf("\n");
         rl_on_new_line();
-        rl_replace_line("", 0);
+        // rl_replace_line("", 0);
         rl_redisplay();
     }
 }
@@ -77,7 +77,7 @@ int main(int ac, char **av, char **env)
         {
             free(test);
             free_env(g_struct.envlist);
-            return 1;
+            return g_struct.exit_status;
         }
        if (ft_strlen(test) > 0)
         add_history(test);

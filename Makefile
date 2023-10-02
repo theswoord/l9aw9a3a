@@ -8,12 +8,12 @@ NAME = minishell
 NAMEB = checker
 CC = gcc
 
-CFLAGS= -Wall -Wextra -Werror -lreadline #-g -fsanitize=address
+CFLAGS= -Wall -Wextra -Werror -lreadline # -g -fsanitize=address
 msa7 = rm -rf
 obj = ${SRC:.c=.o}
 objb = ${SRCB:.c=.o}
-readflag = -L/Users/nbouhali/.brew/opt/readline/lib 
-readinc = -I/Users/nbouhali/.brew/opt/readline/include/
+# readflag = -L/Users/nbouhali/.brew/opt/readline/lib 
+# readinc = -I/Users/nbouhali/.brew/opt/readline/include/
 # tarzan = -L$(shell brew --prefix readline)
 libraries = ./printf/libftprintf.a ./gnl/gnl.a ./libft/libft.a ./ft_malloc/ft_malloc.a
 SUBDIRS = gnl printf libft ft_malloc

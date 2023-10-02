@@ -20,6 +20,7 @@ void ft_env(t_shell *g_struct,int ac, char **av)
         perror("fork");
         exit(1);
     }
+    g_struct->exit_status = 0;
 }
 
 

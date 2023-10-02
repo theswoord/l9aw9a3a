@@ -67,7 +67,7 @@ void execute_commands(char *command, char **args, char **env, t_shell *g_shell);
 // void execute_pipelines(t_node **command_node, char **env);
 void execute_pipelines(t_node **command_node, char **env, t_shell* g_struct);
 // void cd_command(int ac, char **av);
-void echo_command(int ac, char **av);
+void echo_command(int size, char **args, t_shell* g_struct);
 // void ft_env(t_shell *g_struct, int ac, char **av);
 char *find_executable_command(char *command, char *path);
 void ft_exit_error(int case_num, char *command);
