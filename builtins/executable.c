@@ -65,7 +65,6 @@ void execute_commands(char *command, char **args, char **env, t_shell *g_shell)
         }
         if (executable_path)
         {
-            // add args +1 if you want to test the program with command arguments.
             if (access(executable_path, X_OK) == 0)
                 execve(executable_path, args, env);
         }
@@ -112,5 +111,5 @@ void execute_commands_pipes(char *command, char **args, char **env, t_shell *g_s
     g_shell->error_name = COMMAND_NOT_FOUND;
     exit_status_error(g_shell);
     print_error_message(g_shell);
-    return;
+    exit(g_shell->exit_status);
 }

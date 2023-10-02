@@ -41,21 +41,19 @@ void free_pipes_node(t_node **command_node)
 	*command_node = NULL;
 }
 
-void execute_pipelines(t_node **command_node, char **env, t_shell* g_struct)
+void execute_pipelines(t_node **command_node, char **env, t_shell *g_struct)
 {
-	int i;
+	int status;
 	int temp_fd;
 	int pipes[2];
 	t_node *current_node;
 
 	if (*command_node == NULL)
 		return;
-	i = 0;
 	current_node = *command_node;
 	temp_fd = -1;
 	while (current_node)
 	{
-		// printf("%s\n", current_node->args[0]);
 		pipe(pipes);
 		pid_t pid = fork();
 		if (pid == 0)
@@ -70,8 +68,13 @@ void execute_pipelines(t_node **command_node, char **env, t_shell* g_struct)
 			close(pipes[0]);
 			close(pipes[1]);
 			redirections(current_node->redirect);
-			execute_commands_pipes(current_node->args[0], current_node->args, env,g_struct);
-			exit(0);
+			execute_commands_pipes(current_node->args[0], current_node->args, env, g_struct);
+		}
+		else
+		{
+			waitpid(pid, &status, 0);
+			if (WIFEXITED(status))
+				g_struct->exit_status = WEXITSTATUS(status);
 		}
 		if (temp_fd != -1)
 			close(temp_fd);
@@ -83,7 +86,6 @@ void execute_pipelines(t_node **command_node, char **env, t_shell* g_struct)
 	while (wait(NULL) > 0)
 	{
 	};
-	// free :D
 	free_pipes_node(command_node);
 	return;
 }
