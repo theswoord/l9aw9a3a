@@ -60,31 +60,21 @@ void execute_commands(char *command, char **args, char **env, t_shell *g_shell)
         else
         {
             path = extract_from_in_list(g_shell,g_shell->envlist,"PATH");
-            // path = getenv("PATH");
             executable_path = find_executable_command(command, path);
         }
         if (executable_path)
-        {
             if (access(executable_path, X_OK) == 0)
                 execve(executable_path, args, env);
-        }
         g_shell->error_name = COMMAND_NOT_FOUND;
-        exit_status_error(g_shell);
+        exit_status_error(g_shell, 0);
         print_error_message(g_shell);
         exit(g_shell->exit_status);
     }
     else
     {
-        // Parent process
-        // Wait for the child process to complete and get its exit status
         waitpid(pid, &status, 0);
-
         if (WIFEXITED(status))
-        {
-            // Child process exited normally, retrieve its exit status
             g_shell->exit_status = WEXITSTATUS(status);
-            // add_env_var(&g_shell->envlist,"?", ft_itoa(g_shell->exit_status)); // here fix
-        }
     }
 }
 
@@ -102,14 +92,10 @@ void execute_commands_pipes(char *command, char **args, char **env, t_shell *g_s
         executable_path = find_executable_command(command, path);
     }
     if (executable_path)
-    {
-        // add args +1 if you want to test the program with command arguments.
         if (access(executable_path, X_OK) == 0)
             execve(executable_path, args, env);
-    }
-    // print to fd 2 instead of fd 1
     g_shell->error_name = COMMAND_NOT_FOUND;
-    exit_status_error(g_shell);
+    exit_status_error(g_shell, 0);
     print_error_message(g_shell);
     exit(g_shell->exit_status);
 }

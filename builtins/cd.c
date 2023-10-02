@@ -50,7 +50,7 @@ void change_pwd(t_var_t *head, t_shell *g_shell)
     if (old_pwd == NULL || current_pwd == NULL)
     {
         g_shell->error_name = HOME_NOT_SET;
-        exit_status_error(g_shell);
+        exit_status_error(g_shell, 1);
         print_error_message(g_shell);
         exit(1);
     }
@@ -63,11 +63,13 @@ void cd_command(char *directory, char **env, t_shell *g_shell)
     else if (chdir(directory) != 0)
     {
         g_shell->error_name = PERMISSION_DENIED_FILE;
-        exit_status_error(g_shell);
+        exit_status_error(g_shell, 1);
         print_error_message(g_shell);
         return;
     }
     // enviroment can be changed anytime.
     change_pwd(g_shell->envlist, g_shell);
+    g_shell->error_name = SUCCESS;
+    exit_status_error(g_shell, 1);
     return;
 }
