@@ -43,8 +43,6 @@ void echo_command(int size, char **args, t_shell* g_struct)
     }
     if (!skip_newline)
         printf("\n");
-    
-    g_struct->exit_status = 0;
 }
 
 // int main(int argc, char **argv)

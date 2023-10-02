@@ -28,9 +28,8 @@ void print_error_message(t_shell *g_shell)
     else if (g_shell->error_name == SUCCESS)
         ft_putstr_fd("minishell: no error, command completed successfully\n", 2);
 }
-// make a function to update the exit status of the global structre when called based on the error variable
 
-void exit_status_error(t_shell *g_shell)
+void exit_status_error(t_shell *g_shell, int expand)
 {
     if (g_shell->error_name == SYNTAX_ERROR)
         g_shell->exit_status = 258;
@@ -48,4 +47,3 @@ void exit_status_error(t_shell *g_shell)
     else if (g_shell->error_name == SUCCESS)
         g_shell->exit_status = 0;
 }
-// make a function to print errors into fd 2
