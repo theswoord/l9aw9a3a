@@ -1,8 +1,29 @@
 #include "minishell.h"
 
+
+int	allspaces(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] != ' ' && str[i] != '\t')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 void tokenisation(char *str, t_shell *g_struct, char **env)
 {
 
+	if (allspaces(str) == 1 || ft_strlen(str) == 0)
+	{
+		return;
+		/* code */
+	}
+	
 	char **done = ft_strsplit(str); // pit eveyone in a node
 
 	add_token_list(&g_struct->tlist, done);
@@ -17,9 +38,12 @@ void tokenisation(char *str, t_shell *g_struct, char **env)
 		qidentify(g_struct, g_struct->tlist); // here nonini nonini moraja3a H rj3o a nabil
 											  // print_tokens(g_struct->tlist);
 	}
-	else
+	else{
 		printf("syntax error \n");
-
+		return;
+	}
+	// printf("hh\n");
+	
 		char **single_comm;								 // hadi kmala
 		single_comm = from_list_to_arr(g_struct->tlist); // this arr howa li aydkhl l function
 	// if ()
@@ -30,10 +54,14 @@ void tokenisation(char *str, t_shell *g_struct, char **env)
 	if(ft_strcmp(single_comm[0],"cd") == 0)
 	{
 		cd_command(single_comm[1],env,g_struct);
+		add_env_var(&g_struct->envlist,"?",ft_itoa(g_struct->exit_status));
+
 	}
 	else if (ft_strcmp(single_comm[0],"env") == 0)
 	{
 		print_env(g_struct->envlist,0);
+		add_env_var(&g_struct->envlist,"?",ft_itoa(g_struct->exit_status));
+
 
 	}
 	else if (ft_strcmp(single_comm[0],"export") == 0)
@@ -42,6 +70,7 @@ void tokenisation(char *str, t_shell *g_struct, char **env)
 		print_env(g_struct->envlist, 1);
 		
 		export(g_struct,twodlen(single_comm),single_comm,env);
+		add_env_var(&g_struct->envlist,"?",ft_itoa(g_struct->exit_status));
 
 
 	}
@@ -51,22 +80,26 @@ void tokenisation(char *str, t_shell *g_struct, char **env)
 		// print_env(g_struct->envlist, 1);
 		ft_unset(twodlen(single_comm),single_comm,g_struct);
 		// export(g_struct,twodlen(single_comm),single_comm,env);
+		add_env_var(&g_struct->envlist,"?",ft_itoa(g_struct->exit_status));
 
 
 	}
 		else if (ft_strcmp(single_comm[0],"exit") == 0)
 	{
 		ft_exit(single_comm,g_struct);
+		add_env_var(&g_struct->envlist,"?",ft_itoa(g_struct->exit_status));
 
 	}
 		else if (ft_strcmp(single_comm[0],"pwd") == 0)
 	{
 		pwd_command(g_struct);
+		add_env_var(&g_struct->envlist,"?",ft_itoa(g_struct->exit_status));
 
 	}
 			else if (ft_strcmp(single_comm[0],"echo") == 0)
 	{
 		echo_command(twodlen(single_comm),single_comm);
+		add_env_var(&g_struct->envlist,"?",ft_itoa(g_struct->exit_status));
 
 	}
 
@@ -81,6 +114,7 @@ void tokenisation(char *str, t_shell *g_struct, char **env)
 		// printf("arg = %s point redi = %p file = %s type = %d \n",g_struct->pipes_list->args[1],g_struct->pipes_list->redirect,g_struct->pipes_list->redirect->file,g_struct->pipes_list->redirect->type);
 		// printf("%s  %d %s\n",g_struct->redi_list->file,g_struct->redi_list->type,g_struct->redi_list->next->next->file);
 		execute_pipelines(&g_struct->pipes_list, env,g_struct);
+		add_env_var(&g_struct->envlist,"?",ft_itoa(g_struct->exit_status));
 		g_struct->redi_list = NULL;
 
 	}
@@ -88,6 +122,8 @@ void tokenisation(char *str, t_shell *g_struct, char **env)
 	{
 		pipes_divider(g_struct);
 		execute_pipelines(&g_struct->pipes_list, env,g_struct);
+		add_env_var(&g_struct->envlist,"?",ft_itoa(g_struct->exit_status));
+
 	}
 	else
 	{
@@ -96,6 +132,7 @@ void tokenisation(char *str, t_shell *g_struct, char **env)
 		if (ft_strcmp(single_comm[0],"cd") != 0 && ft_strcmp(single_comm[0],"export") != 0 && ft_strcmp(single_comm[0],"env") != 0 && ft_strcmp(single_comm[0],"pwd") != 0 && ft_strcmp(single_comm[0],"echo") != 0&& ft_strcmp(single_comm[0],"unset") != 0&& ft_strcmp(single_comm[0],"exit") != 0) // temp
 		{
 		execute_commands(single_comm[0], single_comm, env, g_struct); // hadi hya ki ktexecuti
+		add_env_var(&g_struct->envlist,"?",ft_itoa(g_struct->exit_status));
 			/* code */
 		}
 		
@@ -246,7 +283,7 @@ void pipes_list(t_shell *g_struct, int count)
 	}
 	if (current == NULL)
 		return;
-	printf("hh = %s\n", current->str);
+	// printf("hh = %s\n", current->str);
 	free(current->str);
 	free(current);
 	g_struct->tlist = current->next;
@@ -263,7 +300,7 @@ void redi_set(t_shell *g_struct){
 		if (current->is_file == true)
 		{
 			add_redi(&g_struct->redi_list,new_redi(current->str,current->value));
-		printf("%s %d\n",current->str,current->is_file);
+		// printf("%s %d\n",current->str,current->is_file);
 			/* code */
 
 			current = current->next;
@@ -404,7 +441,7 @@ void qidentify(t_shell *g_struct, t_tlist *token)
 			{
 				// only remove
 				// tmp->str = strdelch(tmp->str, '\'');
-				printf("ided\n");
+				// printf("ided\n");
 				// ft_memmove(&tmp->str[0], &tmp->str[0 + 1], ft_strlen(tmp->str) - 1);
 				// if (ft_strlen(tmp->str) < 2) {
 				// *tmp->str = '\0';
@@ -415,7 +452,7 @@ void qidentify(t_shell *g_struct, t_tlist *token)
 				/* code */
 			}
 
-			else if (pos(tmp->str, '\"') != -1)
+			 if (pos(tmp->str, '\"') != -1)
 			{
 				// printf("idad\n");
 				if (pos(tmp->str, '$') != -1)
@@ -426,7 +463,7 @@ void qidentify(t_shell *g_struct, t_tlist *token)
 					// tmp->str = expander_qv2(g_struct, &tmp->str); // try this first mn '"to $' dollars '$PATH $USER' mn $tal ' ' later mn ' ' tal " oula ghir tal "
 
 				
-					printf("%s\n", tmp->str);
+					// printf("%s\n", tmp->str);
 				}
 
 				// remove quotes hh
@@ -914,4 +951,29 @@ char *delete_pos(char *str, int pos)
 	result[j] = '\0';
 	free(str);
 	return (result);
+}
+
+char * extract_from_in_list(t_shell * g_struct ,t_var_t *tlist, char * key){
+
+	t_var_t *current ;
+	current = tlist;
+	int checked = 0;
+	while (current)
+	{
+		if (ft_strcmp(current->key , key) == 0) // here
+		{
+			return(current->value);
+			/* code */
+		}
+		checked++;
+		if (checked == g_struct->count)
+		{ // anbdl random i'm here , fix the position $path katmchi
+			return ("");
+		}
+
+		
+		current = current->next;
+		/* code */
+	}
+	return("");
 }

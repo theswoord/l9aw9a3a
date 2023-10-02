@@ -97,4 +97,5 @@ void	add_node(t_node **node, t_node *new);
 // void execute_commands_pipes(char *command, char **args, char **env);
 void execute_commands_pipes(char *command, char **args, char **env, t_shell *g_shell);
 void ft_exit(char **args, t_shell *g_struct);
+int	allspaces(char *str);
 #endif

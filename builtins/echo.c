@@ -45,8 +45,8 @@ void echo_command(int size, char **args)
         printf("\n");
 }
 
-int main(int argc, char **argv)
-{
-    echo_command(argc, argv);
-    return 0;
-}
+// int main(int argc, char **argv)
+// {
+//     echo_command(argc, argv);
+//     return 0;
+// }

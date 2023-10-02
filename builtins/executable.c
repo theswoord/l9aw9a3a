@@ -59,7 +59,8 @@ void execute_commands(char *command, char **args, char **env, t_shell *g_shell)
             executable_path = ft_strdup(command);
         else
         {
-            path = getenv("PATH");
+            path = extract_from_in_list(g_shell,g_shell->envlist,"PATH");
+            // path = getenv("PATH");
             executable_path = find_executable_command(command, path);
         }
         if (executable_path)
@@ -83,6 +84,7 @@ void execute_commands(char *command, char **args, char **env, t_shell *g_shell)
         {
             // Child process exited normally, retrieve its exit status
             g_shell->exit_status = WEXITSTATUS(status);
+            // add_env_var(&g_shell->envlist,"?", ft_itoa(g_shell->exit_status)); // here fix
         }
     }
 }
