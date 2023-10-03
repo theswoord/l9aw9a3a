@@ -22,27 +22,7 @@
 // 	struct env_vars *next;
 // } t_var_t;
 
-typedef struct
-{
-    char *command;
-    char **arguments;
-    char *output_file;
-    char *redirection_operator;
-    char **env;
-    int O_REDI;
-} ParsedCommand;
 
-typedef struct
-{
-    char *command;
-    char **args;
-} command;
-
-typedef struct
-{
-    command *commands;
-    int num_commands;
-} array_of_commands;
 
 
 
@@ -77,10 +57,10 @@ int valid_arg(char *arg);
 // void export(t_shell *g_struct, int ac, char **av, char **env);
 void pwd_command(t_shell *g_shell);
 int find_delimeter(char *string, char *delimeter);
-void redirect_into_file(ParsedCommand *data);
-void redirect_heredoc(ParsedCommand *data);
-void redirect_input(ParsedCommand *data);
-void ft_redirect(ParsedCommand *data);
+// void redirect_into_file(ParsedCommand *data);
+// void redirect_heredoc(ParsedCommand *data);
+// void redirect_input(ParsedCommand *data);
+// void ft_redirect(ParsedCommand *data);
 // void unset_var_env(t_var_t **head, char *key);
 void ft_unset(int ac, char **av, t_shell *g_struct);
 // void cd_command(int ac, char **av, char **env, t_shell *g_struct);
@@ -89,7 +69,7 @@ void output_in(int fd);
 void file_out(char *file);
 void file_append(char *file);
 void file_in(char *file);
-void redirections(t_redi_node *redirect_node);
+void redirections(t_redi_node *redirect_node, t_shell *g_struct);
 t_redi_node *new_redi(char *file, int type);
 t_node	*new_node(char **arr, t_redi_node *redirect);
 void add_redi(t_redi_node **node, t_redi_node *new);

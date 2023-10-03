@@ -36,7 +36,7 @@ void file_in(char *file)
     output_in(fd);
 }
 
-void redirections(t_redi_node *redirect_node)
+void redirections(t_redi_node *redirect_node, t_shell *g_struct)
 {
     t_redi_node *current;
 
@@ -49,6 +49,11 @@ void redirections(t_redi_node *redirect_node)
             file_append(current->file);
         else if (current->type == IN)
             file_in(current->file);
+        else if (current->type == HEREDOC)
+        {
+            dup2(g_struct->heredoc_list->fd, 0);
+            g_struct->heredoc_list = g_struct->heredoc_list->next;
+        }
         else
             return;
         current = current->next;

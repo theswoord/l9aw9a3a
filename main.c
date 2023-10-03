@@ -33,7 +33,7 @@ int main(int ac, char **av, char **env)
     minisignols.sa_handler = sig;
     sigemptyset(&minisignols.sa_mask);
     sigaddset(&minisignols.sa_mask,SIGQUIT);
-    minisignols.sa_flags =0 ;
+    minisignols.sa_flags = 0;
     // sigprocmask(SIG_BLOCK, &sigblock, NULL);
     // sigaction(SIGINT,&minisignols,NULL);
     sigaction(SIGINT,&minisignols,NULL);
@@ -66,12 +66,13 @@ int main(int ac, char **av, char **env)
     // print_env(g_struct.envlist,1);
 //  char *prompt;
 //  prompt = better_prompt();
-    while (1)
-    {
-        test = readline("minishell -> : ");
-        // free(prompt);
-        // test = get_next_line(0);
-        // readline("gggg");
+    // while (1)
+    // {
+    //     test = readline("minishell -> : ");
+    //     // free(prompt);
+    //     // test = get_next_line(0);
+    //     // readline("gggg");
+
 
         if (!test)
         {
@@ -82,8 +83,17 @@ int main(int ac, char **av, char **env)
        if (ft_strlen(test) > 0)
         add_history(test);
        
-       tokenisation(test,&g_struct,env);
-       free(test);
+    //    tokenisation(test,&g_struct,env);
+    //    free(test);
+    // }
+    g_struct.heredoc_list = NULL;
+    heredoc(&g_struct, "eof");
+    heredoc(&g_struct, "end");
+    heredoc(&g_struct, "fin");
+    while (g_struct.heredoc_list != NULL)
+    {
+        printf("%i\n", g_struct.heredoc_list->fd);
+        g_struct.heredoc_list = g_struct.heredoc_list->next;
     }
 }
 
