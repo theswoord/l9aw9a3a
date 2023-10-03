@@ -98,7 +98,7 @@ void tokenisation(char *str, t_shell *g_struct, char **env)
 	}
 			else if (ft_strcmp(single_comm[0],"echo") == 0)
 	{
-		echo_command(twodlen(single_comm),single_comm);
+		echo_command(twodlen(single_comm),single_comm,g_struct);
 		add_env_var(&g_struct->envlist,"?",ft_itoa(g_struct->exit_status));
 
 	}
@@ -132,7 +132,7 @@ void tokenisation(char *str, t_shell *g_struct, char **env)
 		if (ft_strcmp(single_comm[0],"cd") != 0 && ft_strcmp(single_comm[0],"export") != 0 && ft_strcmp(single_comm[0],"env") != 0 && ft_strcmp(single_comm[0],"pwd") != 0 && ft_strcmp(single_comm[0],"echo") != 0&& ft_strcmp(single_comm[0],"unset") != 0&& ft_strcmp(single_comm[0],"exit") != 0) // temp
 		{
 		execute_commands(single_comm[0], single_comm, env, g_struct); // hadi hya ki ktexecuti
-		add_env_var(&g_struct->envlist,"?",ft_itoa(g_struct->exit_status));
+		// add_env_var(&g_struct->envlist,"?",ft_itoa(g_struct->exit_status));
 			/* code */
 		}
 		

@@ -8,6 +8,7 @@
         "signal.h": "c",
         "minishell.h": "c",
         "unistd.h": "c",
-        "type_traits": "c"
+        "type_traits": "c",
+        "builtins.h": "c"
     }
 }
