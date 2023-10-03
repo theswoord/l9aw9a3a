@@ -142,7 +142,7 @@ void ft_exit(char **args, t_shell *g_struct)
 	int exit_status;
 
 	exit_status = 0;
-	printf("exit\n");
+	// printf("exit\n");
 	if (args[1])
 	{
 		if (valid_arg(args[1]))
@@ -156,7 +156,7 @@ void ft_exit(char **args, t_shell *g_struct)
 		exit_status = g_struct->exit_status;
 	}
 	// ft_clear_all();
-	printf("%i\n", exit_status);
+	// printf("%i\n", exit_status);
 	exit(exit_status);
 }
 

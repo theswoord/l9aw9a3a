@@ -18,7 +18,7 @@ int check_n(char *str)
     return (1);
 }
 
-void echo_command(int size, char **args, t_shell *g_struct)
+void echo_command(int size, char **args, t_shell* g_struct)
 {
     int i;
     int skip_newline;
@@ -43,8 +43,6 @@ void echo_command(int size, char **args, t_shell *g_struct)
     }
     if (!skip_newline)
         printf("\n");
-    g_struct->error_name = SUCCESS;
-    exit_status_error(g_struct, 1);
 }
 
 // int main(int argc, char **argv)
