@@ -85,7 +85,6 @@ void tokenisation(char *str, t_shell *g_struct, char **env)
 
 	modify_env(g_struct, g_struct->tlist); // lmochkil ila kan chi 7aja wst param it's not it
 	
-	
 	expander_init(g_struct, g_struct->tlist, NULL);
 	// hadchi khdam
 	// exit_status_error(g_struct,0);
@@ -114,6 +113,7 @@ void tokenisation(char *str, t_shell *g_struct, char **env)
 	// if ()
 	builtins(g_struct,env,single_comm);
 
+	// printf("hhhghghghg\n");
 
 	if (command_id(g_struct->tlist) == PIPE ||command_id(g_struct->tlist) == REDIW || command_id(g_struct->tlist) == REDIR || command_id(g_struct->tlist) == APPEND)
 	{
@@ -125,7 +125,7 @@ void tokenisation(char *str, t_shell *g_struct, char **env)
 		// printf("arg = %s point redi = %p file = %s type = %d \n",g_struct->pipes_list->args[1],g_struct->pipes_list->redirect,g_struct->pipes_list->redirect->file,g_struct->pipes_list->redirect->type);
 		// printf("%s  %d %s\n",g_struct->redi_list->file,g_struct->redi_list->type,g_struct->redi_list->next->next->file);
 		
-		printf(" %p |%s|\n",g_struct->pipes_list->redirect->file,g_struct->pipes_list->redirect->file);
+		// printf(" %p |%s|\n",g_struct->pipes_list->redirect->file,g_struct->pipes_list->redirect->file);
 		execute_pipelines(&g_struct->pipes_list, env,g_struct);
 		add_env_var(&g_struct->envlist,"?",ft_itoa(g_struct->exit_status));
 		g_struct->redi_list = NULL;
@@ -473,7 +473,7 @@ void qidentify(t_shell *g_struct, t_tlist *token)
 					// printf("b4 = |%s\n",tmp->str);
 					// free(tmp->str);
 					tmp->str = expander_qv2(g_struct, tmp->str); // try this first mn '"to $' dollars '$PATH $USER' mn $tal ' ' later mn ' ' tal " oula ghir tal "
-					printf("wst loop =%s\n",tmp->str);
+					// printf("wst loop =%s\n",tmp->str);
 					// tmp->str = expander_qv2(g_struct, &tmp->str); // try this first mn '"to $' dollars '$PATH $USER' mn $tal ' ' later mn ' ' tal " oula ghir tal "
 
 				
@@ -525,7 +525,7 @@ void expander_init(t_shell *g_struct, t_tlist *head, t_var_t *env)
 		if (tmp->value == EXPAND)
 		{
 			tmp->str = expanded(g_struct, tmp->str);
-			printf("f expander = %s\n", tmp->str);
+			// printf("f expander = %s\n", tmp->str);
 		}
 
 		tmp = tmp->next;
@@ -761,17 +761,17 @@ char *env_expander(t_shell * g_struct,t_var_t *head, char * key){
 			free(key);
 			return(ft_strdup(current->value));
 		}
-		checked++;
-		if (checked == g_struct->count)
-		{
-			free(key);
-			return(ft_strdup(""));
-		}
+		// checked++;
+		// if (checked == g_struct->count)
+		// {
+		// 	free(key);
+		// 	return(ft_strdup(""));
+		// }
 
 		current = current->next;
 		/* code */
 	}
-	return (NULL);
+	return (free(key), ft_strdup(""));
 }
 char *ft_realloc(char* str, int size){
 
@@ -784,7 +784,7 @@ if (str == NULL) {
         return NULL;
     } else {
 	char* tmp ; 
-	int old_size = ft_strlen(str);
+	int old_size = ft_strlen(str)+1;
 
 	tmp = ft_calloc(size,1);
 
@@ -844,12 +844,15 @@ char *expander_qv2(t_shell *g_struct, char *str)
     // free(first);
 
     // return out;
-	int i =0;
+	 int i =0;
 	int j = 0;
-	char *first = ft_substr(str, 0, pos(str, '$'));
+	int k = 0;
+	// char *first = ft_substr(str, 0, pos(str, '$'));
 	char *request = NULL;
 	char *expantion = NULL;
-	char *out = ft_calloc(100,1);
+	char *out = ft_calloc(ft_strlen(str)+1,1);
+			// printf("|%s|\n", out);
+	// printf ("ana size  : %zu\n", ft_strlen (str));
 	while(str[i]){
 
 		if (str[i] == '$'){
@@ -862,17 +865,30 @@ char *expander_qv2(t_shell *g_struct, char *str)
 				/* code */
 			}
 			request = ft_substr(str, j, i - j);
+			// printf(">%s<\n",request);
 			expantion = env_expander(g_struct,g_struct->envlist,request);
-			out = ft_strjoin(first, expantion);
-
+			// printf("|%s|\n",expantion);
+			out = ft_strjoingnl(out, expantion);
+			// printf("out = %s\n",out);
+			// printf("|%s|\n", out);
+			// i = 0;
+			out = ft_realloc(out , (ft_strlen(str)+ft_strlen(expantion)));
+			// printf("after = %s\n",out);
+			k += ft_strlen(expantion);
+			// i += ft_strlen (out);
+			// i--;
 		}
 		else
 		{
-			// ft_memmove(out,str,i - j);
-			printf("%s\n", out);
+			out[k]=str[i];
+			out[k+1]='\0';
+			k++;
+			// printf(".%c.\n", out[i]);
 			i++;
 		}
 		// i++;
+	// printf("fiiig after = %s\n",out);
+	// printf ("size db : %d \n", i);
 	}
 	return out;
 }
@@ -990,22 +1006,22 @@ bool list_check(t_tlist *head)
 			return (false);
 		// if((|| current->value == PIPE) && (current->next->value != WORD ||current->next->value != OPT ))
 		// return (false);
-		if ((current->value == APPEND || current->value == REDIR || current->value == REDIW || current->value == DOC) && !current->next)
+			// printf("1\n");
+		if ((current->value == APPEND || current->value == REDIR || current->value == REDIW || current->value == DOC|| current->value == PIPE) && !current->next)
 		{
-			printf("1\n");
 		return (false);
 		}
 		// {
+			// printf("2\n");
 		if((current->value == REDIR || current->value == REDIW || current->value == PIPE) && (current->next->value != WORD && current->next->value != OPT && current->next->value != QUOTES && current->next->value != EXPAND))
 		{
-			printf("%d %d \n",current->next->value,current->value);
-			printf("2\n");
+			// printf("%d %d \n",current->next->value,current->value);
 
 			return (false);
 		}
+			// printf("3\n");
 		if ((current->value == APPEND || current->value == REDIR || current->value == REDIW || current->value == DOC) && current->next == NULL  )
 		{
-			printf("3\n");
 
 			return (false);
 		}
