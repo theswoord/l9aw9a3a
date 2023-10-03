@@ -1,4 +1,5 @@
 "
+-p
 Makefile
 README.md
 a.out
@@ -15,7 +16,6 @@ file5
 ft_malloc
 gdfg
 gg
-ggggg
 gnl
 hello
 helpers.c

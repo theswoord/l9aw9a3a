@@ -262,11 +262,13 @@ void execute_commands_pipes(char *command, char **args, char **env, t_shell *g_s
 void export(t_shell *g_struct, int ac, char **av, char **env);
 void ft_unset(int ac, char **av, t_shell *g_struct);
 void ft_exit(char **args, t_shell *g_struct);
-void exit_status_error(t_shell *g_shell);
+void exit_status_error(t_shell *g_shell, int expand);
 void print_error_message(t_shell *g_shell);
 void pwd_command(t_shell *g_shell);
 // void echo_command(int ac, char **av);
 char * extract_from_in_list(t_shell * g_struct ,t_var_t *tlist, char * key);
 void ft_env(t_shell *g_struct,int ac, char **av);
 void echo_command(int size, char **args, t_shell* g_struct);
+char	*ft_strjoinmini(char *s1, char *s2);
+char *ft_realloc(char* str, int size);
 #endif

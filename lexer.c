@@ -84,15 +84,21 @@ void tokenisation(char *str, t_shell *g_struct, char **env)
 	free_tableau(done, twodlen(done));
 
 	modify_env(g_struct, g_struct->tlist); // lmochkil ila kan chi 7aja wst param it's not it
+	
+	
 	expander_init(g_struct, g_struct->tlist, NULL);
 	// hadchi khdam
+	// exit_status_error(g_struct,0);
 	if (list_check(g_struct->tlist))
 	{
 		qidentify(g_struct, g_struct->tlist); // here nonini nonini moraja3a H rj3o a nabil
 											  // print_tokens(g_struct->tlist);
 	}
 	else{
-		printf("syntax error \n");
+		g_struct->exit_status = 258;
+		// printf("%d\n ",g_struct->exit_status);
+		add_env_var(&g_struct->envlist,"?",ft_itoa(g_struct->exit_status));
+		printf("minishell: syntax error\n");
 		return;
 	}
 	// printf("hh\n");
@@ -118,6 +124,8 @@ void tokenisation(char *str, t_shell *g_struct, char **env)
 		// print_pointers2(g_struct->redi_list);
 		// printf("arg = %s point redi = %p file = %s type = %d \n",g_struct->pipes_list->args[1],g_struct->pipes_list->redirect,g_struct->pipes_list->redirect->file,g_struct->pipes_list->redirect->type);
 		// printf("%s  %d %s\n",g_struct->redi_list->file,g_struct->redi_list->type,g_struct->redi_list->next->next->file);
+		
+		printf(" %p |%s|\n",g_struct->pipes_list->redirect->file,g_struct->pipes_list->redirect->file);
 		execute_pipelines(&g_struct->pipes_list, env,g_struct);
 		add_env_var(&g_struct->envlist,"?",ft_itoa(g_struct->exit_status));
 		g_struct->redi_list = NULL;
@@ -442,20 +450,20 @@ void qidentify(t_shell *g_struct, t_tlist *token)
 		// printf("+%d \n",ft_charfind(tmp->str,'\"'));
 		if (tmp->value == QUOTES)
 		{
-			if (pos(tmp->str, '\'') != -1) // had l3jb makhdamch
-			{
-				// only remove
-				// tmp->str = strdelch(tmp->str, '\'');
-				// printf("ided\n");
-				// ft_memmove(&tmp->str[0], &tmp->str[0 + 1], ft_strlen(tmp->str) - 1);
-				// if (ft_strlen(tmp->str) < 2) {
-				// *tmp->str = '\0';
-				// } else {
-				// ft_memmove(tmp->str, tmp->str + 1, ft_strlen(tmp->str) - 2);
-				// tmp->str[ft_strlen(tmp->str) - 2] = '\0';
-				// }
-				/* code */
-			}
+			// if (pos(tmp->str, '\'') != -1) // had l3jb makhdamch
+			// {
+			// 	// only remove
+			// 	// tmp->str = strdelch(tmp->str, '\'');
+			// 	// printf("ided\n");
+			// 	// ft_memmove(&tmp->str[0], &tmp->str[0 + 1], ft_strlen(tmp->str) - 1);
+			// 	// if (ft_strlen(tmp->str) < 2) {
+			// 	// *tmp->str = '\0';
+			// 	// } else {
+			// 	// ft_memmove(tmp->str, tmp->str + 1, ft_strlen(tmp->str) - 2);
+			// 	// tmp->str[ft_strlen(tmp->str) - 2] = '\0';
+			// 	// }
+			// 	/* code */
+			// }
 
 			 if (pos(tmp->str, '\"') != -1)
 			{
@@ -465,6 +473,7 @@ void qidentify(t_shell *g_struct, t_tlist *token)
 					// printf("b4 = |%s\n",tmp->str);
 					// free(tmp->str);
 					tmp->str = expander_qv2(g_struct, tmp->str); // try this first mn '"to $' dollars '$PATH $USER' mn $tal ' ' later mn ' ' tal " oula ghir tal "
+					printf("wst loop =%s\n",tmp->str);
 					// tmp->str = expander_qv2(g_struct, &tmp->str); // try this first mn '"to $' dollars '$PATH $USER' mn $tal ' ' later mn ' ' tal " oula ghir tal "
 
 				
@@ -510,40 +519,15 @@ void expander_init(t_shell *g_struct, t_tlist *head, t_var_t *env)
 	t_tlist *tmp = head;
 	int i = 0;
 	int DQ = 0;
-	while (tmp != NULL) // define type dial expantion /li deja kayna b7al PATH o dakchi
+	while (tmp != NULL) 
 	{
-		// if (tmp->value == EXPAND) // checks if the $is inside oula outside o wach kayn f env oula la also wach real oula la
-		// {
-		// 	while (tmp->str[i])
-		// 	{
-		// 		if(tmp->str[i] == '\"' && DQ == 0)
-		// 		{
-		// 			DQ = 1;
-		// 			i++;
-		// 		}
-		// 		if (tmp->str[i] == '$')
-		// 		{
-		// 			/* code */
-		// 		}
-
-		// 		i++;
-		// 	}
 
 		if (tmp->value == EXPAND)
 		{
-			// free(tmp->str);
 			tmp->str = expanded(g_struct, tmp->str);
-			// while (tmp->str[i]) // substr mn $ tal 7ed ' '
-			// {
-
-			// 	/* code */
-
-			// }
-
-			/* code */
+			printf("f expander = %s\n", tmp->str);
 		}
 
-		// }
 		tmp = tmp->next;
 	}
 }
@@ -774,13 +758,13 @@ char *env_expander(t_shell * g_struct,t_var_t *head, char * key){
 	{
 		if (ft_strcmp(current->key, key)==0)
 		{
-			// free(key);
+			free(key);
 			return(ft_strdup(current->value));
 		}
 		checked++;
 		if (checked == g_struct->count)
 		{
-			// free(key);
+			free(key);
 			return(ft_strdup(""));
 		}
 
@@ -789,56 +773,138 @@ char *env_expander(t_shell * g_struct,t_var_t *head, char * key){
 	}
 	return (NULL);
 }
-char *expander_qv2(t_shell *g_struct, char *str)
-{
-    int i = 0;
-    int j = 0;
-    char *first = NULL;
-	first = ft_substr(str, 0, pos(str, '$'));
-    char *exp = NULL;
-    char *req = NULL;
-    char *out = NULL;
-	int p = 0;
-    while (str[i])
-    {
-        if (str[i] == '$')
-        {
-            i++;
-            j = i;
-            while (ft_isalnum(str[i]) == 1 && (str[i] != '\'' || str[i] != '\"'))
-            {
-                i++;
-            }
-            req = ft_substr(str, j, i - j);
-            exp = env_expander(g_struct, g_struct->envlist, req);
-			if (p == 0)
-			{
-            out = ft_strjoingnl(first, exp);
-			p = 1;
-			continue;
-				/* code */
-			}
-            out = ft_strjoingnl(out, exp);
-            free(req);
-            free(exp);
-        }
-        else
-        {
-            // Add non-alphanumeric characters to the output string directly
-			
-            out = ft_strjoin(out, ft_substr(str, i, 1));
+char *ft_realloc(char* str, int size){
 
-			// printf(";%s;\n",out);
-            i++;
-        }
-    }
 
-    free(first); // Free the initial substring
+if (str == NULL) {
+        return ft_calloc(size,1);
+    } else if (size == 0) {
+        // If the size is 0, it's equivalent to calling free(ptr)
+        free(str);
+        return NULL;
+    } else {
+	char* tmp ; 
+	int old_size = ft_strlen(str);
 
-    return out;
+	tmp = ft_calloc(size,1);
+
+	ft_strlcpy(tmp,str,old_size);
+	free(str);
+	return tmp;
 }
 
+}
+char *expander_qv2(t_shell *g_struct, char *str)
+{
+    // int i = 0;
+    // int j = 0;
+    // char *first = NULL;
+	// first = ft_substr(str, 0, pos(str, '$'));
+    // char *exp = NULL;
+    // char *req = NULL;
+	// char *test =NULL;
+    // char *out = malloc(1);
+	// int p = 0;
+    // while (str[i])
+    // {
+    //     if (str[i] == '$')
+    //     {
+    //         i++;
+    //         j = i;
+    //         while (ft_isalnum(str[i]) == 1 && (str[i] != '\'' || str[i] != '\"'))
+    //         {
+    //             i++;
+    //         }
+    //         req = ft_substr(str, j, i - j);
+	// 		// printf("req %p\n",req);
+    //         exp = env_expander(g_struct, g_struct->envlist, req);
+	// 		// printf("exp %p\n",exp);
+	// 		if (p == 0)
+	// 		{
+    //         out = ft_strjoingnl(first, exp);
+	// 		p = 1;
+	// 		// free(req);
+    //         // free(exp);
+	// 		continue;
+	// 		}
+    //         out = ft_strjoingnl(out, exp);
+    //         // free(req);
+    //         free(exp);
+    //     }
+    //     else
+    //     {
+	// 		// test = ;
+    //         out = ft_strjoin(out, ft_substr(str, i, 1));
+	// 		printf("test= |%s| = %p out= |%s| = %p \n",test,test,out,out);
+	// 		// free(test);
+    //         i++;
+    //     }
+    // }
+	// // printf("%p %p %p\n",req,out,first);
+    // free(first);
 
+    // return out;
+	int i =0;
+	int j = 0;
+	char *first = ft_substr(str, 0, pos(str, '$'));
+	char *request = NULL;
+	char *expantion = NULL;
+	char *out = ft_calloc(100,1);
+	while(str[i]){
+
+		if (str[i] == '$'){
+			i++;
+			j=i;
+			while (ft_isalnum(str[i]) == 1 )
+			{
+				i++;
+			
+				/* code */
+			}
+			request = ft_substr(str, j, i - j);
+			expantion = env_expander(g_struct,g_struct->envlist,request);
+			out = ft_strjoin(first, expantion);
+
+		}
+		else
+		{
+			// ft_memmove(out,str,i - j);
+			printf("%s\n", out);
+			i++;
+		}
+		// i++;
+	}
+	return out;
+}
+
+char	*ft_strjoinmini(char *s1, char *s2)
+{
+	char	*tkhlita;
+	int		a;
+	int		d;
+	int		ls1;
+	int		ls2;
+
+	ls1 = ft_strlengnl(s1);
+	ls2 = ft_strlengnl(s2);
+	a = 0;
+	tkhlita = (char *)ft_calloc((ls1 + ls2) + 1, 1);
+	if (!tkhlita)
+		return (0);
+	while (a < ls1)
+	{
+		tkhlita[a] = s1[a];
+		a++;
+	}
+	d = 0;
+	while (d < ls2)
+	{
+		tkhlita[a++] = s2[d++];
+	}
+	free(s1);
+	free(s2);
+	return (tkhlita);
+}
 
 // "$USER"
 char *recombinator(char *first, char *later, char *rest)
@@ -922,6 +988,27 @@ bool list_check(t_tlist *head)
 			return (false);
 		if(current->value == PIPE && current->queue == 0)
 			return (false);
+		// if((|| current->value == PIPE) && (current->next->value != WORD ||current->next->value != OPT ))
+		// return (false);
+		if ((current->value == APPEND || current->value == REDIR || current->value == REDIW || current->value == DOC) && !current->next)
+		{
+			printf("1\n");
+		return (false);
+		}
+		// {
+		if((current->value == REDIR || current->value == REDIW || current->value == PIPE) && (current->next->value != WORD && current->next->value != OPT && current->next->value != QUOTES && current->next->value != EXPAND))
+		{
+			printf("%d %d \n",current->next->value,current->value);
+			printf("2\n");
+
+			return (false);
+		}
+		if ((current->value == APPEND || current->value == REDIR || current->value == REDIW || current->value == DOC) && current->next == NULL  )
+		{
+			printf("3\n");
+
+			return (false);
+		}
 		// if ()
 		current = current->next;
 		/* code */
