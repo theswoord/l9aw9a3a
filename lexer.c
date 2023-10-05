@@ -1,17 +1,53 @@
 #include "minishell.h"
 
+
+
+char *add_exit_to_env(t_shell * g_struct, int exit){
+
+
+	if (g_struct->exit_arr)
+	{
+		free(g_struct->exit_arr);
+		/* code */
+	}
+	else
+	{
+		return(ft_itoa(g_struct->exit_status)) ;
+	}
+	return NULL;
+}
+void update_exit(t_shell *g_struct){
+
+	static int i = 0;
+	// if (g_struct->exit_arr)
+	// {
+	// 	printf("3iw\n");
+	// 	free(g_struct->exit_arr);
+	// 	/* code */
+	// }
+	if (i != 0)
+	{
+		free(g_struct->exit_arr);
+	}
+	g_struct->exit_arr = ft_itoa(g_struct->exit_status);
+		printf("%p\n",g_struct->exit_arr);
+	i++;
+}
+
 void builtins(t_shell *g_struct , char ** env ,  char ** single_comm){
 		if(ft_strcmp(single_comm[0],"cd") == 0)
 	{
 		cd_command(single_comm[1],env,g_struct);
-		add_env_var(&g_struct->envlist,"?",ft_itoa(g_struct->exit_status));
+		update_exit(g_struct);
+		add_env_var(&g_struct->envlist,"?",g_struct->exit_arr);
 
 	}
 	else if (ft_strcmp(single_comm[0],"env") == 0)
 	{
 		// print_env(g_struct->envlist,0);
 		ft_env(g_struct,twodlen(single_comm),single_comm);
-		add_env_var(&g_struct->envlist,"?",ft_itoa(g_struct->exit_status));
+		update_exit(g_struct);
+		add_env_var(&g_struct->envlist,"?",g_struct->exit_arr);
 
 
 	}
@@ -21,7 +57,8 @@ void builtins(t_shell *g_struct , char ** env ,  char ** single_comm){
 		print_env(g_struct->envlist, 1);
 		
 		export(g_struct,twodlen(single_comm),single_comm,env);
-		add_env_var(&g_struct->envlist,"?",ft_itoa(g_struct->exit_status));
+		update_exit(g_struct);
+		add_env_var(&g_struct->envlist,"?",g_struct->exit_arr);
 
 
 	}
@@ -31,26 +68,31 @@ void builtins(t_shell *g_struct , char ** env ,  char ** single_comm){
 		// print_env(g_struct->envlist, 1);
 		ft_unset(twodlen(single_comm),single_comm,g_struct);
 		// export(g_struct,twodlen(single_comm),single_comm,env);
-		add_env_var(&g_struct->envlist,"?",ft_itoa(g_struct->exit_status));
+		update_exit(g_struct);
+		add_env_var(&g_struct->envlist,"?",g_struct->exit_arr);
 
 
 	}
 		else if (ft_strcmp(single_comm[0],"exit") == 0)
 	{
 		ft_exit(single_comm,g_struct);
-		add_env_var(&g_struct->envlist,"?",ft_itoa(g_struct->exit_status));
+		update_exit(g_struct);
+		add_env_var(&g_struct->envlist,"?",g_struct->exit_arr);
 
 	}
 		else if (ft_strcmp(single_comm[0],"pwd") == 0)
 	{
 		pwd_command(g_struct);
-		add_env_var(&g_struct->envlist,"?",ft_itoa(g_struct->exit_status));
+		update_exit(g_struct);
+		add_env_var(&g_struct->envlist,"?",g_struct->exit_arr);
 
 	}
 			else if (ft_strcmp(single_comm[0],"echo") == 0)
 	{
 		echo_command(twodlen(single_comm),single_comm,g_struct);
-		add_env_var(&g_struct->envlist,"?",ft_itoa(g_struct->exit_status));
+		printf("raw = |%d|\n", g_struct->exit_status);
+		update_exit(g_struct);
+		add_env_var(&g_struct->envlist,"?",g_struct->exit_arr);
 
 	}
 }
@@ -96,7 +138,8 @@ void tokenisation(char *str, t_shell *g_struct, char **env)
 	else{
 		g_struct->exit_status = 258;
 		// printf("%d\n ",g_struct->exit_status);
-		add_env_var(&g_struct->envlist,"?",ft_itoa(g_struct->exit_status));
+		update_exit(g_struct);
+		add_env_var(&g_struct->envlist,"?",g_struct->exit_arr);
 		printf("minishell: syntax error\n");
 		return;
 	}
@@ -128,7 +171,8 @@ void tokenisation(char *str, t_shell *g_struct, char **env)
 	// print_tokens(g_struct->tlist);
 		execute_pipelines(&g_struct->pipes_list, env,g_struct);
 
-		add_env_var(&g_struct->envlist,"?",ft_itoa(g_struct->exit_status));
+		update_exit(g_struct);
+		add_env_var(&g_struct->envlist,"?",g_struct->exit_arr);
 		g_struct->redi_list = NULL;
 	free_tokens(g_struct->tlist); 
 
@@ -138,7 +182,8 @@ void tokenisation(char *str, t_shell *g_struct, char **env)
 	{
 		pipes_divider(g_struct);
 		execute_pipelines(&g_struct->pipes_list, env,g_struct);
-		add_env_var(&g_struct->envlist,"?",ft_itoa(g_struct->exit_status));
+		update_exit(g_struct);
+		add_env_var(&g_struct->envlist,"?",g_struct->exit_arr);
 
 	}
 	else
@@ -152,7 +197,9 @@ void tokenisation(char *str, t_shell *g_struct, char **env)
 		if (ft_strcmp(single_comm[0],"cd") != 0 && ft_strcmp(single_comm[0],"export") != 0 && ft_strcmp(single_comm[0],"env") != 0 && ft_strcmp(single_comm[0],"pwd") != 0 && ft_strcmp(single_comm[0],"echo") != 0&& ft_strcmp(single_comm[0],"unset") != 0&& ft_strcmp(single_comm[0],"exit") != 0) // temp
 		{
 		execute_commands(single_comm[0], single_comm, env, g_struct); // hadi hya ki ktexecuti
-		// add_env_var(&g_struct->envlist,"?",ft_itoa(g_struct->exit_status));
+		update_exit(g_struct);
+		
+		add_env_var(&g_struct->envlist,"?",g_struct->exit_arr);
 			/* code */
 		}
 		// printf("1\n");

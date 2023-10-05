@@ -130,6 +130,7 @@ typedef struct s_shell
     int count; // hada test o safi
     // int exit_status; //static int
     int exit_status;
+    char *exit_arr;
     t_shell_error error_name;
     t_redi_node *redi_list;
 }t_shell; 
@@ -284,4 +285,6 @@ void ft_env(t_shell *g_struct,int ac, char **av);
 void echo_command(int size, char **args, t_shell* g_struct);
 char	*ft_strjoinmini(char *s1, char *s2);
 char *ft_realloc(char* str, int size);
+char *add_exit_to_env(t_shell * g_struct, int exit); //here
+void update_exit(t_shell *g_struct);
 #endif
