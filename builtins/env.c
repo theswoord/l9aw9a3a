@@ -2,9 +2,27 @@
 
 void ft_env(t_shell *g_struct, int ac, char **av)
 {
-    print_env(g_struct->envlist, 0);
-    g_struct->error_name = SUCCESS;
-    exit_status_error(g_struct, 1);
+    int i;
+    pid_t pid;
+
+    pid = fork();
+    if (pid == 0)
+    {
+        print_env(g_struct->envlist, 0);
+        g_struct->error_name = SUCCESS;
+        exit_status_error(g_struct, 1);
+        exit(0);
+    }
+    else if (pid > 0)
+    {
+        waitpid(pid, NULL, 0);
+        exit(0);
+    }
+    else
+    {
+        perror("fork");
+        exit(1);
+    }
 }
 
 // ez just use the print function from export to print all list of variables without declare -x

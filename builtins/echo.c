@@ -18,7 +18,7 @@ int check_n(char *str)
     return (1);
 }
 
-void echo_command(int size, char **args, t_shell *g_struct)
+void echo_child(int size, char **args, t_shell *g_struct)
 {
     int i;
     int skip_newline;
@@ -47,8 +47,25 @@ void echo_command(int size, char **args, t_shell *g_struct)
     exit_status_error(g_struct, 1);
 }
 
-// int main(int argc, char **argv)
-// {
-//     echo_command(argc, argv);
-//     return 0;
-// }
+void echo_command(int size, char **args, t_shell *g_struct)
+{
+    int i;
+    pid_t pid;
+
+    pid = fork();
+    if (pid == 0)
+    {
+        echo_child(size, args, g_struct);
+        exit(0);
+    }
+    else if (pid > 0)
+    {
+        waitpid(pid, NULL, 0);
+        exit(0);
+    }
+    else
+    {
+        perror("fork");
+        exit(1);
+    }
+}

@@ -1,59 +1,59 @@
 #include "minishell.h"
 
-void builtins(t_shell *g_struct , char ** env ,  char ** single_comm){
-		if(ft_strcmp(single_comm[0],"cd") == 0)
-	{
-		cd_command(single_comm[1],env,g_struct);
-		add_env_var(&g_struct->envlist,"?",ft_itoa(g_struct->exit_status));
+// void builtins(t_shell *g_struct , char ** env ,  char ** single_comm){
+// 		if(ft_strcmp(single_comm[0],"cd") == 0)
+// 	{
+// 		cd_command(single_comm[1],env,g_struct);
+// 		add_env_var(&g_struct->envlist,"?",ft_itoa(g_struct->exit_status));
 
-	}
-	else if (ft_strcmp(single_comm[0],"env") == 0)
-	{
-		// print_env(g_struct->envlist,0);
-		ft_env(g_struct,twodlen(single_comm),single_comm);
-		add_env_var(&g_struct->envlist,"?",ft_itoa(g_struct->exit_status));
+// 	}
+// 	else if (ft_strcmp(single_comm[0],"env") == 0)
+// 	{
+// 		// print_env(g_struct->envlist,0);
+// 		ft_env(g_struct,twodlen(single_comm),single_comm);
+// 		add_env_var(&g_struct->envlist,"?",ft_itoa(g_struct->exit_status));
 
 
-	}
-	else if (ft_strcmp(single_comm[0],"export") == 0)
-	{
-		if (twodlen(single_comm)==1)
-		print_env(g_struct->envlist, 1);
+// 	}
+// 	else if (ft_strcmp(single_comm[0],"export") == 0)
+// 	{
+// 		if (twodlen(single_comm)==1)
+// 		print_env(g_struct->envlist, 1);
 		
-		export(g_struct,twodlen(single_comm),single_comm,env);
-		add_env_var(&g_struct->envlist,"?",ft_itoa(g_struct->exit_status));
+// 		export(g_struct,twodlen(single_comm),single_comm,env);
+// 		add_env_var(&g_struct->envlist,"?",ft_itoa(g_struct->exit_status));
 
 
-	}
-	else if (ft_strcmp(single_comm[0],"unset") == 0)
-	{
-		// if (twodlen(single_comm)==1)
-		// print_env(g_struct->envlist, 1);
-		ft_unset(twodlen(single_comm),single_comm,g_struct);
-		// export(g_struct,twodlen(single_comm),single_comm,env);
-		add_env_var(&g_struct->envlist,"?",ft_itoa(g_struct->exit_status));
+// 	}
+// 	else if (ft_strcmp(single_comm[0],"unset") == 0)
+// 	{
+// 		// if (twodlen(single_comm)==1)
+// 		// print_env(g_struct->envlist, 1);
+// 		ft_unset(twodlen(single_comm),single_comm,g_struct);
+// 		// export(g_struct,twodlen(single_comm),single_comm,env);
+// 		add_env_var(&g_struct->envlist,"?",ft_itoa(g_struct->exit_status));
 
 
-	}
-		else if (ft_strcmp(single_comm[0],"exit") == 0)
-	{
-		ft_exit(single_comm,g_struct);
-		add_env_var(&g_struct->envlist,"?",ft_itoa(g_struct->exit_status));
+// 	}
+// 		else if (ft_strcmp(single_comm[0],"exit") == 0)
+// 	{
+// 		ft_exit(single_comm,g_struct);
+// 		add_env_var(&g_struct->envlist,"?",ft_itoa(g_struct->exit_status));
 
-	}
-		else if (ft_strcmp(single_comm[0],"pwd") == 0)
-	{
-		pwd_command(g_struct);
-		add_env_var(&g_struct->envlist,"?",ft_itoa(g_struct->exit_status));
+// 	}
+// 		else if (ft_strcmp(single_comm[0],"pwd") == 0)
+// 	{
+// 		pwd_command(g_struct);
+// 		add_env_var(&g_struct->envlist,"?",ft_itoa(g_struct->exit_status));
 
-	}
-			else if (ft_strcmp(single_comm[0],"echo") == 0)
-	{
-		echo_command(twodlen(single_comm),single_comm,g_struct);
-		add_env_var(&g_struct->envlist,"?",ft_itoa(g_struct->exit_status));
+// 	}
+// 			else if (ft_strcmp(single_comm[0],"echo") == 0)
+// 	{
+// 		echo_command(twodlen(single_comm),single_comm,g_struct);
+// 		add_env_var(&g_struct->envlist,"?",ft_itoa(g_struct->exit_status));
 
-	}
-}
+// 	}
+// }
 int	allspaces(char *str)
 {
 	int	i;
@@ -134,12 +134,12 @@ void tokenisation(char *str, t_shell *g_struct, char **env)
 	{
 		// char **single_comm;								 // hadi kmala
 		// single_comm = from_list_to_arr(g_struct->tlist); // this arr howa li aydkhl l function
-		if (ft_strcmp(single_comm[0],"cd") != 0 && ft_strcmp(single_comm[0],"export") != 0 && ft_strcmp(single_comm[0],"env") != 0 && ft_strcmp(single_comm[0],"pwd") != 0 && ft_strcmp(single_comm[0],"echo") != 0&& ft_strcmp(single_comm[0],"unset") != 0&& ft_strcmp(single_comm[0],"exit") != 0) // temp
-		{
-		general_execution(g_struct, args, 1); // hadi hya ki ktexecuti
+		// if (ft_strcmp(single_comm[0],"cd") != 0 && ft_strcmp(single_comm[0],"export") != 0 && ft_strcmp(single_comm[0],"env") != 0 && ft_strcmp(single_comm[0],"pwd") != 0 && ft_strcmp(single_comm[0],"echo") != 0&& ft_strcmp(single_comm[0],"unset") != 0&& ft_strcmp(single_comm[0],"exit") != 0) // temp
+		// {
+		general_execution(g_struct, single_comm, 1); // hadi hya ki ktexecuti
 		// add_env_var(&g_struct->envlist,"?",ft_itoa(g_struct->exit_status));
 			/* code */
-		}
+		// }
 		
 		free(single_comm);
 		// free_tableauv2(hhhh);

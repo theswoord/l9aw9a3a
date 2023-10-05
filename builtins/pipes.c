@@ -58,7 +58,7 @@ void pipes_exec(t_node *current_node, t_shell *g_struct, int *pipes, int temp_fd
 			close(pipes[0]);
 			close(pipes[1]);
 			redirections(current_node->redirect, g_struct);
-			general_execution(g_struct, args, 0);
+			general_execution(g_struct, current_node->args, 0);
 		}
 		else
 		{
@@ -121,57 +121,3 @@ void add_node(t_node **node, t_node *new)
 		head = head->next;
 	head->next = new;
 }
-
-// int main(int ac, char **av, char **env)
-// {
-// 	t_node *command_node;
-
-// 	command_node = NULL;
-
-// 	char *args[] = {"ls", NULL};
-// 	// char *args1[] = {"ls", NULL};
-// 	// char *args2[] = {"cat", "-e", NULL};
-// 	// char *args[] = {"ls", "-l", NULL};
-// 	// char *args1[] = {"wc", "-l", NULL};
-// 	// char *args2[] = {"cat", "-e", NULL};
-// 	// you can pass the linked list directly or get the node from the return value
-// 	// t_node *command1 = new_command_node(&command_node, args);
-
-// 	// char *args2[] = {"grep", "env", NULL};
-// 	// t_node *command2 = new_command_node(&command_node, args2);
-
-// 	// char *args3[] = {"sort", NULL};
-// 	// new_command_node(&command_node, args3);
-
-// 	// char *args4[] = {"wc", "-w", NULL};
-// 	// new_command_node(&command_node, args4);
-
-// 	// char *args5[] = {"cat", "-e", NULL};
-// 	// new_command_node(&command_node, args5);
-// 	t_redi_node	*redirect1 = NULL;
-// 	char file1[] = "text";
-// 	int type1 = OUT;
-// 	add_redi(&redirect1, new_redi(file1, type1));
-
-// 	char file2[] = "tasty";
-// 	int type2 = OUT;
-// 	add_redi(&redirect1, new_redi(file2, type2));
-
-// 	// t_redi_node	*redirect2 = NULL;
-// 	// add_node(&command_node, new_node(args, redirect1));
-// 	// char file3[] = "tasty";
-// 	// int type3 = IN;
-// 	// add_redi(&redirect2, new_redi(file3, type3));
-// 	add_node(&command_node, new_node(args, redirect1));
-// 	// add_node(&command_node, new_node(args1, NULL));
-
-// 	// f declaration dyal linked list khod li bghiti, ya ima head_tiz w new_tiz wla rir new_command_node
-// 	execute_pipelines(&command_node, env);
-// 	// char *args2[] = {"ls", NULL};
-// 	// char *args3[] = {"ls","-l", NULL};
-// 	// add_node(&command_node, new_node(args2, NULL));
-// 	// add_node(&command_node, new_node(args3, NULL));
-// 	// execute_pipelines(&command_node, env);
-
-// 	return (0);
-// }
