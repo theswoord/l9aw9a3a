@@ -118,22 +118,19 @@ void tokenisation(char *str, t_shell *g_struct, char **env)
 	// }
 	
 
-	if (command_id(g_struct->tlist) == PIPE ||command_id(g_struct->tlist) == REDIW || command_id(g_struct->tlist) == REDIR || command_id(g_struct->tlist) == APPEND)
+	if (command_id(g_struct->tlist) == REDIW || command_id(g_struct->tlist) == REDIR || command_id(g_struct->tlist) == APPEND)
 	{
 		files_finder(g_struct->tlist);
-		// printf(" zqqq\n");
 		redi_set(g_struct);
 		pipes_divider(g_struct);
-		// print_pointers2(g_struct->redi_list);
-		// printf("arg = %s point redi = %p file = %s type = %d \n",g_struct->pipes_list->args[1],g_struct->pipes_list->redirect,g_struct->pipes_list->redirect->file,g_struct->pipes_list->redirect->type);
-		// printf("%s  %d %s\n",g_struct->redi_list->file,g_struct->redi_list->type,g_struct->redi_list->next->next->file);
-		// printf(" %p |%s|\n",g_struct->pipes_list->redirect->file,g_struct->pipes_list->redirect->file);
+
+
 	print_tokens(g_struct->tlist);
 		execute_pipelines(&g_struct->pipes_list, env,g_struct);
 
 		add_env_var(&g_struct->envlist,"?",ft_itoa(g_struct->exit_status));
 		g_struct->redi_list = NULL;
-	free_tokens(g_struct->tlist); // hadi mzyana ghir ila knt ankhdm b array it needs to go
+	free_tokens(g_struct->tlist); 
 
 
 	}
