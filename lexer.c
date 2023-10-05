@@ -125,7 +125,7 @@ void tokenisation(char *str, t_shell *g_struct, char **env)
 		pipes_divider(g_struct);
 
 
-	print_tokens(g_struct->tlist);
+	// print_tokens(g_struct->tlist);
 		execute_pipelines(&g_struct->pipes_list, env,g_struct);
 
 		add_env_var(&g_struct->envlist,"?",ft_itoa(g_struct->exit_status));
