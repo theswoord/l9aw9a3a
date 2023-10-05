@@ -71,6 +71,7 @@ int	allspaces(char *str)
 void tokenisation(char *str, t_shell *g_struct, char **env)
 {
 
+		char **single_comm ;								 // hadi kmala
 	if (allspaces(str) == 1 || ft_strlen(str) == 0)
 	{
 		return;
@@ -85,7 +86,6 @@ void tokenisation(char *str, t_shell *g_struct, char **env)
 
 	modify_env(g_struct, g_struct->tlist); // lmochkil ila kan chi 7aja wst param it's not it
 	
-	expander_init(g_struct, g_struct->tlist, NULL);
 	// hadchi khdam
 	// exit_status_error(g_struct,0);
 	if (list_check(g_struct->tlist))
@@ -100,10 +100,10 @@ void tokenisation(char *str, t_shell *g_struct, char **env)
 		printf("minishell: syntax error\n");
 		return;
 	}
+	expander_init(g_struct, g_struct->tlist, NULL);
 	// printf("hh\n");
 	
-		char **single_comm;								 // hadi kmala
-		single_comm = from_list_to_arr(g_struct->tlist); // this arr howa li aydkhl l function
+	
 	// if ()
 	// {
 	// 	/* code */
@@ -111,9 +111,12 @@ void tokenisation(char *str, t_shell *g_struct, char **env)
 	// cd_command()
 
 	// if ()
-	builtins(g_struct,env,single_comm);
-
 	// printf("hhhghghghg\n");
+	// while (1)
+	// {
+	// 	/* code */
+	// }
+	
 
 	if (command_id(g_struct->tlist) == PIPE ||command_id(g_struct->tlist) == REDIW || command_id(g_struct->tlist) == REDIR || command_id(g_struct->tlist) == APPEND)
 	{
@@ -124,11 +127,14 @@ void tokenisation(char *str, t_shell *g_struct, char **env)
 		// print_pointers2(g_struct->redi_list);
 		// printf("arg = %s point redi = %p file = %s type = %d \n",g_struct->pipes_list->args[1],g_struct->pipes_list->redirect,g_struct->pipes_list->redirect->file,g_struct->pipes_list->redirect->type);
 		// printf("%s  %d %s\n",g_struct->redi_list->file,g_struct->redi_list->type,g_struct->redi_list->next->next->file);
-		
 		// printf(" %p |%s|\n",g_struct->pipes_list->redirect->file,g_struct->pipes_list->redirect->file);
+	print_tokens(g_struct->tlist);
 		execute_pipelines(&g_struct->pipes_list, env,g_struct);
+
 		add_env_var(&g_struct->envlist,"?",ft_itoa(g_struct->exit_status));
 		g_struct->redi_list = NULL;
+	free_tokens(g_struct->tlist); // hadi mzyana ghir ila knt ankhdm b array it needs to go
+
 
 	}
 	else if (command_id(g_struct->tlist) == PIPE)
@@ -142,17 +148,24 @@ void tokenisation(char *str, t_shell *g_struct, char **env)
 	{
 		// char **single_comm;								 // hadi kmala
 		// single_comm = from_list_to_arr(g_struct->tlist); // this arr howa li aydkhl l function
+		printf("hh \n");
+		
+		single_comm = from_list_to_arr(g_struct->tlist); // this arr howa li aydkhl l function
+	builtins(g_struct,env,single_comm);
 		if (ft_strcmp(single_comm[0],"cd") != 0 && ft_strcmp(single_comm[0],"export") != 0 && ft_strcmp(single_comm[0],"env") != 0 && ft_strcmp(single_comm[0],"pwd") != 0 && ft_strcmp(single_comm[0],"echo") != 0&& ft_strcmp(single_comm[0],"unset") != 0&& ft_strcmp(single_comm[0],"exit") != 0) // temp
 		{
 		execute_commands(single_comm[0], single_comm, env, g_struct); // hadi hya ki ktexecuti
 		add_env_var(&g_struct->envlist,"?",ft_itoa(g_struct->exit_status));
 			/* code */
 		}
-		
+		printf("1\n");
 		free(single_comm);
 		// free_tableauv2(hhhh);
 	free_tokens(g_struct->tlist); // hadi mzyana ghir ila knt ankhdm b array it needs to go
 	}
+		// while (1){
+
+		// }
 	// print_tokens(g_struct->tlist);
 	// free_tokens(g_struct->tlist); // hadi mzyana ghir ila knt ankhdm b array it needs to go
 
@@ -693,7 +706,9 @@ char **from_list_to_arr(t_tlist *head)
 		// printf("*%s*\n",arr[i]);
 		i++;
 		current = current->next;
+		printf("%p\n",arr);
 	}
+	
 	arr[i] = NULL;
 
 	return arr;
