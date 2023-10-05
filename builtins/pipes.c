@@ -68,7 +68,7 @@ void execute_pipelines(t_node **command_node, char **env, t_shell *g_struct)
 			close(pipes[0]);
 			close(pipes[1]);
 			redirections(current_node->redirect, g_struct);
-			execute_commands_pipes(current_node->args[0], current_node->args, env, g_struct);
+			general_execution(g_struct, args, 0);
 		}
 		else
 		{
