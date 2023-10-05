@@ -145,7 +145,7 @@ void tokenisation(char *str, t_shell *g_struct, char **env)
 	{
 		// char **single_comm;								 // hadi kmala
 		// single_comm = from_list_to_arr(g_struct->tlist); // this arr howa li aydkhl l function
-		printf("hh \n");
+		// printf("hh \n");
 		
 		single_comm = from_list_to_arr(g_struct->tlist); // this arr howa li aydkhl l function
 	builtins(g_struct,env,single_comm);
@@ -155,7 +155,7 @@ void tokenisation(char *str, t_shell *g_struct, char **env)
 		// add_env_var(&g_struct->envlist,"?",ft_itoa(g_struct->exit_status));
 			/* code */
 		}
-		printf("1\n");
+		// printf("1\n");
 		free(single_comm);
 		// free_tableauv2(hhhh);
 	free_tokens(g_struct->tlist); // hadi mzyana ghir ila knt ankhdm b array it needs to go
@@ -482,7 +482,11 @@ void qidentify(t_shell *g_struct, t_tlist *token)
 				{
 					// printf("b4 = |%s\n",tmp->str);
 					// free(tmp->str);
+					// printf("b4 |%p|\n",tmp->str);
+
 					tmp->str = expander_qv2(g_struct, tmp->str); // try this first mn '"to $' dollars '$PATH $USER' mn $tal ' ' later mn ' ' tal " oula ghir tal "
+					// printf("a4te |%p|\n",tmp->str);
+
 					// printf("wst loop =%s\n",tmp->str);
 					// tmp->str = expander_qv2(g_struct, &tmp->str); // try this first mn '"to $' dollars '$PATH $USER' mn $tal ' ' later mn ' ' tal " oula ghir tal "
 
@@ -703,7 +707,7 @@ char **from_list_to_arr(t_tlist *head)
 		// printf("*%s*\n",arr[i]);
 		i++;
 		current = current->next;
-		printf("%p\n",arr);
+		// printf("%p\n",arr);
 	}
 	
 	arr[i] = NULL;
@@ -887,6 +891,7 @@ char *expander_qv2(t_shell *g_struct, char *str)
 			out = ft_realloc(out , (ft_strlen(str)+ft_strlen(expantion)));
 			// printf("after = %s\n",out);
 			k += ft_strlen(expantion);
+			free(expantion);
 			// i += ft_strlen (out);
 			// i--;
 		}
@@ -902,6 +907,7 @@ char *expander_qv2(t_shell *g_struct, char *str)
 	// printf("fiiig after = %s\n",out);
 	// printf ("size db : %d \n", i);
 	}
+	free(str);
 	return out;
 }
 
