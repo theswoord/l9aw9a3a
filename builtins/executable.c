@@ -88,7 +88,7 @@ void execute_commands_pipes(char *command, char **args, char **env, t_shell *g_s
         executable_path = ft_strdup(command);
     else
     {
-        path = getenv("PATH");
+        path = extract_from_in_list(g_shell,g_shell->envlist,"PATH");
         executable_path = find_executable_command(command, path);
     }
     if (executable_path)

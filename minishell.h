@@ -124,6 +124,7 @@ typedef struct s_shell
 
     t_tlist *tlist;
     t_var_t *envlist;
+    char **env;
     t_node *pipes_list;
     t_heredoc *heredoc_list;
     e_tokenum tokenum;
@@ -241,7 +242,7 @@ char *quotes_moncef(char *str);
 t_tlist *pipes_copy(t_tlist *head, t_tlist *current);
 void free_tableauv2(char **tableau);
 // void execute_pipelines(t_node **command_node, char **env);
-void execute_pipelines(t_node **command_node, char **env, t_shell* g_struct);
+void execute_pipelines(t_node **command_node, t_shell *g_struct);
 void free_pipes(t_node *head);
 void free_pipes_node(t_node **command_node);
 t_node *new_command_node(t_node **list, char **args);

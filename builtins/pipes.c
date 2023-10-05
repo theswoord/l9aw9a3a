@@ -11,7 +11,6 @@ void free_redirections(t_redi_node **redirect_node)
 		temp = current_redi;
 		current_redi = current_redi->next;
 		free(temp->file);
-		// printf("hh %p\n",temp);
 		free(temp);
 		temp = NULL;
 	}
@@ -41,20 +40,11 @@ void free_pipes_node(t_node **command_node)
 	*command_node = NULL;
 }
 
-void execute_pipelines(t_node **command_node, char **env, t_shell *g_struct)
+void pipes_exec(t_node *current_node, t_shell *g_struct, int *pipes, int temp_fd)
 {
 	int status;
-	int temp_fd;
-	int pipes[2];
-	t_node *current_node;
 
-	if (*command_node == NULL)
-		return;
-	current_node = *command_node;
-	temp_fd = -1;
-	while (current_node)
-	{
-		pipe(pipes);
+	pipe(pipes);
 		pid_t pid = fork();
 		if (pid == 0)
 		{
@@ -68,7 +58,7 @@ void execute_pipelines(t_node **command_node, char **env, t_shell *g_struct)
 			close(pipes[0]);
 			close(pipes[1]);
 			redirections(current_node->redirect, g_struct);
-			execute_commands_pipes(current_node->args[0], current_node->args, env, g_struct);
+			execute_commands_pipes(current_node->args[0], current_node->args, g_struct->env, g_struct);
 		}
 		else
 		{
@@ -76,6 +66,22 @@ void execute_pipelines(t_node **command_node, char **env, t_shell *g_struct)
 			if (WIFEXITED(status))
 				g_struct->exit_status = WEXITSTATUS(status);
 		}
+}
+
+void execute_pipelines(t_node **command_node, t_shell *g_struct)
+{
+	int status;
+	int temp_fd;
+	int pipes[2];
+	t_node *current_node;
+
+	if (*command_node == NULL)
+		return;
+	current_node = *command_node;
+	temp_fd = -1;
+	while (current_node)
+	{
+		pipes_exec(current_node, g_struct, pipes, temp_fd);
 		if (temp_fd != -1)
 			close(temp_fd);
 		temp_fd = pipes[0];
@@ -88,31 +94,6 @@ void execute_pipelines(t_node **command_node, char **env, t_shell *g_struct)
 	};
 	free_pipes_node(command_node);
 	return;
-}
-
-t_node *new_command_node(t_node **list, char **args)
-{
-	t_node *node;
-	int i;
-	t_node *current;
-
-	node = (t_node *)malloc(sizeof(t_node));
-	if (node == NULL)
-		return (NULL);
-	node->args = args;
-	node->redirect = NULL;
-	node->next = NULL;
-
-	if (*list == NULL)
-		*list = node;
-	else
-	{
-		current = *list;
-		while (current->next != NULL)
-			current = current->next;
-		current->next = node;
-	}
-	return (node);
 }
 
 t_node *new_node(char **arr, t_redi_node *redirect)

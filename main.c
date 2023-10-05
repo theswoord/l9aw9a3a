@@ -66,34 +66,34 @@ int main(int ac, char **av, char **env)
     // print_env(g_struct.envlist,1);
 //  char *prompt;
 //  prompt = better_prompt();
-    // while (1)
-    // {
-    //     test = readline("minishell -> : ");
-    //     // free(prompt);
-    //     // test = get_next_line(0);
-    //     // readline("gggg");
-
-    //     if (!test)
-    //     {
-    //         free(test);
-    //         free_env(g_struct.envlist);
-    //         return 1;
-    //     }
-    //    if (ft_strlen(test) > 0)
-    //     add_history(test);
-       
-    //    tokenisation(test,&g_struct,env);
-    //    free(test);
-    // }
-    g_struct.heredoc_list = NULL;
-    heredoc(&g_struct, "eof");
-    heredoc(&g_struct, "end");
-    heredoc(&g_struct, "fin");
-    while (g_struct.heredoc_list != NULL)
+    while (1)
     {
-        printf("%i\n", g_struct.heredoc_list->fd);
-        g_struct.heredoc_list = g_struct.heredoc_list->next;
+        test = readline("minishell -> : ");
+        // free(prompt);
+        // test = get_next_line(0);
+        // readline("gggg");
+
+        if (!test)
+        {
+            free(test);
+            free_env(g_struct.envlist);
+            return 1;
+        }
+       if (ft_strlen(test) > 0)
+        add_history(test);
+       
+       tokenisation(test,&g_struct,env);
+       free(test);
     }
+    // g_struct.heredoc_list = NULL;
+    // heredoc(&g_struct, "eof");
+    // heredoc(&g_struct, "end");
+    // heredoc(&g_struct, "fin");
+    // while (g_struct.heredoc_list != NULL)
+    // {
+    //     printf("%i\n", g_struct.heredoc_list->fd);
+    //     g_struct.heredoc_list = g_struct.heredoc_list->next;
+    // }
 }
 
 // char *better_prompt(void){

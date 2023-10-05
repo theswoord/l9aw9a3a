@@ -113,7 +113,7 @@ void tokenisation(char *str, t_shell *g_struct, char **env)
 		// print_pointers2(g_struct->redi_list);
 		// printf("arg = %s point redi = %p file = %s type = %d \n",g_struct->pipes_list->args[1],g_struct->pipes_list->redirect,g_struct->pipes_list->redirect->file,g_struct->pipes_list->redirect->type);
 		// printf("%s  %d %s\n",g_struct->redi_list->file,g_struct->redi_list->type,g_struct->redi_list->next->next->file);
-		execute_pipelines(&g_struct->pipes_list, env,g_struct);
+		execute_pipelines(&g_struct->pipes_list, g_struct);
 		add_env_var(&g_struct->envlist,"?",ft_itoa(g_struct->exit_status));
 		g_struct->redi_list = NULL;
 
@@ -121,7 +121,7 @@ void tokenisation(char *str, t_shell *g_struct, char **env)
 	else if (command_id(g_struct->tlist) == PIPE)
 	{
 		pipes_divider(g_struct);
-		execute_pipelines(&g_struct->pipes_list, env,g_struct);
+		execute_pipelines(&g_struct->pipes_list, g_struct);
 		add_env_var(&g_struct->envlist,"?",ft_itoa(g_struct->exit_status));
 
 	}

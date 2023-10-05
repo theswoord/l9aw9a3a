@@ -76,6 +76,7 @@ void initialize_environment(t_shell *g_struct,t_var_t **head, char **env)
 		}
 		i++;
 	}
+	g_struct->env = env;
 			// printf("+%d\n",g_struct->count);
 }
 

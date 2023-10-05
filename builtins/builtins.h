@@ -45,7 +45,7 @@ size_t ft_strlen(const char *str);
 void execute_commands(char *command, char **args, char **env, t_shell *g_shell);
 // void execute_pipelines(array_of_commands *command_list, char **env);
 // void execute_pipelines(t_node **command_node, char **env);
-void execute_pipelines(t_node **command_node, char **env, t_shell* g_struct);
+void execute_pipelines(t_node **command_node, t_shell *g_struct);
 // void cd_command(int ac, char **av);
 void echo_command(int ac, char **av, t_shell *g_struct);
 // void ft_env(t_shell *g_struct, int ac, char **av);
