@@ -279,4 +279,5 @@ char * extract_from_in_list(t_shell * g_struct ,t_var_t *tlist, char * key);
 t_heredoc *new_here(int fd);
 void add_here(t_heredoc **node, t_heredoc *new);
 void    heredoc(t_shell *g_struct, char *eof);
+void general_execution(t_shell *g_struct, char **args, int fork);
 #endif

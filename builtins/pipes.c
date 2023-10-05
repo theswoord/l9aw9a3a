@@ -58,7 +58,7 @@ void pipes_exec(t_node *current_node, t_shell *g_struct, int *pipes, int temp_fd
 			close(pipes[0]);
 			close(pipes[1]);
 			redirections(current_node->redirect, g_struct);
-			execute_commands_pipes(current_node->args[0], current_node->args, g_struct->env, g_struct);
+			general_execution(g_struct, args, 0);
 		}
 		else
 		{

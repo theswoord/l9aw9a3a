@@ -59,7 +59,7 @@ void execute_commands(char *command, char **args, char **env, t_shell *g_shell)
             executable_path = ft_strdup(command);
         else
         {
-            path = extract_from_in_list(g_shell,g_shell->envlist,"PATH");
+            path = extract_from_in_list(g_shell, g_shell->envlist, "PATH");
             executable_path = find_executable_command(command, path);
         }
         if (executable_path)
@@ -98,4 +98,26 @@ void execute_commands_pipes(char *command, char **args, char **env, t_shell *g_s
     exit_status_error(g_shell, 0);
     print_error_message(g_shell);
     exit(g_shell->exit_status);
+}
+
+void general_execution(t_shell *g_struct, char **args, int fork)
+{
+    if (ft_strcmp(args[0], "cd") == 0)
+        cd_command(args[1], g_struct->env, g_struct);
+    else if (ft_strcmp(args[0], "env") == 0)
+        ft_env(g_struct, twodlen(args), args);
+    else if (ft_strcmp(args[0], "export") == 0)
+        print_env(g_struct->envlist, 1);
+    else if (ft_strcmp(args[0], "unset") == 0)
+        ft_unset(twodlen(args), args, g_struct);
+    else if (ft_strcmp(args[0], "exit") == 0)
+        ft_exit(args, g_struct);
+    else if (ft_strcmp(args[0], "pwd") == 0)
+        pwd_command(g_struct);
+    else if (ft_strcmp(args[0], "echo") == 0)
+        echo_command(twodlen(args), args, g_struct);
+    else if (fork == 1)
+        execute_commands(args[0], args, g_struct->env, g_struct);
+    else
+        execute_commands_pipes(args[0], args, g_struct->env, g_struct);
 }

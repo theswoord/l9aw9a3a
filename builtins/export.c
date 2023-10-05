@@ -1,7 +1,5 @@
 #include "builtins.h"
 
-t_shell *g_struct;
-
 // void add_env_var(t_var_t **head, char *key, char *value)
 // {
 // 	t_var_t *new_node;
@@ -116,30 +114,15 @@ void add_to_environ(char *argument, t_var_t **env)
 void export(t_shell *g_struct, int ac, char **av, char **env)
 {
 	int i;
-	pid_t pid;
 
-	pid = fork();
-	if (pid == 0)
-	{
-		initialize_environment(g_struct,&g_struct->envlist, env);
-		i = 0;
-		while (++i < ac)
-			add_to_environ(av[i], &g_struct->envlist);
-		// print_env(g_struct->envlist, 1);
-		return;
-	}
-	else if (pid > 0)
-	{
-		waitpid(pid, NULL, 0);
-		exit(0);
-	}
-	else
-	{
-		perror("fork");
-		exit(1);
-	}
+	initialize_environment(g_struct, &g_struct->envlist, env);
+	i = 0;
+	while (++i < ac)
+		add_to_environ(av[i], &g_struct->envlist);
+	if (ac == 1)
+		print_env(g_struct->envlist, 1);
+	return;
 }
-
 // int main(int ac, char **av, char **env)
 // {
 // 	export(ac, av, env);
