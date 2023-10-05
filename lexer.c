@@ -96,6 +96,8 @@ void builtins(t_shell *g_struct , char ** env ,  char ** single_comm){
 
 	}
 }
+
+
 int	allspaces(char *str)
 {
 	int	i;
@@ -474,10 +476,11 @@ char *quotes_moncef(char *str)
 	result = ft_calloc(ft_strlen(str) - 1, 1);
 	while (str[i])
 	{
-		if (str[i] == '\"' && s_q == true)
+		if (str[i] == '\"' && s_q == true )
 		{
 			d_q = !d_q;
 			i++;
+			// printf("%c\n",str[i]);
 			// check = true;
 			/* code */
 		}
@@ -821,6 +824,7 @@ char *env_expander(t_shell * g_struct,t_var_t *head, char * key){
 	{
 		if (ft_strcmp(current->key, key)==0)
 		{
+		// printf(".%s.%s\n",key,current->value);
 			free(key);
 			return(ft_strdup(current->value));
 		}
@@ -859,100 +863,34 @@ if (str == NULL) {
 }
 char *expander_qv2(t_shell *g_struct, char *str)
 {
-    // int i = 0;
-    // int j = 0;
-    // char *first = NULL;
-	// first = ft_substr(str, 0, pos(str, '$'));
-    // char *exp = NULL;
-    // char *req = NULL;
-	// char *test =NULL;
-    // char *out = malloc(1);
-	// int p = 0;
-    // while (str[i])
-    // {
-    //     if (str[i] == '$')
-    //     {
-    //         i++;
-    //         j = i;
-    //         while (ft_isalnum(str[i]) == 1 && (str[i] != '\'' || str[i] != '\"'))
-    //         {
-    //             i++;
-    //         }
-    //         req = ft_substr(str, j, i - j);
-	// 		// printf("req %p\n",req);
-    //         exp = env_expander(g_struct, g_struct->envlist, req);
-	// 		// printf("exp %p\n",exp);
-	// 		if (p == 0)
-	// 		{
-    //         out = ft_strjoingnl(first, exp);
-	// 		p = 1;
-	// 		// free(req);
-    //         // free(exp);
-	// 		continue;
-	// 		}
-    //         out = ft_strjoingnl(out, exp);
-    //         // free(req);
-    //         free(exp);
-    //     }
-    //     else
-    //     {
-	// 		// test = ;
-    //         out = ft_strjoin(out, ft_substr(str, i, 1));
-	// 		printf("test= |%s| = %p out= |%s| = %p \n",test,test,out,out);
-	// 		// free(test);
-    //         i++;
-    //     }
-    // }
-	// // printf("%p %p %p\n",req,out,first);
-    // free(first);
-
-    // return out;
+   
 	 int i =0;
 	int j = 0;
 	int k = 0;
-	// char *first = ft_substr(str, 0, pos(str, '$'));
 	char *request = NULL;
 	char *expantion = NULL;
 	char *out = ft_calloc(ft_strlen(str)+1,1);
-			// printf("|%s|\n", out);
-	// printf ("ana size  : %zu\n", ft_strlen (str));
 	while(str[i]){
 
 		if (str[i] == '$'){
 			i++;
 			j=i;
-			while (ft_isalnum(str[i]) == 1 )
-			{
+			while (ft_isalnum(str[i]) == 1 || str[i] == '?' )
 				i++;
-			
-				/* code */
-			}
 			request = ft_substr(str, j, i - j);
-			// printf(">%s<\n",request);
 			expantion = env_expander(g_struct,g_struct->envlist,request);
-			// printf("|%s|\n",expantion);
 			out = ft_strjoingnl(out, expantion);
-			// printf("out = %s\n",out);
-			// printf("|%s|\n", out);
-			// i = 0;
 			out = ft_realloc(out , (ft_strlen(str)+ft_strlen(expantion)));
-			// printf("after = %s\n",out);
 			k += ft_strlen(expantion);
 			free(expantion);
-			// i += ft_strlen (out);
-			// i--;
 		}
 		else
 		{
 			out[k]=str[i];
 			out[k+1]='\0';
 			k++;
-			// printf(".%c.\n", out[i]);
 			i++;
 		}
-		// i++;
-	// printf("fiiig after = %s\n",out);
-	// printf ("size db : %d \n", i);
 	}
 	free(str);
 	return out;
