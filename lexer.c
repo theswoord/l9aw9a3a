@@ -30,7 +30,7 @@ void update_exit(t_shell *g_struct){
 		free(g_struct->exit_arr);
 	}
 	g_struct->exit_arr = ft_itoa(g_struct->exit_status);
-		printf("%p\n",g_struct->exit_arr);
+		// printf("%p\n",g_struct->exit_arr);
 	i++;
 }
 
@@ -90,7 +90,7 @@ void builtins(t_shell *g_struct , char ** env ,  char ** single_comm){
 			else if (ft_strcmp(single_comm[0],"echo") == 0)
 	{
 		echo_command(twodlen(single_comm),single_comm,g_struct);
-		printf("raw = |%d|\n", g_struct->exit_status);
+		// printf("raw = |%d|\n", g_struct->exit_status);
 		update_exit(g_struct);
 		add_env_var(&g_struct->envlist,"?",g_struct->exit_arr);
 
@@ -473,13 +473,19 @@ char *quotes_moncef(char *str)
 	bool s_q = true;
 	bool d_q = true;
 	char *result;
-	result = ft_calloc(ft_strlen(str) - 1, 1);
+	result = ft_calloc(ft_strlen(str), 1);
 	while (str[i])
 	{
-		if (str[i] == '\"' && s_q == true )
+		if (str[i] == '\"' && s_q == true)
 		{
+			// printf("fdgdfg\n");
 			d_q = !d_q;
+			while (str[i] == '\"')
+			{
 			i++;
+				/* code */
+			}
+			
 			// printf("%c\n",str[i]);
 			// check = true;
 			/* code */
@@ -487,7 +493,11 @@ char *quotes_moncef(char *str)
 		else if (str[i] == '\'' && d_q == true)
 		{
 			s_q = !s_q;
+			while (str[i] == '\'')
+			{
 			i++;
+				/* code */
+			}
 			// check = true;
 		}
 
@@ -507,48 +517,14 @@ void qidentify(t_shell *g_struct, t_tlist *token)
 
 	while (tmp != NULL) // lil moraja3a hh
 	{
-		// printf("+%d \n",ft_charfind(tmp->str,'\"'));
 		if (tmp->value == QUOTES)
 		{
-			// if (pos(tmp->str, '\'') != -1) // had l3jb makhdamch
-			// {
-			// 	// only remove
-			// 	// tmp->str = strdelch(tmp->str, '\'');
-			// 	// printf("ided\n");
-			// 	// ft_memmove(&tmp->str[0], &tmp->str[0 + 1], ft_strlen(tmp->str) - 1);
-			// 	// if (ft_strlen(tmp->str) < 2) {
-			// 	// *tmp->str = '\0';
-			// 	// } else {
-			// 	// ft_memmove(tmp->str, tmp->str + 1, ft_strlen(tmp->str) - 2);
-			// 	// tmp->str[ft_strlen(tmp->str) - 2] = '\0';
-			// 	// }
-			// 	/* code */
-			// }
 
 			 if (pos(tmp->str, '\"') != -1)
 			{
-				// printf("idad\n");
 				if (pos(tmp->str, '$') != -1)
-				{
-					// printf("b4 = |%s\n",tmp->str);
-					// free(tmp->str);
-					// printf("b4 |%p|\n",tmp->str);
-
-					tmp->str = expander_qv2(g_struct, tmp->str); // try this first mn '"to $' dollars '$PATH $USER' mn $tal ' ' later mn ' ' tal " oula ghir tal "
-					// printf("a4te |%p|\n",tmp->str);
-
-					// printf("wst loop =%s\n",tmp->str);
-					// tmp->str = expander_qv2(g_struct, &tmp->str); // try this first mn '"to $' dollars '$PATH $USER' mn $tal ' ' later mn ' ' tal " oula ghir tal "
-
-				
-					// printf("%s\n", tmp->str);
-				}
-
-				// remove quotes hh
-				//  find $ then replace and remove
-				/* code */
+				tmp->str = expander_qv2(g_struct, tmp->str); // try this first mn '"to $' dollars '$PATH $USER' mn $tal ' ' later mn ' ' tal " oula ghir tal "
 			}
-			// printf("|%s|\n",tmp->str);
 			tmp->str = quotes_moncef(tmp->str); // NABIL FIX LEAKS O FIX
 		}
 
