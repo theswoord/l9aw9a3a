@@ -30,6 +30,7 @@ void update_exit(t_shell *g_struct){
 		free(g_struct->exit_arr);
 	}
 	g_struct->exit_arr = ft_itoa(g_struct->exit_status);
+	add_env_var(&g_struct->envlist,"?",g_struct->exit_arr);
 		// printf("%p\n",g_struct->exit_arr);
 	i++;
 }
@@ -39,7 +40,7 @@ void builtins(t_shell *g_struct , char ** env ,  char ** single_comm){
 	{
 		cd_command(single_comm[1],env,g_struct);
 		update_exit(g_struct);
-		add_env_var(&g_struct->envlist,"?",g_struct->exit_arr);
+		// add_env_var(&g_struct->envlist,"?",g_struct->exit_arr);
 
 	}
 	else if (ft_strcmp(single_comm[0],"env") == 0)
@@ -47,7 +48,7 @@ void builtins(t_shell *g_struct , char ** env ,  char ** single_comm){
 		// print_env(g_struct->envlist,0);
 		ft_env(g_struct,twodlen(single_comm),single_comm);
 		update_exit(g_struct);
-		add_env_var(&g_struct->envlist,"?",g_struct->exit_arr);
+		// add_env_var(&g_struct->envlist,"?",g_struct->exit_arr);
 
 
 	}
@@ -58,7 +59,7 @@ void builtins(t_shell *g_struct , char ** env ,  char ** single_comm){
 		
 		export(g_struct,twodlen(single_comm),single_comm,env);
 		update_exit(g_struct);
-		add_env_var(&g_struct->envlist,"?",g_struct->exit_arr);
+		// add_env_var(&g_struct->envlist,"?",g_struct->exit_arr);
 
 
 	}
@@ -69,7 +70,7 @@ void builtins(t_shell *g_struct , char ** env ,  char ** single_comm){
 		ft_unset(twodlen(single_comm),single_comm,g_struct);
 		// export(g_struct,twodlen(single_comm),single_comm,env);
 		update_exit(g_struct);
-		add_env_var(&g_struct->envlist,"?",g_struct->exit_arr);
+		// add_env_var(&g_struct->envlist,"?",g_struct->exit_arr);
 
 
 	}
@@ -77,14 +78,14 @@ void builtins(t_shell *g_struct , char ** env ,  char ** single_comm){
 	{
 		ft_exit(single_comm,g_struct);
 		update_exit(g_struct);
-		add_env_var(&g_struct->envlist,"?",g_struct->exit_arr);
+		// add_env_var(&g_struct->envlist,"?",g_struct->exit_arr);
 
 	}
 		else if (ft_strcmp(single_comm[0],"pwd") == 0)
 	{
 		pwd_command(g_struct);
 		update_exit(g_struct);
-		add_env_var(&g_struct->envlist,"?",g_struct->exit_arr);
+		// add_env_var(&g_struct->envlist,"?",g_struct->exit_arr);
 
 	}
 			else if (ft_strcmp(single_comm[0],"echo") == 0)
@@ -92,7 +93,7 @@ void builtins(t_shell *g_struct , char ** env ,  char ** single_comm){
 		echo_command(twodlen(single_comm),single_comm,g_struct);
 		// printf("raw = |%d|\n", g_struct->exit_status);
 		update_exit(g_struct);
-		add_env_var(&g_struct->envlist,"?",g_struct->exit_arr);
+		// add_env_var(&g_struct->envlist,"?",g_struct->exit_arr);
 
 	}
 }
@@ -119,7 +120,6 @@ void tokenisation(char *str, t_shell *g_struct, char **env)
 	if (allspaces(str) == 1 || ft_strlen(str) == 0)
 	{
 		return;
-		/* code */
 	}
 	
 	char **done = ft_strsplit(str); // pit eveyone in a node
@@ -129,7 +129,8 @@ void tokenisation(char *str, t_shell *g_struct, char **env)
 	free_tableau(done, twodlen(done));
 
 	modify_env(g_struct, g_struct->tlist); // lmochkil ila kan chi 7aja wst param it's not it
-	
+	update_exit(g_struct);
+	// add_env_var(&g_struct->envlist,"?",g_struct->exit_arr);
 	// hadchi khdam
 	// exit_status_error(g_struct,0);
 	if (list_check(g_struct->tlist))
@@ -141,7 +142,7 @@ void tokenisation(char *str, t_shell *g_struct, char **env)
 		g_struct->exit_status = 258;
 		// printf("%d\n ",g_struct->exit_status);
 		update_exit(g_struct);
-		add_env_var(&g_struct->envlist,"?",g_struct->exit_arr);
+		// add_env_var(&g_struct->envlist,"?",g_struct->exit_arr);
 		printf("minishell: syntax error\n");
 		return;
 	}
@@ -564,6 +565,7 @@ void expander_init(t_shell *g_struct, t_tlist *head, t_var_t *env)
 
 		if (tmp->value == EXPAND)
 		{
+		// printf("hhh11111111h\n");
 			tmp->str = expanded(g_struct, tmp->str);
 			// printf("f expander = %s\n", tmp->str);
 		}
@@ -596,17 +598,17 @@ char *expanded(t_shell *g_struct, char *str)
 			str = ft_strjoingnl(first, expantion);
 			return (free(expantion), str);
 		}
-		checked++;
-		if (checked == g_struct->count)
-		{ // anbdl random i'm here , fix the position $path katmchi
-			free(str);
-			expantion = ft_strdup("");
-		}
+		// checked++;
+		// if (checked == g_struct->count)
+		// { // anbdl random i'm here , fix the position $path katmchi
+		// 	free(str);
+		// 	expantion = ft_strdup("");
+		// }
 		/* code */
 		tmp = tmp->next;
 	}
 	free(str);
-	return ft_strjoingnl(first, expantion);
+	return ft_strjoingnl(first, "");
 
 	// free(first);
 }
@@ -847,7 +849,7 @@ char *expander_qv2(t_shell *g_struct, char *str)
 	char *expantion = NULL;
 	char *out = ft_calloc(ft_strlen(str)+1,1);
 	while(str[i]){
-
+		// printf("hhhhhh\n");
 		if (str[i] == '$'){
 			i++;
 			j=i;
