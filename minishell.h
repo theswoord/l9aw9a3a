@@ -6,7 +6,7 @@
 /*   By: nbouhali < nbouhali@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 04:50:46 by nbouhali          #+#    #+#             */
-/*   Updated: 2023/10/06 04:50:47 by nbouhali         ###   ########.fr       */
+/*   Updated: 2023/10/06 05:02:15 by nbouhali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -250,7 +250,7 @@ char *delete_pos(char *str, int pos);
 char *recombinator(char *first , char *later, char *rest);
 int command_id(t_tlist *head);
 void pipes_divider(t_shell *g_struct);
-char *quotes_moncef(char *str);
+char *quotes_remover(char *str);
 t_tlist *pipes_copy(t_tlist *head, t_tlist *current);
 void free_tableauv2(char **tableau);
 // void execute_pipelines(t_node **command_node, char **env);

@@ -6,7 +6,7 @@
 /*   By: nbouhali < nbouhali@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 04:32:42 by nbouhali          #+#    #+#             */
-/*   Updated: 2023/10/06 04:32:43 by nbouhali         ###   ########.fr       */
+/*   Updated: 2023/10/06 05:02:15 by nbouhali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	qidentify(t_shell *g_struct, t_tlist *token)
 				if (pos(tmp->str, '$') != -1)
 					tmp->str = expander_qv2(g_struct, tmp->str);
 			}
-			tmp->str = quotes_moncef(tmp->str);
+			tmp->str = quotes_remover(tmp->str);
 		}
 		tmp = tmp->next;
 	}
@@ -74,42 +74,6 @@ char	*expanded(t_shell *g_struct, char *str)
 	}
 	free(str);
 	return (ft_strjoingnl(first, ""));
-}
-
-char	*expanded_q(t_shell *g_struct, char *str)
-{
-	t_var_t	*tmp;
-	char	*first;
-	char	*later;
-	char	*expantion;
-	int		checked;
-	char	*rest;
-	char	*final;
-
-	tmp = g_struct->envlist;
-	checked = 0;
-	first = ft_substr(str, 0, pos(str, '$'));
-	later = ft_strchr(str, '$') + 1;
-	rest = ft_strrchr(str, '"');
-	while (tmp != NULL)
-	{
-		if (ft_strncmp(tmp->key, later, pos(later, ' ')) == 0)
-		{
-			expantion = ft_strdup(tmp->value);
-			final = recombinator(first, expantion, rest);
-			free(str);
-			return (final);
-		}
-		checked++;
-		if (checked == g_struct->count)
-		{
-			expantion = ft_strdup("");
-			final = recombinator(first, expantion, rest);
-		}
-		tmp = tmp->next;
-	}
-	free(str);
-	return (final);
 }
 
 char	*env_expander(t_shell *g_struct, t_var_t *head, char *key)

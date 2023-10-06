@@ -6,7 +6,7 @@
 /*   By: nbouhali < nbouhali@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 04:41:07 by nbouhali          #+#    #+#             */
-/*   Updated: 2023/10/06 04:41:08 by nbouhali         ###   ########.fr       */
+/*   Updated: 2023/10/06 05:04:23 by nbouhali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,9 @@ bool	list_check(t_tlist *head)
 			return (false);
 		}
 		if ((current->value == REDIR || current->value == REDIW
-				|| current->value == PIPE) && (current->next->value != WORD
-				&& current->next->value != OPT && current->next->value != QUOTES
+				|| current->value == PIPE || current->value == APPEND)
+			&& (current->next->value != WORD && current->next->value != OPT
+				&& current->next->value != QUOTES
 				&& current->next->value != EXPAND))
 		{
 			return (false);

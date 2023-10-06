@@ -6,7 +6,7 @@
 /*   By: nbouhali < nbouhali@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 04:34:59 by nbouhali          #+#    #+#             */
-/*   Updated: 2023/10/06 04:35:00 by nbouhali         ###   ########.fr       */
+/*   Updated: 2023/10/06 05:05:14 by nbouhali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,9 +93,7 @@ void	pipes_list(t_shell *g_struct, int count)
 	{
 		last = g_struct->pipes_list;
 		while (last->next != NULL)
-		{
 			last = last->next;
-		}
 		last->next = node;
 	}
 	if (current == NULL)

@@ -6,13 +6,13 @@
 /*   By: nbouhali < nbouhali@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 04:32:44 by nbouhali          #+#    #+#             */
-/*   Updated: 2023/10/06 04:32:45 by nbouhali         ###   ########.fr       */
+/*   Updated: 2023/10/06 05:02:15 by nbouhali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*quotes_moncef(char *str)
+char	*quotes_remover(char *str)
 {
 	int		i;
 	int		j;
@@ -39,9 +39,7 @@ char	*quotes_moncef(char *str)
 			while (str[i] == '\'')
 				i++;
 		}
-		result[j] = str[i];
-		j++;
-		i++;
+		result[j++] = str[i++];
 	}
 	free(str);
 	return (result);
