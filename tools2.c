@@ -1,20 +1,31 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tools2.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nbouhali < nbouhali@student.1337.ma >      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/10/06 04:41:46 by nbouhali          #+#    #+#             */
+/*   Updated: 2023/10/06 04:41:47 by nbouhali         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-char *recombinator(char *first, char *later, char *rest)
+char	*recombinator(char *first, char *later, char *rest)
 {
-	char *result;
+	char	*result;
 
 	result = ft_strjoingnl(first, later);
 	result = ft_strjoingnl(result, rest);
-
 	free(later);
-	// free(rest);
-	return result;
+	return (result);
 }
-char *ft_strchrtill(const char *s, int c, int len)
+
+char	*ft_strchrtill(const char *s, int c, int len)
 {
-	size_t a;
-	char *mbdla;
+	size_t	a;
+	char	*mbdla;
 
 	a = 0;
 	mbdla = (char *)s;
@@ -28,6 +39,7 @@ char *ft_strchrtill(const char *s, int c, int len)
 	}
 	return (0);
 }
+
 char	*ft_strjoinmini(char *s1, char *s2)
 {
 	char	*tkhlita;
@@ -56,39 +68,45 @@ char	*ft_strjoinmini(char *s1, char *s2)
 	free(s2);
 	return (tkhlita);
 }
-char *ft_realloc(char* str, int size){
 
-
-if (str == NULL) {
-        return ft_calloc(size,1);
-    } else if (size == 0) {
-        // If the size is 0, it's equivalent to calling free(ptr)
-        free(str);
-        return NULL;
-    } else {
-	char* tmp ; 
-	int old_size = ft_strlen(str)+1;
-
-	tmp = ft_calloc(size,1);
-
-	ft_strlcpy(tmp,str,old_size);
-	free(str);
-	return tmp;
-}
-}
-int element_counter(t_tlist *head, int what)
+char	*ft_realloc(char *str, int size)
 {
-	int count = 0;
-	t_tlist *current = head;
+	char	*tmp;
+	int		old_size;
 
+	if (str == NULL)
+	{
+		return (ft_calloc(size, 1));
+	}
+	else if (size == 0)
+	{
+		free(str);
+		return (NULL);
+	}
+	else
+	{
+		old_size = ft_strlen(str) + 1;
+		tmp = ft_calloc(size, 1);
+		ft_strlcpy(tmp, str, old_size);
+		free(str);
+		return (tmp);
+	}
+}
+
+int	element_counter(t_tlist *head, int what)
+{
+	int		count;
+	t_tlist	*current;
+
+	count = 0;
+	current = head;
 	while (current != NULL)
 	{
 		if (current->value == what)
 		{
 			count++;
 		}
-
 		current = current->next;
 	}
-	return count;
+	return (count);
 }

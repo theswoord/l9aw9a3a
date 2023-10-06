@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   helpers.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nbouhali < nbouhali@student.1337.ma >      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/10/06 04:50:04 by nbouhali          #+#    #+#             */
+/*   Updated: 2023/10/06 04:50:05 by nbouhali         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-int ft_charfind(const char *str, char c)
+int	ft_charfind(const char *str, char c)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])
@@ -14,21 +26,20 @@ int ft_charfind(const char *str, char c)
 	return (0);
 }
 
-int ft_strcmp(const char *s1, const char *s2)
+int	ft_strcmp(const char *s1, const char *s2)
 {
 	while (*s1 && (*s1 == *s2))
 	{
 		s1++;
 		s2++;
 	}
-	return *(unsigned char *)s1 - *(unsigned char *)s2;
+	return (*(unsigned char *)s1 - *(unsigned char *)s2);
 }
 
-int add_env_var(t_var_t **head, char *key, char *value)
+int	add_env_var(t_var_t **head, char *key, char *value)
 {
-	// int success;
-	t_var_t *new_node;
-	t_var_t *current;
+	t_var_t	*new_node;
+	t_var_t	*current;
 
 	current = *head;
 	while (current != NULL)
@@ -40,7 +51,7 @@ int add_env_var(t_var_t **head, char *key, char *value)
 				free(current->value);
 				current->value = ft_strdup(value);
 			}
-			return 0;
+			return (0);
 		}
 		current = current->next;
 	}
@@ -55,17 +66,16 @@ int add_env_var(t_var_t **head, char *key, char *value)
 	return (1);
 }
 
-void initialize_environment(t_shell *g_struct,t_var_t **head, char **env)
+void	initialize_environment(t_shell *g_struct, t_var_t **head, char **env)
 {
-	char *key;
-	char *value;
-	int i;
+	char	*key;
+	char	*value;
+	int		i;
+
 	*head = NULL;
 	i = 0;
-	// printf("fsdfsd\n");
 	while (env[i] != NULL)
 	{
-
 		if (ft_charfind(env[i], '=') != 0)
 		{
 			key = ft_substr(env[i], 0, ft_charfind(env[i], '='));
@@ -76,5 +86,4 @@ void initialize_environment(t_shell *g_struct,t_var_t **head, char **env)
 		}
 		i++;
 	}
-			// printf("+%d\n",g_struct->count);
 }

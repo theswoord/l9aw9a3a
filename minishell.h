@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nbouhali < nbouhali@student.1337.ma >      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/10/06 04:50:46 by nbouhali          #+#    #+#             */
+/*   Updated: 2023/10/06 04:50:47 by nbouhali         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 #define MINISHELL_H
 #include "./gnl/get_next_line.h"
@@ -160,24 +172,24 @@ char *special_trim(char * str, char c);
 char *simple_trim(char *str, char c);
 void the_divider(t_prompt *helper ,t_counter *elements, char *str);
 int twodlen(char **tableau);
-void quoter(t_prompt *helper);
+// void quoter(t_prompt *helper);
 void str_replacement(char *str);
 // int quotation(char *str,int c);
-void linkwithex(char **tableau);
+// void linkwithex(char **tableau);
 char* ft_strtok(char *str);
 // void strr_replacement(char *str);
 /*	----	----temp----	-----	*/
-int isQuotesClosed(const char *str);
+// int isQuotesClosed(const char *str);
 /*	----	----free----	-----	*/
 void free_tableau(char** tableau,int lines);
 /*	----	----print----	-----	*/
-void printTree(struct s_tree* root);
-void printInOrderIndented(struct s_tree* node, int depth);
-void printBinaryTree(struct s_tree* root, int level, char direction);
-void printSpaces(int count);
+// void printTree(struct s_tree* root);
+// void printInOrderIndented(struct s_tree* node, int depth);
+// void printBinaryTree(struct s_tree* root, int level, char direction);
+// void printSpaces(int count);
 /*	----	----tree----	-----	*/
-void insertNode(struct s_tree** root, char* data);
-void freeTree(struct s_tree* node);
+// void insertNode(struct s_tree** root, char* data);
+// void freeTree(struct s_tree* node);
 /*  ----    ----list----    -----   */
 // t_list *l_addnode(char* data);
 // int list_size(t_list *head);
@@ -193,7 +205,7 @@ char *toktok(char *str);
 // void print_env(t_env *head);
 // t_env	*ft_lstnew(char *content);
 // void	ft_lstadd_back(t_env **lst, t_env *new);
-void print_environ(void);
+// void print_environ(void);
 // void catch_environ(t_env **lenv, char **env);
 // t_env	*ft_lstlast(t_env *lst);
 void print_env(t_var_t *head, int boole);
@@ -203,20 +215,20 @@ int add_env_var(t_var_t **head, char *key, char *value);
 int ft_strcmp(const char *s1, const char *s2);
 int ft_charfind(const char *str, char c);
 char* env_nav(t_var_t **head,char * key);
-char *better_prompt(void);
-static int	skip_sep(char *s);
-static int	ft_word_len(char *s);
+// char *better_prompt(void);
+static int	ignore_spaces(char *s);
+static int	ft_lenght(char *s);
 static int	ft_count(char *s);
-char	**ft_strsplit(char *s);
+char	**ft_u_split(char *s);
 void token_list(t_tlist **head,char *tok, int type,int queue);
 void add_token_list(t_tlist **head, char **tab);
 int typefinder (char *line);
-void print_tokens(t_tlist *head);
-void add_to_env(t_var_t **head, char *env);
+// void print_tokens(t_tlist *head);
+// void add_to_env(t_var_t **head, char *env);
 void modify_env(t_shell *g_struct,t_tlist *token);
 char * expanded(t_shell *g_struct,char* str);
 void expander_init(t_shell *g_struct,t_tlist *head, t_var_t *env);
-int find_in_list(t_var_t *head, char* search);
+// int find_in_list(t_var_t *head, char* search);
 void qidentify(t_shell *g_struct,t_tlist *token);
 void add_to_environ(char *argument, t_var_t **env);
 int list_size(t_tlist *head);
@@ -250,13 +262,13 @@ t_node *new_node(char **arr, t_redi_node *redirect);
 void add_node(t_node **node, t_node *new);
 void execute_commands(char *command, char **args, char **env, t_shell *g_shell);
 void special_free(t_shell *g_struct);
-void special_free_recursive(t_shell *g_struct, t_tlist *current);
-void special_freex(t_shell *g_struct);
+// void special_free_recursive(t_shell *g_struct, t_tlist *current);
+// void special_freex(t_shell *g_struct);
 void print_pointers(t_tlist *head);
-void versatile_divider(t_shell *g_struct);
-int versatile_nodes_count(t_tlist **current);
-void versatile_pipes_list(t_shell *g_struct, int count, bool detected);
-int versatile_counter(t_tlist *head);
+// void versatile_divider(t_shell *g_struct);
+// int versatile_nodes_count(t_tlist **current);
+// void versatile_pipes_list(t_shell *g_struct, int count, bool detected);
+// int versatile_counter(t_tlist *head);
 void files_finder(t_tlist *head);
 void add_redi(t_redi_node **node, t_redi_node *new);
 t_redi_node *new_redi(char *file, int type);

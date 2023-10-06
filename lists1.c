@@ -1,10 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lists1.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nbouhali < nbouhali@student.1337.ma >      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/10/06 04:50:32 by nbouhali          #+#    #+#             */
+/*   Updated: 2023/10/06 04:50:33 by nbouhali         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-
-void free_env(t_var_t *head)
+void	free_env(t_var_t *head)
 {
-	t_var_t *current;
-	t_var_t *temp;
+	t_var_t	*current;
+	t_var_t	*temp;
 
 	current = head;
 	while (current != NULL)
@@ -17,10 +28,11 @@ void free_env(t_var_t *head)
 	}
 }
 
-void print_env(t_var_t *head, int boole)
+void	print_env(t_var_t *head, int boole)
 {
-	t_var_t *current = head;
+	t_var_t	*current;
 
+	current = head;
 	while (current != NULL)
 	{
 		if (boole == 1)
@@ -41,12 +53,12 @@ void print_env(t_var_t *head, int boole)
 	}
 }
 
-char *env_nav(t_var_t **head, char *key)
+char	*env_nav(t_var_t **head, char *key)
 {
+	t_var_t	*current;
+	char	*outsider;
 
-	t_var_t *current;
 	current = *head;
-	char *outsider;
 	while (current != NULL)
 	{
 		if (ft_strcmp(current->key, key) == 0)
@@ -55,31 +67,21 @@ char *env_nav(t_var_t **head, char *key)
 		}
 		current = current->next;
 	}
-	return outsider;
+	return (outsider);
 }
-void token_list(t_tlist **head, char *tok, int type, int queue)
+
+void	token_list(t_tlist **head, char *tok, int type, int queue)
 {
+	t_tlist	*current;
+	t_tlist	*new_node;
 
-	// int i = 0;
-	t_tlist *current;
-	t_tlist *new_node;
-	// static int queue = 0;
-	// t_tlist *current = *head;
 	current = *head;
-	// while (current != NULL)
-	// {
-	// 	current = current->next;
-	// 	/* code */
-	// }
-
 	new_node = malloc(sizeof(t_tlist));
 	new_node->str = ft_strdup(tok);
-	// free(tok);
 	if (type)
-	new_node->value = type;	
+		new_node->value = type;
 	new_node->queue = queue;
 	new_node->is_file = false;
-	
 	new_node->next = NULL;
 	if (*head == NULL)
 		*head = new_node;
@@ -90,23 +92,18 @@ void token_list(t_tlist **head, char *tok, int type, int queue)
 		current->next = new_node;
 	}
 }
-void add_token_list(t_tlist **head, char **tab)
-{
 
-	int i = 0;
-	char *tok;
-	char *type;
+void	add_token_list(t_tlist **head, char **tab)
+{
+	int		i;
+	char	*tok;
+	char	*type;
+
+	i = 0;
 	*head = NULL;
-	// i = twodlen(tab)-1;
-	// printf("before %d\n", i);
 	while (tab[i] != NULL)
 	{
-		// if (/* condition */) condition dial word pipe o dakchi
-		// {
-		// 	/* code */
-		// }
-		token_list(head, tab[i], typefinder(tab[i]),i); // 7yed had nuull
+		token_list(head, tab[i], typefinder(tab[i]), i);
 		i++;
 	}
-	// printf("after = %d\n", i);
 }
