@@ -107,7 +107,7 @@ void general_execution(t_shell *g_struct, char **args, int fork)
     else if (ft_strcmp(args[0], "env") == 0)
         ft_env(g_struct, twodlen(args), args);
     else if (ft_strcmp(args[0], "export") == 0)
-        print_env(g_struct->envlist, 1);
+        export(g_struct, twodlen(args), args, g_struct->env);
     else if (ft_strcmp(args[0], "unset") == 0)
         ft_unset(twodlen(args), args, g_struct);
     else if (ft_strcmp(args[0], "exit") == 0)
