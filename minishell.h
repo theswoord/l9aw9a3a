@@ -287,4 +287,9 @@ char	*ft_strjoinmini(char *s1, char *s2);
 char *ft_realloc(char* str, int size);
 char *add_exit_to_env(t_shell * g_struct, int exit); //here
 void update_exit(t_shell *g_struct);
+int	allspaces(char *str);
+void builtins(t_shell *g_struct , char ** env ,  char ** single_comm);
+int element_counter(t_tlist *head, int what);
+int nodes_count(t_tlist **current);
+void pipes_list(t_shell *g_struct, int count);
 #endif
