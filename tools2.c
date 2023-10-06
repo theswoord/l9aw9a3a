@@ -6,7 +6,7 @@
 /*   By: nbouhali < nbouhali@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 04:41:46 by nbouhali          #+#    #+#             */
-/*   Updated: 2023/10/06 04:41:47 by nbouhali         ###   ########.fr       */
+/*   Updated: 2023/10/06 20:16:26 by nbouhali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ char	*ft_realloc(char *str, int size)
 	}
 }
 
-int	element_counter(t_tlist *head, int what)
+int	element_counter(t_shell *g_struct,t_tlist *head, int what)
 {
 	int		count;
 	t_tlist	*current;
@@ -104,6 +104,9 @@ int	element_counter(t_tlist *head, int what)
 	{
 		if (current->value == what)
 		{
+			// if (ft_strcmp(value))
+			if(current->value == DOC)
+			heredoc(g_struct, current->next->str);
 			count++;
 		}
 		current = current->next;

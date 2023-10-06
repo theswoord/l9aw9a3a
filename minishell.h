@@ -6,7 +6,7 @@
 /*   By: nbouhali < nbouhali@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 04:50:46 by nbouhali          #+#    #+#             */
-/*   Updated: 2023/10/06 05:02:15 by nbouhali         ###   ########.fr       */
+/*   Updated: 2023/10/06 20:15:18 by nbouhali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,7 @@ typedef struct s_shell
     t_node *pipes_list;
     t_heredoc *heredoc_list;
     e_tokenum tokenum;
+    char **env;
     int count; // hada test o safi
     // int exit_status; //static int
     int exit_status;
@@ -301,7 +302,8 @@ char *add_exit_to_env(t_shell * g_struct, int exit); //here
 void update_exit(t_shell *g_struct);
 int	allspaces(char *str);
 void builtins(t_shell *g_struct , char ** env ,  char ** single_comm);
-int element_counter(t_tlist *head, int what);
+int element_counter(t_shell *g_struct ,t_tlist *head, int what);
 int nodes_count(t_tlist **current);
 void pipes_list(t_shell *g_struct, int count);
+
 #endif

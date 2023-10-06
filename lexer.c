@@ -6,7 +6,7 @@
 /*   By: nbouhali < nbouhali@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 04:32:36 by nbouhali          #+#    #+#             */
-/*   Updated: 2023/10/06 04:37:29 by nbouhali         ###   ########.fr       */
+/*   Updated: 2023/10/06 20:26:18 by nbouhali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,25 @@ void	tokenisation(char *str, t_shell *g_struct, char **env)
 		printf("minishell: syntax error\n");
 		return ;
 	}
+	if(command_id(g_struct->tlist) == DOC )
+	{
+		// printf("l9it doc hh\n");
+		
+		// return;
+		int docs = element_counter(g_struct,g_struct->tlist, DOC);
+		free_tokens(g_struct->tlist);
+		return;
+		// int times = 0;
+		// while (times < docs)
+		// {
+		// 	heredoc(g_struct,)
+		// 	/* code */
+		// times ++;
+		// }
+		
+	}
+
+		
 	expander_init(g_struct, g_struct->tlist, NULL);
 	if (command_id(g_struct->tlist) == REDIW
 		|| command_id(g_struct->tlist) == REDIR
@@ -91,6 +110,8 @@ int	command_id(t_tlist *head)
 			return (REDIR);
 		if (current->value == APPEND)
 			return (APPEND);
+		if(current->value == DOC)
+			return (DOC);
 		current = current->next;
 	}
 	return (99);
@@ -108,7 +129,7 @@ void	pipes_divider(t_shell *g_struct)
 	current = g_struct->tlist;
 	i = 0;
 	b = 0;
-	a = element_counter(g_struct->tlist, PIPE) + 1;
+	a = element_counter(g_struct,g_struct->tlist, PIPE) + 1;
 	while (i < a)
 	{
 		b = nodes_count(&current);

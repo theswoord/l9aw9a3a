@@ -6,7 +6,7 @@
 /*   By: nbouhali < nbouhali@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 04:32:44 by nbouhali          #+#    #+#             */
-/*   Updated: 2023/10/06 05:02:15 by nbouhali         ###   ########.fr       */
+/*   Updated: 2023/10/06 19:50:30 by nbouhali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,8 @@ void	builtins(t_shell *g_struct, char **env, char **single_comm)
 	}
 	else if (ft_strcmp(single_comm[0], "env") == 0)
 	{
+			// printf("hhh\n");
+		
 		ft_env(g_struct, twodlen(single_comm), single_comm);
 		update_exit(g_struct);
 	}
