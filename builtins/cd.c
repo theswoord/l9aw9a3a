@@ -1,9 +1,5 @@
 #include "builtins.h"
 
-// make a function that finds the path based on key name in the enviroment.
-// replace old with current pwd
-// replace current pwd in env with current pwd with getcwd
-
 t_var_t *find_value(char *key, t_var_t *head, char *value)
 {
     t_var_t *current;
@@ -52,7 +48,6 @@ void change_pwd(t_var_t *head, t_shell *g_shell)
         g_shell->error_name = HOME_NOT_SET;
         exit_status_error(g_shell, 1);
         print_error_message(g_shell);
-        exit(1);
     }
 }
 

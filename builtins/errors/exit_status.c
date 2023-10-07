@@ -47,3 +47,9 @@ void exit_status_error(t_shell *g_shell, int expand)
     else if (g_shell->error_name == SUCCESS)
         g_shell->exit_status = 0;
 }
+void error_set(t_shell *g_shell, t_shell_error error_name)
+{
+        g_shell->error_name = error_name;
+        print_error_message(g_shell);
+        exit_status_error(g_shell, 1);
+}
