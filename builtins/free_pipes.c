@@ -1,0 +1,40 @@
+#include "builtins.h"
+
+void	free_redirections(t_redi_node **redirect_node)
+{
+	t_redi_node	*current_redi;
+	t_redi_node	*temp;
+
+	current_redi = *redirect_node;
+	while (current_redi != NULL)
+	{
+		temp = current_redi;
+		current_redi = current_redi->next;
+		free(temp->file);
+		free(temp);
+		temp = NULL;
+	}
+}
+
+void	free_pipes_node(t_node **command_node)
+{
+	int			i;
+	t_node		*current;
+	t_redi_node	*current_redi;
+	t_redi_node	*temp;
+
+	if (*command_node == NULL)
+		return ;
+	current = *command_node;
+	if (current->args != NULL)
+	{
+		i = -1;
+		while (current->args[++i] != NULL)
+			free(current->args[i]);
+		free(current->args);
+	}
+	free_redirections(&(current->redirect));
+	free_pipes_node(&((*command_node)->next));
+	free(*command_node);
+	*command_node = NULL;
+}

@@ -1,34 +1,11 @@
 #include "builtins.h"
 
-// int ft_charfind(const char *str, char c)
-// {
-// 	int i;
-
-//  	i = 0;
-// 	while (str[i])
-// 	{
-// 		if (c == str[i])
-// 			return (i);
-// 		i++;
-// 	}
-// 	return (0);
-// }
-
-// int ft_strcmp(const char *s1, const char *s2)
-// {
-//     while (*s1 && (*s1 == *s2)) {
-//         s1++;
-//         s2++;
-//     }
-//     return *(unsigned char*)s1 - *(unsigned char*)s2;
-// }
-
-char *ft_substr(char const *s, unsigned int start, size_t len)
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	size_t i;
-	char *str;
+	size_t	i;
+	char	*str;
 
- 	if (!s)
+	if (!s)
 		return (0);
 	if (start > ft_strlen(s))
 		return (ft_strdup(""));
@@ -47,13 +24,13 @@ char *ft_substr(char const *s, unsigned int start, size_t len)
 	return (str);
 }
 
-char *ft_strchr(const char *s, int c)
+char	*ft_strchr(const char *s, int c)
 {
-	int i;
-	char *str;
-	int len;
+	int		i;
+	char	*str;
+	int		len;
 
- 	i = 0;
+	i = 0;
 	str = (char *)s;
 	len = ft_strlen(str);
 	while (i <= len)
@@ -67,14 +44,14 @@ char *ft_strchr(const char *s, int c)
 	return (0);
 }
 
-int ft_strncmp(const char *s1, const char *s2, size_t n)
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	size_t b;
-	int c;
-	unsigned char *compare1;
-	unsigned char *compare2;
+	size_t			b;
+	int				c;
+	unsigned char	*compare1;
+	unsigned char	*compare2;
 
- 	b = 0;
+	b = 0;
 	c = 0;
 	compare1 = (unsigned char *)s1;
 	compare2 = (unsigned char *)s2;
@@ -90,12 +67,12 @@ int ft_strncmp(const char *s1, const char *s2, size_t n)
 	return (0);
 }
 
-char *ft_strdup(const char *s1)
+char	*ft_strdup(const char *s1)
 {
-	int i;
-	char *str;
+	int		i;
+	char	*str;
 
- 	i = 0;
+	i = 0;
 	str = (char *)malloc(ft_strlen(s1) + 1);
 	if (!str)
 		return (0);
@@ -104,15 +81,15 @@ char *ft_strdup(const char *s1)
 	return (str);
 }
 
-void *ft_memcpy(void *dst, const void *src, size_t n)
+void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
-	size_t i;
-	char *str1;
-	char *str2;
+	size_t	i;
+	char	*str1;
+	char	*str2;
 
 	if (dst == src)
 		return (0);
- 	i = 0;
+	i = 0;
 	str1 = (char *)src;
 	str2 = (char *)dst;
 	while (i < n)
@@ -121,14 +98,4 @@ void *ft_memcpy(void *dst, const void *src, size_t n)
 		i++;
 	}
 	return (str2);
-}
-
-size_t ft_strlen(const char *str)
-{
-	size_t i;
-
- 	i = 0;
-	while (str[i])
-		i++;
-	return (i);
 }

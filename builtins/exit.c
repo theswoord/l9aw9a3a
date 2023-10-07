@@ -1,10 +1,10 @@
 #include "builtins.h"
 
-int ft_atoi(const char *str)
+int	ft_atoi(const char *str)
 {
-	int b;
-	int ichara;
-	int l7asol;
+	int	b;
+	int	ichara;
+	int	l7asol;
 
 	b = 0;
 	ichara = 1;
@@ -28,7 +28,7 @@ int ft_atoi(const char *str)
 	return (l7asol * ichara);
 }
 
-int ft_isdigit(int a)
+int	ft_isdigit(int a)
 {
 	if (a >= '0' && a <= '9')
 		return (1);
@@ -36,9 +36,9 @@ int ft_isdigit(int a)
 		return (0);
 }
 
-int is_number(char *str)
+int	is_number(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])
@@ -50,10 +50,10 @@ int is_number(char *str)
 	return (0);
 }
 
-int valid_arg(char *arg)
+int	valid_arg(char *arg)
 {
-	int i;
-	int sign;
+	int	i;
+	int	sign;
 
 	i = 0;
 	sign = 1;
@@ -69,9 +69,9 @@ int valid_arg(char *arg)
 	return (0);
 }
 
-void ft_exit(char **args, t_shell *g_struct)
+void	ft_exit(char **args, t_shell *g_struct)
 {
-	int exit_status;
+	int	exit_status;
 
 	exit_status = 0;
 	printf("exit\n");
