@@ -52,14 +52,14 @@ void change_pwd(t_var_t *head, t_shell *g_shell)
         g_shell->error_name = HOME_NOT_SET;
         exit_status_error(g_shell, 1);
         print_error_message(g_shell);
-        exit(1);
+        // exit(1);
     }
 }
 
 void cd_command(char *directory, char **env, t_shell *g_shell)
 {
     if (!directory)
-        chdir(getenv("HOME"));
+        chdir(extract_from_in_list(g_shell,g_shell->envlist,"PATH"));
     else if (chdir(directory) != 0)
     {
         g_shell->error_name = PERMISSION_DENIED_FILE;

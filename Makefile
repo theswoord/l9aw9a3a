@@ -15,8 +15,8 @@ objb = ${SRCB:.c=.o}
 
 # readflag = -L/Users/zbenaiss/.brew/opt/readline/lib 
 # readinc = -I/Users/zbenaiss/.brew/opt/readline/include/
-readflagnbl = -L/Users/nbouhali/.brew/opt/readline/lib 
-readincnbl = -I/Users/nbouhali/.brew/opt/readline/include/
+# readflagnbl = -L/Users/nbouhali/.brew/opt/readline/lib 
+# readincnbl = -I/Users/nbouhali/.brew/opt/readline/include/
 
 # tarzan = -L$(shell brew --prefix readline)
 libraries = ./printf/libftprintf.a ./gnl/gnl.a ./libft/libft.a ./ft_malloc/ft_malloc.a

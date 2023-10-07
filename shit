@@ -28,7 +28,6 @@ lists.c
 lists.o
 lists1.c
 lists1.o
-ls
 main.c
 main.o
 memory_friend.c
