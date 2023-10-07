@@ -44,7 +44,7 @@ void echo_child(int size, char **args, t_shell *g_struct)
     if (!skip_newline)
         printf("\n");
     g_struct->error_name = SUCCESS;
-    exit_status_error(g_struct, 1);
+    exit_status_error(g_struct);
 }
 
 void echo_command(int size, char **args, t_shell *g_struct)

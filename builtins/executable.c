@@ -28,8 +28,6 @@ char *find_executable_command(char *command, char *path)
         executable_path[dir_end - dir_start] = '/';
         ft_memcpy(executable_path + (dir_end - dir_start) + 1, command, command_len);
         executable_path[(dir_end - dir_start) + 1 + command_len] = '\0';
-        // printf("%s\n", executable_path);
-        // exit(1);
         if (access(executable_path, X_OK) == 0)
         {
             return (executable_path);
@@ -65,9 +63,7 @@ void execute_commands(char *command, char **args, char **env, t_shell *g_shell)
         if (executable_path)
             if (access(executable_path, X_OK) == 0)
                 execve(executable_path, args, env);
-        g_shell->error_name = COMMAND_NOT_FOUND;
-        exit_status_error(g_shell, 0);
-        print_error_message(g_shell);
+        error_set(g_shell, COMMAND_NOT_FOUND, 1);
         exit(g_shell->exit_status);
     }
     else
@@ -94,9 +90,7 @@ void execute_commands_pipes(char *command, char **args, char **env, t_shell *g_s
     if (executable_path)
         if (access(executable_path, X_OK) == 0)
             execve(executable_path, args, env);
-    g_shell->error_name = COMMAND_NOT_FOUND;
-    exit_status_error(g_shell, 0);
-    print_error_message(g_shell);
+    error_set(g_shell, COMMAND_NOT_FOUND, 1);
     exit(g_shell->exit_status);
 }
 

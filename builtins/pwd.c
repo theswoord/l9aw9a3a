@@ -9,12 +9,10 @@ void pwd_command(t_shell *g_shell)
             printf("%s\n",cwd);
         else
         {
-            g_shell->error_name = PERMISSION_DENIED_FILE;
-            exit_status_error(g_shell, 1);
-            print_error_message(g_shell);
+            error_set(g_shell, PERMISSION_DENIED_FILE, 1);
             return;
         }
         g_shell->error_name = SUCCESS;
-        exit_status_error(g_shell, 1);
+        exit_status_error(g_shell);
         return;
 }

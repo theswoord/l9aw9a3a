@@ -85,22 +85,3 @@ void add_redi(t_redi_node **node, t_redi_node *new)
         head = head->next;
     head->next = new;
 }
-
-
-// int main()
-// {
-//     t_redi_node *redirect = NULL;
-//     char file[] = "text";
-//     char type[] = "out";
-//     head_tiz(&redirect, new_tiz(file, type));
-
-//     char file1[] = "kkk";
-//     char type1[] = "in";
-//     head_tiz(&redirect, new_tiz(file1, type1));
-
-//     char file2[] = "tizk";
-//     char type2[] = "append";
-//     head_tiz(&redirect, new_tiz(file2, type2));
-
-//     redirections(redirect);
-// }

@@ -33,4 +33,5 @@ void ft_unset(int ac, char **av, t_shell *g_struct)
     i = 0;
     while (++i < ac)
         unset_var_env(&g_struct->envlist, av[i]);
+    return;
 }
