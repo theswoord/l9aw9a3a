@@ -59,6 +59,7 @@ void pipes_exec(t_node *current_node, t_shell *g_struct, int *pipes, int temp_fd
 			close(pipes[1]);
 			redirections(current_node->redirect, g_struct);
 			general_execution(g_struct, current_node->args, 0);
+			exit(g_struct->exit_status);
 		}
 		else
 		{

@@ -1,1 +1,47 @@
-hh
+
+
+
+
+nogga
+
+
+?="0"
+_="/Users/zbenaiss/Desktop/Bigshell/./minishell"
+TERM="xterm-256color"
+USER_ZDOTDIR="/Users/zbenaiss"
+ZDOTDIR="/Users/zbenaiss"
+VSCODE_INJECTION="1"
+VSCODE_GIT_IPC_HANDLE="/var/folders/zz/zyxvpxvq6csfxvn_n000cb080032r2/T/vscode-git-b10661f7e5.sock"
+VSCODE_GIT_ASKPASS_MAIN="/Applications/Visual Studio Code.app/Contents/Resources/app/extensions/git/dist/askpass-main.js"
+VSCODE_GIT_ASKPASS_EXTRA_ARGS="--ms-enable-electron-run-as-node"
+VSCODE_GIT_ASKPASS_NODE="/Applications/Visual Studio Code.app/Contents/Frameworks/Code Helper (Plugin).app/Contents/MacOS/Code Helper (Plugin)"
+GIT_ASKPASS="/Applications/Visual Studio Code.app/Contents/Resources/app/extensions/git/dist/askpass.sh"
+COLORTERM="truecolor"
+LANG="en_US.UTF-8"
+TERM_PROGRAM_VERSION="1.79.2"
+TERM_PROGRAM="vscode"
+HOMEBREW_TEMP="/tmp/zbenaiss/Homebrew/Temp"
+HOMEBREW_CACHE="/tmp/zbenaiss/Homebrew/Caches"
+OLDPWD="/Users/zbenaiss/Desktop/Bigshell"
+PWD="/Users/zbenaiss/Desktop/Bigshell"
+SHLVL="1"
+ORIGINAL_XDG_CURRENT_DESKTOP="undefined"
+XPC_FLAGS="0x0"
+XPC_SERVICE_NAME="0"
+TMPDIR="/var/folders/zz/zyxvpxvq6csfxvn_n000cb080032r2/T/"
+__CF_USER_TEXT_ENCODING="0x18B02:0x0:0x0"
+SHELL="/bin/zsh"
+HOME="/Users/zbenaiss"
+SSH_AUTH_SOCK="/private/tmp/com.apple.launchd.beszfUDGjc/Listeners"
+LOGNAME="zbenaiss"
+PATH="/Users/zbenaiss/.brew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki:/Users/zbenaiss/.brew/bin"
+MallocNanoZone="0"
+USER="zbenaiss"
+[?2004hminishell -> : ^C[?2004l
+minishell -> : 
+minishell -> : [?2004h^C[?2004l
+minishell -> : [?2004h^C[?2004l
+
+[?2004h^C[?2004l
+
+[?2004h[?2004l

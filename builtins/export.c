@@ -115,13 +115,11 @@ void export(t_shell *g_struct, int ac, char **av, char **env)
 {
 	int i;
 
-	initialize_environment(g_struct, &g_struct->envlist, env);
 	i = 0;
 	while (++i < ac)
 		add_to_environ(av[i], &g_struct->envlist);
 	if (ac == 1)
 		print_env(g_struct->envlist, 1);
-	return;
 }
 // int main(int ac, char **av, char **env)
 // {

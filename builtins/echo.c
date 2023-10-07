@@ -24,7 +24,7 @@ void echo_child(int size, char **args, t_shell *g_struct)
     int skip_newline;
 
     i = skip_newline = 0;
-    
+
     skip_newline = check_n(args[1]);
     i = skip_newline + 1;
     while (args && args[i])
@@ -49,23 +49,5 @@ void echo_child(int size, char **args, t_shell *g_struct)
 
 void echo_command(int size, char **args, t_shell *g_struct)
 {
-    int i;
-    pid_t pid;
-
-    pid = fork();
-    if (pid == 0)
-    {
-        echo_child(size, args, g_struct);
-        exit(0);
-    }
-    else if (pid > 0)
-    {
-        waitpid(pid, NULL, 0);
-        exit(0);
-    }
-    else
-    {
-        perror("fork");
-        exit(1);
-    }
+    echo_child(size, args, g_struct);
 }
