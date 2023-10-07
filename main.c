@@ -6,7 +6,7 @@
 /*   By: nbouhali < nbouhali@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 04:50:35 by nbouhali          #+#    #+#             */
-/*   Updated: 2023/10/06 04:50:36 by nbouhali         ###   ########.fr       */
+/*   Updated: 2023/10/07 21:53:42 by nbouhali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	sig(int signal)
 	{
 		printf("\n");
 		rl_on_new_line();
-		// rl_replace_line("", 0);
+		rl_replace_line("", 0);
 		rl_redisplay();
 	}
 }
@@ -53,14 +53,5 @@ int	main(int ac, char **av, char **env)
 			add_history(test);
 		tokenisation(test, &g_struct, env);
 		free(test);
-	}
-	g_struct.heredoc_list = NULL;
-	heredoc(&g_struct, "eof");
-	heredoc(&g_struct, "end");
-	heredoc(&g_struct, "fin");
-	while (g_struct.heredoc_list != NULL)
-	{
-		printf("%i\n", g_struct.heredoc_list->fd);
-		g_struct.heredoc_list = g_struct.heredoc_list->next;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: nbouhali < nbouhali@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 04:50:46 by nbouhali          #+#    #+#             */
-/*   Updated: 2023/10/07 04:33:37 by nbouhali         ###   ########.fr       */
+/*   Updated: 2023/10/07 20:51:50 by nbouhali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,16 @@ typedef struct s_prompt
     int twodlen;
 
 } t_prompt;
+
+typedef struct s_index
+{
+
+int i;
+int j;
+int k;
+
+
+}t_lesindex;
 
 typedef struct s_counter
 {
@@ -306,5 +316,6 @@ void builtins(t_shell *g_struct , char ** env ,  char ** single_comm);
 int element_counter(t_shell *g_struct ,t_tlist *head, int what);
 int nodes_count(t_tlist **current);
 void pipes_list(t_shell *g_struct, int count);
+void	free_tokens3(t_tlist *head);
 
 #endif

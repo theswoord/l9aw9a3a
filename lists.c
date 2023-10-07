@@ -6,7 +6,7 @@
 /*   By: nbouhali < nbouhali@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 04:50:29 by nbouhali          #+#    #+#             */
-/*   Updated: 2023/10/06 05:09:02 by nbouhali         ###   ########.fr       */
+/*   Updated: 2023/10/07 21:57:33 by nbouhali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ int	typefinder(char *line)
 {
 	int	i;
 
-	i = 0;
-	while (line[i])
+	i = -1;
+	while (line[++i])
 	{
 		if (line[i] == '$')
 			return (EXPAND);
@@ -68,7 +68,6 @@ int	typefinder(char *line)
 			return (VAR);
 		else if (line[i] == '\'' || line[i] == '\"')
 			return (QUOTES);
-		i++;
 	}
 	return (WORD);
 }

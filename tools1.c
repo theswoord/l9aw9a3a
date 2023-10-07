@@ -6,7 +6,7 @@
 /*   By: nbouhali < nbouhali@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 04:41:07 by nbouhali          #+#    #+#             */
-/*   Updated: 2023/10/06 05:04:23 by nbouhali         ###   ########.fr       */
+/*   Updated: 2023/10/07 21:51:53 by nbouhali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,36 +38,27 @@ bool	quotes_errors(char *str)
 
 bool	list_check(t_tlist *head)
 {
-	t_tlist	*current;
+	t_tlist	*c;
 
-	current = head;
-	while (current != NULL)
+	c = head;
+	while (c != NULL)
 	{
-		if (quotes_errors(current->str) == false)
+		if (quotes_errors(c->str) == false)
 			return (false);
-		if (current->value == PIPE && current->queue == 0)
+		if (c->value == PIPE && c->queue == 0)
 			return (false);
-		if ((current->value == APPEND || current->value == REDIR
-				|| current->value == REDIW || current->value == DOC
-				|| current->value == PIPE) && !current->next)
-		{
+		if ((c->value == APPEND || c->value == REDIR || c->value == REDIW
+				|| c->value == DOC || c->value == PIPE) && !c->next)
 			return (false);
-		}
-		if ((current->value == REDIR || current->value == REDIW
-				|| current->value == PIPE || current->value == APPEND)
-			&& (current->next->value != WORD && current->next->value != OPT
-				&& current->next->value != QUOTES
-				&& current->next->value != EXPAND))
-		{
+		if ((c->value == REDIR || c->value == REDIW || c->value == PIPE
+				|| c->value == APPEND) && (c->next->value != WORD
+				&& c->next->value != OPT && c->next->value != QUOTES
+				&& c->next->value != EXPAND))
 			return (false);
-		}
-		if ((current->value == APPEND || current->value == REDIR
-				|| current->value == REDIW || current->value == DOC)
-			&& current->next == NULL)
-		{
+		if ((c->value == APPEND || c->value == REDIR || c->value == REDIW
+				|| c->value == DOC) && c->next == NULL)
 			return (false);
-		}
-		current = current->next;
+		c = c->next;
 	}
 	return (true);
 }

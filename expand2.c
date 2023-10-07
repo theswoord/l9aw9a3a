@@ -6,7 +6,7 @@
 /*   By: nbouhali < nbouhali@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 04:32:44 by nbouhali          #+#    #+#             */
-/*   Updated: 2023/10/06 19:50:30 by nbouhali         ###   ########.fr       */
+/*   Updated: 2023/10/07 22:00:19 by nbouhali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,15 +50,12 @@ char	*expander_qv2(t_shell *g_struct, char *str)
 	int		i;
 	int		j;
 	int		k;
-	char	*request;
 	char	*expantion;
 	char	*out;
 
 	i = 0;
 	j = 0;
 	k = 0;
-	request = NULL;
-	expantion = NULL;
 	out = ft_calloc(ft_strlen(str) + 1, 1);
 	while (str[i])
 	{
@@ -68,8 +65,8 @@ char	*expander_qv2(t_shell *g_struct, char *str)
 			j = i;
 			while (ft_isalnum(str[i]) == 1 || str[i] == '?')
 				i++;
-			request = ft_substr(str, j, i - j);
-			expantion = env_expander(g_struct, g_struct->envlist, request);
+			expantion = env_expander(g_struct, g_struct->envlist, ft_substr(str,
+						j, i - j));
 			out = ft_strjoingnl(out, expantion);
 			out = ft_realloc(out, (ft_strlen(str) + ft_strlen(expantion)));
 			k += ft_strlen(expantion);
@@ -96,8 +93,6 @@ void	builtins(t_shell *g_struct, char **env, char **single_comm)
 	}
 	else if (ft_strcmp(single_comm[0], "env") == 0)
 	{
-			// printf("hhh\n");
-		
 		ft_env(g_struct, twodlen(single_comm), single_comm);
 		update_exit(g_struct);
 	}
