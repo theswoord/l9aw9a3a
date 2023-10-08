@@ -1,9 +1,13 @@
-#include <stdio.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   input.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nbouhali < nbouhali@student.1337.ma >      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/10/08 04:44:15 by nbouhali          #+#    #+#             */
+/*   Updated: 2023/10/08 04:45:39 by nbouhali         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-// int main() {
-//     char buffer[100];
-//     printf("Enter a line of text: ");
-//     fgets(buffer, sizeof(buffer), stdin);
-//     printf("You entered: %s", buffer);
-//     return 0;
-// }
+#include <stdio.h>

@@ -1,15 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exit.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nbouhali < nbouhali@student.1337.ma >      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/10/08 04:44:41 by nbouhali          #+#    #+#             */
+/*   Updated: 2023/10/08 04:46:35 by nbouhali         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "builtins.h"
 
-// void    ft_clear_all()
-// {
-
-// }
-
-int ft_atoi(const char *str)
+int	ft_atoi(const char *str)
 {
-	int b;
-	int ichara;
-	int l7asol;
+	int	b;
+	int	ichara;
+	int	l7asol;
 
 	b = 0;
 	ichara = 1;
@@ -32,18 +39,6 @@ int ft_atoi(const char *str)
 	}
 	return (l7asol * ichara);
 }
-
-// size_t	ft_strlen(const char *a)
-// {
-// 	size_t	b;
-
-// 	b = 0;
-// 	while (a[b])
-// 	{
-// 		b++;
-// 	}
-// 	return (b);
-// }
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
@@ -81,10 +76,9 @@ void	ft_putstr_fd(char *s, int fd)
 	}
 }
 
-void ft_exit_error(int case_num, char *command)
+void	ft_exit_error(int case_num, char *command)
 {
-	char *error_message;
-	// print the output to stderr instead of standard output
+	char	*error_message;
 
 	error_message = ft_strjoin("-bash: exit: ", command);
 	error_message = ft_strjoin(error_message, ": numeric argument required\n");
@@ -92,11 +86,10 @@ void ft_exit_error(int case_num, char *command)
 		ft_putstr_fd("-bash: exit: too many arguments\n", 2);
 	else if (case_num == 2)
 		ft_putstr_fd(error_message, 2);
-	// ft_clear_all();
 	exit(255);
 }
 
-int ft_isdigit(int a)
+int	ft_isdigit(int a)
 {
 	if (a >= '0' && a <= '9')
 		return (1);
@@ -104,9 +97,9 @@ int ft_isdigit(int a)
 		return (0);
 }
 
-int is_number(char *str)
+int	is_number(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])
@@ -118,10 +111,10 @@ int is_number(char *str)
 	return (0);
 }
 
-int valid_arg(char *arg)
+int	valid_arg(char *arg)
 {
-	int i;
-	int sign;
+	int	i;
+	int	sign;
 
 	i = 0;
 	sign = 1;
@@ -137,12 +130,11 @@ int valid_arg(char *arg)
 	return (0);
 }
 
-void ft_exit(char **args, t_shell *g_struct)
+void	ft_exit(char **args, t_shell *g_struct)
 {
-	int exit_status;
+	int	exit_status;
 
 	exit_status = 0;
-	// printf("exit\n");
 	if (args[1])
 	{
 		if (valid_arg(args[1]))
@@ -155,18 +147,5 @@ void ft_exit(char **args, t_shell *g_struct)
 	{
 		exit_status = g_struct->exit_status;
 	}
-	// ft_clear_all();
-	// printf("%i\n", exit_status);
 	exit(exit_status);
 }
-
-// int main(int ac, char **av)
-// {
-// 	ft_exit(av);
-// }
-
-// Too many arguments: If the user provides additional arguments after the exit command, you can display an error message like "exit: too many arguments" and exit the shell with a non-zero status code.
-
-// Invalid argument: If the user provides a non-numeric argument to the exit command, you can display an error message like "exit: numeric argument required" and exit the shell with a non-zero status code.
-
-// Clean exit: If the user simply enters the exit command without any arguments, you can exit the shell gracefully with an exit status of 0.
