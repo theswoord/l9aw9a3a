@@ -96,6 +96,8 @@ char *ft_strdup(const char *s1)
 	char *str;
 
  	i = 0;
+	if (!s1)
+	return NULL;
 	str = (char *)malloc(ft_strlen(s1) + 1);
 	if (!str)
 		return (0);
@@ -127,6 +129,11 @@ size_t ft_strlen(const char *str)
 {
 	size_t i;
 
+	if (!str)
+	{
+		return 0;
+		/* code */
+	}
  	i = 0;
 	while (str[i])
 		i++;

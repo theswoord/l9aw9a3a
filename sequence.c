@@ -6,7 +6,7 @@
 /*   By: nbouhali < nbouhali@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 04:34:59 by nbouhali          #+#    #+#             */
-/*   Updated: 2023/10/06 05:05:14 by nbouhali         ###   ########.fr       */
+/*   Updated: 2023/10/08 01:50:39 by nbouhali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@ void	files_finder(t_tlist *head)
 	while (current != NULL && current->next)
 	{
 		if (current->value == REDIR || current->value == APPEND
-			|| current->value == REDIW)
+			|| current->value == REDIW || current->value == DOC )
 		{
 			current->next->value = current->value;
 			current->next->is_file = true;
 		}
 		if (ft_strcmp(current->str, ">") == 0 || ft_strcmp(current->str,
-				">>") == 0 || ft_strcmp(current->str, "<") == 0)
+				">>") == 0 || ft_strcmp(current->str, "<") == 0 || ft_strcmp(current->str, "<<") == 0)
 			current->is_file = false;
 		current = current->next;
 	}
@@ -39,7 +39,7 @@ int	nodes_count(t_tlist **current)
 	while (*current != NULL)
 	{
 		if ((*current)->value == PIPE || (*current)->value == REDIR
-			|| (*current)->value == REDIW || (*current)->value == APPEND)
+			|| (*current)->value == REDIW || (*current)->value == APPEND || (*current)->value == DOC )
 		{
 			(*current) = (*current)->next;
 			return (nodes);
@@ -82,6 +82,7 @@ void	pipes_list(t_shell *g_struct, int count)
 	while (i < count)
 	{
 		node->args[i] = current->str;
+		// printf(".%s.\n", current->str);
 		free(current);
 		i++;
 		current = current->next;

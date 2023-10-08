@@ -6,7 +6,7 @@
 /*   By: nbouhali < nbouhali@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 04:32:36 by nbouhali          #+#    #+#             */
-/*   Updated: 2023/10/07 20:28:22 by nbouhali         ###   ########.fr       */
+/*   Updated: 2023/10/08 03:52:50 by nbouhali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,16 @@ void	tokenisation(char *str, t_shell *g_struct, char **env)
 	}
 	if (command_id(g_struct->tlist) == DOC)
 	{
+		g_struct->heredoc_list = NULL;
 		docs = element_counter(g_struct, g_struct->tlist, DOC);
-		free_tokens(g_struct->tlist);
-		return ;
 	}
 	expander_init(g_struct, g_struct->tlist, NULL);
-	if (command_id(g_struct->tlist) == REDIW
+
+	
+	if (command_id(g_struct->tlist) == PIPE
+		||command_id(g_struct->tlist) == REDIW
 		|| command_id(g_struct->tlist) == REDIR
-		|| command_id(g_struct->tlist) == APPEND)
+		|| command_id(g_struct->tlist) == APPEND || command_id(g_struct->tlist) == DOC )
 	{
 		files_finder(g_struct->tlist);
 		redi_set(g_struct);
@@ -53,13 +55,13 @@ void	tokenisation(char *str, t_shell *g_struct, char **env)
 		execute_pipelines(&g_struct->pipes_list, g_struct);
 		update_exit(g_struct);
 		g_struct->redi_list = NULL;
-		free_tokens(g_struct->tlist);
-	}
-	else if (command_id(g_struct->tlist) == PIPE)
-	{
-		pipes_divider(g_struct);
-		execute_pipelines(&g_struct->pipes_list, g_struct);
-		update_exit(g_struct);
+
+		if((command_id(g_struct->tlist) == REDIW
+		|| command_id(g_struct->tlist) == REDIR
+		|| command_id(g_struct->tlist) == APPEND || command_id(g_struct->tlist) == DOC)) 
+		{
+			free(g_struct->tlist);
+		}
 	}
 	else
 	{
@@ -69,6 +71,7 @@ void	tokenisation(char *str, t_shell *g_struct, char **env)
 		free(single_comm);
 		free_tokens(g_struct->tlist);
 	}
+
 }
 
 int	command_id(t_tlist *head)
@@ -114,9 +117,12 @@ void	pipes_divider(t_shell *g_struct)
 	}
 	if (g_struct->redi_list != NULL)
 	{
+		// printf("\t%p\n", cu);
 		cu = g_struct->pipes_list;
+		// printf("\t%p\n", cu);
 		while (cu && cu->next)
 			cu = cu->next;
 		cu->redirect = g_struct->redi_list;
+		
 	}
 }

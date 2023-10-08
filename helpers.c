@@ -6,7 +6,7 @@
 /*   By: nbouhali < nbouhali@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 04:50:04 by nbouhali          #+#    #+#             */
-/*   Updated: 2023/10/06 05:15:57 by nbouhali         ###   ########.fr       */
+/*   Updated: 2023/10/08 00:15:50 by nbouhali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ int	ft_charfind(const char *str, char c)
 
 int	ft_strcmp(const char *s1, const char *s2)
 {
+	if (!s1 || !s2)
+		return (-1);
 	while (*s1 && (*s1 == *s2))
 	{
 		s1++;
@@ -59,8 +61,7 @@ int	add_env_var(t_var_t **head, char *key, char *value)
 	new_node->key = ft_strdup(key);
 	if (!value)
 		new_node->value = NULL;
-	else
-		new_node->value = ft_strdup(value);
+	new_node->value = ft_strdup(value);
 	new_node->next = *head;
 	*head = new_node;
 	return (1);

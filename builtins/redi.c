@@ -39,10 +39,12 @@ void file_in(char *file)
 void redirections(t_redi_node *redirect_node, t_shell *g_struct)
 {
     t_redi_node *current;
+    t_heredoc *temp;
 
     current = redirect_node;
     while (current)
     {
+        // printf("|%d|\n",current->type);
         if (current->type == OUT)
             file_out(current->file);
         else if (current->type == APPEAND)
@@ -51,8 +53,11 @@ void redirections(t_redi_node *redirect_node, t_shell *g_struct)
             file_in(current->file);
         else if (current->type == HEREDOC)
         {
+            // printf("hfghsfhf\n");
             dup2(g_struct->heredoc_list->fd, 0);
+            temp = g_struct->heredoc_list;
             g_struct->heredoc_list = g_struct->heredoc_list->next;
+            free(temp);
         }
         else
             return;

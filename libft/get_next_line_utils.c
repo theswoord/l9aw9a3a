@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zbenaiss <zbenaiss@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: nbouhali < nbouhali@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 15:09:26 by zbenaiss          #+#    #+#             */
-/*   Updated: 2022/11/22 17:36:34 by zbenaiss         ###   ########.fr       */
+/*   Updated: 2023/10/07 22:18:07 by nbouhali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,11 @@ size_t	ft_strlen(const char *str)
 {
 	size_t	i;
 
+	if (!str)
+	{
+		return 0;
+		/* code */
+	}
 	i = 0;
 	while (str[i])
 		i++;

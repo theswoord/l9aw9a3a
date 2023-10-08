@@ -10,7 +10,8 @@ void free_redirections(t_redi_node **redirect_node)
 	{
 		temp = current_redi;
 		current_redi = current_redi->next;
-		// free(temp->file);
+		// printf("\t%p\n", temp->file);
+		free(temp->file);
 		// printf("hh %p\n",temp);
 		free(temp);
 		temp = NULL;

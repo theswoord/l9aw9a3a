@@ -6,7 +6,7 @@
 /*   By: nbouhali < nbouhali@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 04:50:29 by nbouhali          #+#    #+#             */
-/*   Updated: 2023/10/07 21:57:33 by nbouhali         ###   ########.fr       */
+/*   Updated: 2023/10/08 03:38:28 by nbouhali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	free_tokens(t_tlist *head)
 	{
 		temp = current;
 		current = current->next;
+		// if (temp->str != NULL)
 		free(temp->str);
 		free(temp);
 	}

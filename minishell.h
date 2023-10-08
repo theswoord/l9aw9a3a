@@ -6,7 +6,7 @@
 /*   By: nbouhali < nbouhali@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 04:50:46 by nbouhali          #+#    #+#             */
-/*   Updated: 2023/10/07 20:51:50 by nbouhali         ###   ########.fr       */
+/*   Updated: 2023/10/07 22:45:50 by nbouhali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,8 @@ typedef struct s_index
 int i;
 int j;
 int k;
+char *out;
+char *result;
 
 
 }t_lesindex;
