@@ -1,22 +1,10 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: zbenaiss <zbenaissa@1337.ma>               +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/08 04:11:16 by zbenaiss          #+#    #+#             */
-/*   Updated: 2023/10/08 04:11:17 by zbenaiss         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "builtins.h"
 
 int	ft_atoi(const char *str)
 {
-	int	b;
-	int	ichara;
-	int	l7asol;
+	int b;
+	int ichara;
+	int l7asol;
 
 	b = 0;
 	ichara = 1;
@@ -48,9 +36,9 @@ int	ft_isdigit(int a)
 		return (0);
 }
 
-int	is_number(char *str)
+int is_number(char *str)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	while (str[i])
@@ -64,8 +52,8 @@ int	is_number(char *str)
 
 int	valid_arg(char *arg)
 {
-	int	i;
-	int	sign;
+	int i;
+	int sign;
 
 	i = 0;
 	sign = 1;
@@ -86,7 +74,6 @@ void	ft_exit(char **args, t_shell *g_struct)
 	int	exit_status;
 
 	exit_status = 0;
-	printf("exit\n");
 	if (args[1])
 	{
 		if (valid_arg(args[1]))
@@ -97,5 +84,8 @@ void	ft_exit(char **args, t_shell *g_struct)
 	}
 	else
 		exit_status = g_struct->exit_status;
+
+	// ft_clear_all();
+	printf("%i\n", exit_status);
 	exit(exit_status);
 }

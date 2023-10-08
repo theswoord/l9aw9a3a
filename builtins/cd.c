@@ -6,7 +6,7 @@
 /*   By: zbenaiss <zbenaissa@1337.ma>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 04:10:58 by zbenaiss          #+#    #+#             */
-/*   Updated: 2023/10/08 04:10:59 by zbenaiss         ###   ########.fr       */
+/*   Updated: 2023/10/08 05:07:16 by zbenaiss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,16 +55,12 @@ void	change_pwd(t_var_t *head, t_shell *g_shell)
 	getcwd(pwd, sizeof(pwd));
 	find_value("OLDPWD", head, find_key("PWD", head));
 	find_value("PWD", head, pwd);
-	if (old_pwd == NULL || current_pwd == NULL)
-	{
-		error_set(g_shell, HOME_NOT_SET, 1);
-	}
 }
 
 void	cd_command(char *directory, char **env, t_shell *g_shell)
 {
 	if (!directory)
-		chdir(getenv("HOME"));
+		chdir(extract_from_in_list(g_shell, g_shell->envlist, "PATH"));
 	else if (chdir(directory) != 0)
 	{
 		error_set(g_shell, PERMISSION_DENIED_FILE, 1);

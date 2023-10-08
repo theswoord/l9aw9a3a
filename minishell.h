@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zbenaiss <zbenaissa@1337.ma>               +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/10/06 04:50:46 by nbouhali          #+#    #+#             */
+/*   Updated: 2023/10/08 05:15:33 by zbenaiss         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 # include "./ft_malloc/ft_malloc.h"
@@ -107,6 +119,30 @@ typedef struct s_prompt
 
 }						t_prompt;
 
+typedef struct s_index
+{
+
+int i;
+int j;
+int k;
+char *out;
+char *result;
+
+
+}t_lesindex;
+
+typedef struct s_index
+{
+
+int i;
+int j;
+int k;
+char *out;
+char *result;
+
+
+}t_lesindex;
+
 typedef struct s_counter
 {
 	int					quotes;
@@ -119,18 +155,20 @@ typedef struct s_counter
 
 typedef struct s_shell
 {
-	t_tlist				*tlist;
-	t_var_t				*envlist;
-	char				**env;
-	t_node				*pipes_list;
-	t_heredoc			*heredoc_list;
-	e_tokenum			tokenum;
-	int count; // hada test o safi
-	// int exit_status; //static int
-	int					exit_status;
-	t_shell_error		error_name;
-	t_redi_node			*redi_list;
-}						t_shell;
+
+    t_tlist *tlist;
+    t_var_t *envlist;
+    t_node *pipes_list;
+    t_heredoc *heredoc_list;
+    e_tokenum tokenum;
+    char **env;
+    int count; // hada test o safi
+    // int exit_status; //static int
+    int exit_status;
+    char *exit_arr;
+    t_shell_error error_name;
+    t_redi_node *redi_list;
+}t_shell; 
 
 // extern t_shell	g_struct;
 // typedef struct s_tre
@@ -148,35 +186,33 @@ void					tokenisation(char *str, t_shell *g_struct, char **env);
 void					element_init(t_counter *elements, char *str);
 int						syntax_check(t_counter *elements, char *str);
 /*	----	----utils----	-----	*/
-int						e_search(char *str, char c);
-char					*quotefixer(char *str, char quote);
-int						closed_quotes(char *str);
-int						closed_double_quotes(char *str);
-char					*code_3_quotes(char *str);
-char					*special_trim(char *str, char c);
-char					*simple_trim(char *str, char c);
-void					the_divider(t_prompt *helper, t_counter *elements,
-							char *str);
-int						twodlen(char **tableau);
-void					quoter(t_prompt *helper);
-void					str_replacement(char *str);
+int e_search(char* str, char c);
+char *quotefixer(char *str, char quote);
+int closed_quotes(char *str);
+int closed_double_quotes(char *str);
+char* code_3_quotes(char * str);
+char *special_trim(char * str, char c);
+char *simple_trim(char *str, char c);
+void the_divider(t_prompt *helper ,t_counter *elements, char *str);
+int twodlen(char **tableau);
+// void quoter(t_prompt *helper);
+void str_replacement(char *str);
 // int quotation(char *str,int c);
-void					linkwithex(char **tableau);
-char					*ft_strtok(char *str);
+// void linkwithex(char **tableau);
+char* ft_strtok(char *str);
 // void strr_replacement(char *str);
 /*	----	----temp----	-----	*/
-int						isQuotesClosed(const char *str);
+// int isQuotesClosed(const char *str);
 /*	----	----free----	-----	*/
 void					free_tableau(char **tableau, int lines);
 /*	----	----print----	-----	*/
-void					printTree(struct s_tree *root);
-void					printInOrderIndented(struct s_tree *node, int depth);
-void					printBinaryTree(struct s_tree *root, int level,
-							char direction);
-void					printSpaces(int count);
+// void printTree(struct s_tree* root);
+// void printInOrderIndented(struct s_tree* node, int depth);
+// void printBinaryTree(struct s_tree* root, int level, char direction);
+// void printSpaces(int count);
 /*	----	----tree----	-----	*/
-void					insertNode(struct s_tree **root, char *data);
-void					freeTree(struct s_tree *node);
+// void insertNode(struct s_tree** root, char* data);
+// void freeTree(struct s_tree* node);
 /*  ----    ----list----    -----   */
 // t_list *l_addnode(char* data);
 // int list_size(t_list *head);
@@ -192,87 +228,78 @@ char					*toktok(char *str);
 // void print_env(t_env *head);
 // t_env	*ft_lstnew(char *content);
 // void	ft_lstadd_back(t_env **lst, t_env *new);
-void					print_environ(void);
+// void print_environ(void);
 // void catch_environ(t_env **lenv, char **env);
 // t_env	*ft_lstlast(t_env *lst);
-void					print_env(t_var_t *head, int boole);
-void					free_env(t_var_t *head);
-void					initialize_environment(t_shell *g_struct,
-							t_var_t **head, char **env);
-int						add_env_var(t_var_t **head, char *key, char *value);
-int						ft_strcmp(const char *s1, const char *s2);
-int						ft_charfind(const char *str, char c);
-char					*env_nav(t_var_t **head, char *key);
-char					*better_prompt(void);
-static int				skip_sep(char *s);
-static int				ft_word_len(char *s);
-static int				ft_count(char *s);
-char					**ft_strsplit(char *s);
-void					token_list(t_tlist **head, char *tok, int type,
-							int queue);
-void					add_token_list(t_tlist **head, char **tab);
-int						typefinder(char *line);
-void					print_tokens(t_tlist *head);
-void					add_to_env(t_var_t **head, char *env);
-void					modify_env(t_shell *g_struct, t_tlist *token);
-char					*expanded(t_shell *g_struct, char *str);
-void					expander_init(t_shell *g_struct, t_tlist *head,
-							t_var_t *env);
-int						find_in_list(t_var_t *head, char *search);
-void					qidentify(t_shell *g_struct, t_tlist *token);
-void					add_to_environ(char *argument, t_var_t **env);
-int						list_size(t_tlist *head);
+void print_env(t_var_t *head, int boole);
+void free_env(t_var_t *head);
+void initialize_environment(t_shell *g_struct,t_var_t **head, char **env);
+int add_env_var(t_var_t **head, char *key, char *value);
+int ft_strcmp(const char *s1, const char *s2);
+int ft_charfind(const char *str, char c);
+char* env_nav(t_var_t **head,char * key);
+// char *better_prompt(void);
+static int	ignore_spaces(char *s);
+static int	ft_lenght(char *s);
+static int	ft_count(char *s);
+char	**ft_u_split(char *s);
+void token_list(t_tlist **head,char *tok, int type,int queue);
+void add_token_list(t_tlist **head, char **tab);
+int typefinder (char *line);
+// void print_tokens(t_tlist *head);
+// void add_to_env(t_var_t **head, char *env);
+void modify_env(t_shell *g_struct,t_tlist *token);
+char * expanded(t_shell *g_struct,char* str);
+void expander_init(t_shell *g_struct,t_tlist *head, t_var_t *env);
+// int find_in_list(t_var_t *head, char* search);
+void qidentify(t_shell *g_struct,t_tlist *token);
+void add_to_environ(char *argument, t_var_t **env);
+int list_size(t_tlist *head);
 // void execute_pipelines(array_of_commands *command_list, char **env);
 char					**from_list_to_arr(t_tlist *head);
 t_var_t					*find_value(char *key, t_var_t *head, char *value);
 char					*find_key(char *key, t_var_t *head);
 // void change_pwd(t_var_t *head);
-void					change_pwd(t_var_t *head, t_shell *g_shell);
-void					cd_command(char *directory, char **env,
-							t_shell *g_shell);
-char					*expanded_q(t_shell *g_struct, char *str);
-char					*ft_strchrtill(const char *s, int c, int len);
-char					*strdelch(char *str, char ch);
-void					free_tokens(t_tlist *head);
-void					free_env(t_var_t *head);
-bool					quotes_errors(char *str);
-bool					list_check(t_tlist *head);
-char					*delete_pos(char *str, int pos);
-char					*recombinator(char *first, char *later, char *rest);
-int						command_id(t_tlist *head);
-void					pipes_divider(t_shell *g_struct);
-char					*quotes_moncef(char *str);
-t_tlist					*pipes_copy(t_tlist *head, t_tlist *current);
-void					free_tableauv2(char **tableau);
+void change_pwd(t_var_t *head, t_shell *g_shell);
+void cd_command(char *directory, char **env, t_shell *g_shell);
+char *expanded_q(t_shell *g_struct, char *str);
+char	*ft_strchrtill(const char *s, int c,int len);
+char *strdelch(char *str, char ch);
+void free_tokens(t_tlist *head);
+void free_env(t_var_t *head);
+bool quotes_errors(char *str);
+bool list_check(t_tlist *head);
+char *delete_pos(char *str, int pos);
+char *recombinator(char *first , char *later, char *rest);
+int command_id(t_tlist *head);
+void pipes_divider(t_shell *g_struct);
+char *quotes_remover(char *str);
+t_tlist *pipes_copy(t_tlist *head, t_tlist *current);
+void free_tableauv2(char **tableau);
 // void execute_pipelines(t_node **command_node, char **env);
-void					execute_pipelines(t_node **command_node,
-							t_shell *g_struct);
-void					free_pipes(t_node *head);
-void					free_pipes_node(t_node **command_node);
-t_node					*new_command_node(t_node **list, char **args);
-t_node					*new_node(char **arr, t_redi_node *redirect);
-void					add_node(t_node **node, t_node *new);
-void					execute_commands(char *command, char **args, char **env,
-							t_shell *g_shell);
-void					special_free(t_shell *g_struct);
-void					special_free_recursive(t_shell *g_struct,
-							t_tlist *current);
-void					special_freex(t_shell *g_struct);
-void					print_pointers(t_tlist *head);
-void					versatile_divider(t_shell *g_struct);
-int						versatile_nodes_count(t_tlist **current);
-void					versatile_pipes_list(t_shell *g_struct, int count,
-							bool detected);
-int						versatile_counter(t_tlist *head);
-void					files_finder(t_tlist *head);
-void					add_redi(t_redi_node **node, t_redi_node *new);
-t_redi_node				*new_redi(char *file, int type);
-void					add_node(t_node **node, t_node *new);
-void					redi_set(t_shell *g_struct);
-char					*expander_qv2(t_shell *g_struct, char *str);
-char					*env_expander(t_shell *g_struct, t_var_t *head,
-							char *key);
-void					print_pointers2(t_redi_node *head);
+void execute_pipelines(t_node **command_node, t_shell *g_struct);
+void free_pipes(t_node *head);
+void free_pipes_node(t_node **command_node);
+t_node *new_command_node(t_node **list, char **args);
+t_node *new_node(char **arr, t_redi_node *redirect);
+void add_node(t_node **node, t_node *new);
+void execute_commands(char *command, char **args, char **env, t_shell *g_shell);
+void special_free(t_shell *g_struct);
+// void special_free_recursive(t_shell *g_struct, t_tlist *current);
+// void special_freex(t_shell *g_struct);
+void print_pointers(t_tlist *head);
+// void versatile_divider(t_shell *g_struct);
+// int versatile_nodes_count(t_tlist **current);
+// void versatile_pipes_list(t_shell *g_struct, int count, bool detected);
+// int versatile_counter(t_tlist *head);
+void files_finder(t_tlist *head);
+void add_redi(t_redi_node **node, t_redi_node *new);
+t_redi_node *new_redi(char *file, int type);
+void add_node(t_node **node, t_node *new);
+void redi_set(t_shell *g_struct);
+char *expander_qv2(t_shell *g_struct , char * str);
+char *env_expander(t_shell * g_struct,t_var_t *head, char * key);
+void print_pointers2(t_redi_node* head);
 // void cd_command(int ac, char *directory, char **env, t_shell *g_struct);
 void					execute_commands_pipes(char *command, char **args,
 							char **env, t_shell *g_shell);
@@ -290,9 +317,22 @@ char					*extract_from_in_list(t_shell *g_struct, t_var_t *tlist,
 t_heredoc				*new_here(int fd);
 void					add_here(t_heredoc **node, t_heredoc *new);
 void					heredoc(t_shell *g_struct, char *eof);
+// void echo_command(int ac, char **av);
+char					* extract_from_in_list(t_shell * g_struct ,t_var_t *tlist, char * key);
+void					ft_env(t_shell *g_struct, int ac, char **av);
+void					echo_command(int size, char **args, t_shell* g_struct);
+char					*ft_strjoinmini(char *s1, char *s2);
+char					*ft_realloc(char* str, int size);
+char					*add_exit_to_env(t_shell * g_struct, int exit); //here
+void					update_exit(t_shell *g_struct);
+int						allspaces(char *str);
+void					builtins(t_shell *g_struct , char ** env ,  char ** single_comm);
+int						element_counter(t_shell *g_struct ,t_tlist *head, int what);
+int						nodes_count(t_tlist **current);
+void					pipes_list(t_shell *g_struct, int count);
+void					free_tokens3(t_tlist *head);
 void					general_execution(t_shell *g_struct, char **args,
 							int fork);
-void					ft_env(t_shell *g_struct, int ac, char **av);
 void					error_set(t_shell *g_shell, t_shell_error error_name,
 							int print);
 #endif

@@ -6,7 +6,7 @@
 /*   By: zbenaiss <zbenaissa@1337.ma>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 04:11:24 by zbenaiss          #+#    #+#             */
-/*   Updated: 2023/10/08 04:11:25 by zbenaiss         ###   ########.fr       */
+/*   Updated: 2023/10/08 05:34:09 by zbenaiss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ char	*ft_strdup(const char *s1)
 	char	*str;
 
 	i = 0;
+	if (!s1)
+		return (NULL);
 	str = (char *)malloc(ft_strlen(s1) + 1);
 	if (!str)
 		return (0);
@@ -110,4 +112,18 @@ void	*ft_memcpy(void *dst, const void *src, size_t n)
 		i++;
 	}
 	return (str2);
+}
+
+size_t	ft_strlen(const char *str)
+{
+	size_t	i;
+
+	if (!str)
+	{
+		return (0);
+	}
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
 }

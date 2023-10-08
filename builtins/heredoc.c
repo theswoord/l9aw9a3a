@@ -6,7 +6,7 @@
 /*   By: zbenaiss <zbenaissa@1337.ma>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 04:11:27 by zbenaiss          #+#    #+#             */
-/*   Updated: 2023/10/08 04:11:28 by zbenaiss         ###   ########.fr       */
+/*   Updated: 2023/10/08 05:36:06 by zbenaiss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,13 @@ void	heredoc(t_shell *g_struct, char *eof)
 		line = get_next_line(0);
 		line = ft_strtrim(line, "\n");
 		if (ft_strcmp(line, eof) == 0)
+		{
+			free(line);
 			break ;
+		}
 		ft_putstr_fd(line, pipes[1]);
+		ft_putstr_fd("\n", pipes[1]);
+		free(line);
 	}
 	close(pipes[1]);
 	add_here(&g_struct->heredoc_list, new_here(pipes[0]));

@@ -6,7 +6,7 @@
 /*   By: zbenaiss <zbenaissa@1337.ma>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 04:11:34 by zbenaiss          #+#    #+#             */
-/*   Updated: 2023/10/08 04:11:35 by zbenaiss         ###   ########.fr       */
+/*   Updated: 2023/10/08 05:37:44 by zbenaiss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	redirections(t_redi_node *redirect_node, t_shell *g_struct)
 {
 	t_redi_node	*current;
+	t_heredoc	*temp;
 
 	current = redirect_node;
 	while (current)
@@ -28,7 +29,9 @@ void	redirections(t_redi_node *redirect_node, t_shell *g_struct)
 		else if (current->type == HEREDOC)
 		{
 			dup2(g_struct->heredoc_list->fd, 0);
+			temp = g_struct->heredoc_list;
 			g_struct->heredoc_list = g_struct->heredoc_list->next;
+			free(temp);
 		}
 		else
 			return ;
@@ -41,7 +44,7 @@ t_redi_node	*new_redi(char *file, int type)
 	t_redi_node	*new;
 
 	new = malloc(sizeof(t_redi_node));
-	new->file = ft_strdup(file);
+	new->file = file;
 	new->type = type;
 	new->next = NULL;
 	return (new);

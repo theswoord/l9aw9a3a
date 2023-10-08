@@ -16,7 +16,9 @@ char	*ft_strdup(const char *s1)
 {
 	int		b;
 	char	*chi7aja;
-
+	if (!s1)
+	return NULL;
+	
 	b = 0;
 	b = ft_strlen(s1);
 	chi7aja = malloc(b * sizeof(char) + 1);

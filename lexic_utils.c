@@ -1,76 +1,39 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lexic_utils.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nbouhali < nbouhali@student.1337.ma >      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/10/06 04:50:11 by nbouhali          #+#    #+#             */
+/*   Updated: 2023/10/06 05:12:31 by nbouhali         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-int e_search(char* str, char c){
+int	e_search(char *str, char c)
+{
+	int	i;
+	int	count;
 
-
-    int i;
-    int count;
-    i =0;
-    count = 0;
-
-    while(str[i]!= '\0'){
-
-        if (str[i]== c)
-            count++;
-        
-        i++;
-    }
-    return count;
+	i = 0;
+	count = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] == c)
+			count++;
+		i++;
+	}
+	return (count);
 }
-int twodlen(char **tableau){
-    int i =0;
 
-    while (tableau[i])
-    i++;
+int	twodlen(char **tableau)
+{
+	int	i;
 
-
-    return i;
+	i = 0;
+	while (tableau[i])
+		i++;
+	return (i);
 }
-void str_replacement(char *str){
-
-    int i =0;
-    int o =0; 
-    int c =1;
-    while (str[i] != '\0')
-    {
-
-        if((str[i] == '"' || str[i] == '\'')&& c == 1 )
-        {
-            o = 1;
-            c= 0 ;
-            i++;
-        }
-        if((str[i] == '"' || str[i] == '\'')&& o == 1)
-        {
-            c = 1;
-            o=0;
-            i++;
-        }
-        if(o == 1 && c==1)
-        {
-            o=0;
-            c=0;
-        }
-            if (str[i] == ' ' && o==0)
-               str[i] = '\n';
-    i++;
-    }
-    
-}
-// void strr_replacement(char *str){
-
-//     int i =ft_strlen(str)-1;
-//      int o =0; 
-//     while (str[i] != '\0')
-//     {
-//         // printf("|%c|\n",str[i]);
-//         if (str[i] == ' ' && o==0)
-//                str[i] = '\n';
-//         if(str[i] == '"' || str[i] == '\'')
-//         {
-//             o = 1;
-//         }
-//     i--;
-//     }
-    
-// }

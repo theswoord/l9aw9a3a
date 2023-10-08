@@ -15,7 +15,12 @@
 size_t	ft_strlen(const char *a)
 {
 	size_t	b;
-
+	if (!a)
+	{
+		return 0;
+		/* code */
+	}
+	
 	b = 0;
 	while (a[b])
 	{

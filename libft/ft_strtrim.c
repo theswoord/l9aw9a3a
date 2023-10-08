@@ -90,5 +90,6 @@ char	*ft_strtrim(char const *s1, char const *set)
 		natija[b++] = s1[lowel++];
 	}
 	natija[b] = '\0';
+	free((char *)s1);
 	return (natija);
 }
