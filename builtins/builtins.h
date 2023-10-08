@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtins.h                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zbenaiss <zbenaissa@1337.ma>               +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/10/08 04:12:13 by zbenaiss          #+#    #+#             */
+/*   Updated: 2023/10/08 04:12:14 by zbenaiss         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef BUILTINS_H
 # define BUILTINS_H
 
@@ -34,7 +46,6 @@ int			valid_arg(char *arg);
 void		pwd_command(t_shell *g_shell);
 int			find_delimeter(char *string, char *delimeter);
 void		ft_unset(int ac, char **av, t_shell *g_struct);
-// void cd_command(int ac, char **av, char **env, t_shell *g_struct);
 void		output_out(int fd);
 void		output_in(int fd);
 void		file_out(char *file);
@@ -45,7 +56,6 @@ t_redi_node	*new_redi(char *file, int type);
 t_node		*new_node(char **arr, t_redi_node *redirect);
 void		add_redi(t_redi_node **node, t_redi_node *new);
 void		add_node(t_node **node, t_node *new);
-// void execute_commands_pipes(char *command, char **args, char **env);
 void		execute_commands_pipes(char *command, char **args, char **env,
 				t_shell *g_shell);
 void		ft_exit(char **args, t_shell *g_struct);

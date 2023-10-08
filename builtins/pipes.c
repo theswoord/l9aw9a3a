@@ -1,4 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipes.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zbenaiss <zbenaissa@1337.ma>               +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/10/08 04:11:30 by zbenaiss          #+#    #+#             */
+/*   Updated: 2023/10/08 04:13:55 by zbenaiss         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "builtins.h"
+
+void	close_pipes(int *pipes)
+{
+	close(pipes[0]);
+	close(pipes[1]);
+}
 
 void	pipes_exec(t_node *current_node, t_shell *g_struct, int *pipes,
 		int temp_fd)
@@ -17,8 +35,7 @@ void	pipes_exec(t_node *current_node, t_shell *g_struct, int *pipes,
 		}
 		if (current_node->next != NULL)
 			dup2(pipes[1], STDOUT_FILENO);
-		close(pipes[0]);
-		close(pipes[1]);
+		close_pipes(pipes);
 		redirections(current_node->redirect, g_struct);
 		general_execution(g_struct, current_node->args, 0);
 		exit(g_struct->exit_status);
