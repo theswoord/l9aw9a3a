@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exit.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zbenaiss <zbenaissa@1337.ma>               +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/10/08 06:32:39 by zbenaiss          #+#    #+#             */
+/*   Updated: 2023/10/08 06:32:46 by zbenaiss         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "builtins.h"
 
 int	ft_atoi(const char *str)
 {
-	int b;
-	int ichara;
-	int l7asol;
+	int	b;
+	int	ichara;
+	int	l7asol;
 
 	b = 0;
 	ichara = 1;
@@ -36,9 +48,9 @@ int	ft_isdigit(int a)
 		return (0);
 }
 
-int is_number(char *str)
+int	is_number(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])
@@ -52,8 +64,8 @@ int is_number(char *str)
 
 int	valid_arg(char *arg)
 {
-	int i;
-	int sign;
+	int	i;
+	int	sign;
 
 	i = 0;
 	sign = 1;
@@ -69,7 +81,7 @@ int	valid_arg(char *arg)
 	return (0);
 }
 
-void	ft_exit(char **args, t_shell *g_struct)
+void	ft_exit(char **args, t_shell *mstruct)
 {
 	int	exit_status;
 
@@ -77,15 +89,12 @@ void	ft_exit(char **args, t_shell *g_struct)
 	if (args[1])
 	{
 		if (valid_arg(args[1]))
-			error_set(g_struct, TOO_MANY_ARGUMENTS, 1);
+			error_set(mstruct, TOO_MANY_ARGUMENTS, 1);
 		else if (args[2])
-			error_set(g_struct, NUMERIC_ARG_REQUIRED, 1);
+			error_set(mstruct, NUMERIC_ARG_REQUIRED, 1);
 		exit_status = ft_atoi(args[1]);
 	}
 	else
-		exit_status = g_struct->exit_status;
-
-	// ft_clear_all();
-	printf("%i\n", exit_status);
+		exit_status = mstruct->exit_status;
 	exit(exit_status);
 }

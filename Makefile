@@ -2,21 +2,19 @@
 
 
 
-SRC = helpers.c main.c lexer.c lexic_utils.c memory_friend.c ./builtins/cd.c ./builtins/echo.c ./builtins/env.c ./builtins/executable.c ./builtins/exit.c ./builtins/export.c ./builtins/helpers0.c ./builtins/input.c ./builtins/pipes.c ./builtins/redi.c ./builtins/unset.c ./builtins/errors/exit_status.c ./builtins/pwd.c ./builtins/heredoc.c ./tools1.c ./tools2.c ./sequence.c ./expand.c ./environ.c ./expand2.c tools0.c tokens.c lists.c lists1.c
-SRCB = ./bonus_checker/bonus.c ./bonus_checker/instructionpush_bonus.c ./bonus_checker/instructionsrotate_bonus.c ./bonus_checker/instructionsswap_bonus.c ./bonus_checker/output_bonus.c ./bonus_checker/tools_bonus.c ./bonus_checker/instructionhelpers_bonus.c ./bonus_checker/utils2_bonus.c ./bonus_checker/tools2_bonus.c ./bonus_checker/free_bonus.c ./bonus_checker/checker_bonus.c
+SRC = helpers.c main.c lexer.c lexic_utils.c memory_friend.c ./builtins/cd.c ./builtins/echo.c ./builtins/env.c ./builtins/executable.c ./builtins/exit.c ./builtins/export.c ./builtins/helpers0.c ./builtins/pipes.c ./builtins/redi.c ./builtins/unset.c ./builtins/errors/exit_status.c ./builtins/pwd.c ./builtins/heredoc.c ./tools1.c ./tools2.c ./sequence.c ./expand.c ./environ.c ./expand2.c tools0.c tokens.c lists.c lists1.c ./builtins/executable_help.c ./builtins/free_pipes.c ./builtins/redirections.c
 NAME = minishell
-NAMEB = checker
 CC = gcc
 
-CFLAGS= -Wall -Wextra -Werror -lreadline #-g -fsanitize=address
+CFLAGS= -Wall -Wextra -Werror -lreadline -g -fsanitize=address
 msa7 = rm -rf
 obj = ${SRC:.c=.o}
 objb = ${SRCB:.c=.o}
 
-# readflag = -L/Users/zbenaiss/.brew/opt/readline/lib 
-# readinc = -I/Users/zbenaiss/.brew/opt/readline/include/
-readflagnbl = -L/Users/nbouhali/.brew/opt/readline/lib 
-readincnbl = -I/Users/nbouhali/.brew/opt/readline/include/
+readflag = -L/Users/zbenaiss/.brew/opt/readline/lib 
+readinc = -I/Users/zbenaiss/.brew/opt/readline/include/
+# readflagnbl = -L/Users/nbouhali/.brew/opt/readline/lib 
+# readincnbl = -I/Users/nbouhali/.brew/opt/readline/include/
 
 # tarzan = -L$(shell brew --prefix readline)
 libraries = ./printf/libftprintf.a ./gnl/gnl.a ./libft/libft.a ./ft_malloc/ft_malloc.a

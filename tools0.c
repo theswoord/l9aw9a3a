@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools0.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nbouhali < nbouhali@student.1337.ma >      +#+  +:+       +#+        */
+/*   By: zbenaiss <zbenaissa@1337.ma>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 04:39:01 by nbouhali          #+#    #+#             */
-/*   Updated: 2023/10/06 04:39:02 by nbouhali         ###   ########.fr       */
+/*   Updated: 2023/10/08 06:09:24 by zbenaiss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,11 @@ void	print_pointers(t_tlist *head)
 	}
 }
 
-void	special_free(t_shell *g_struct)
+void	special_free(t_shell *mstruct)
 {
 	t_tlist	*current;
 
-	current = g_struct->tlist;
+	current = mstruct->tlist;
 	while (current != NULL)
 	{
 		if (current->str)

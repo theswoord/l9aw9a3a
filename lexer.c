@@ -6,13 +6,13 @@
 /*   By: zbenaiss <zbenaissa@1337.ma>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 04:32:36 by nbouhali          #+#    #+#             */
-/*   Updated: 2023/10/08 05:24:56 by zbenaiss         ###   ########.fr       */
+/*   Updated: 2023/10/08 06:09:24 by zbenaiss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	tokenisation(char *str, t_shell *g_struct, char **env)
+void	tokenisation(char *str, t_shell *mstruct, char **env)
 {
 	char	**single_comm;
 	char	**done;
@@ -23,53 +23,54 @@ void	tokenisation(char *str, t_shell *g_struct, char **env)
 		return ;
 	}
 	done = ft_u_split(str);
-	add_token_list(&g_struct->tlist, done);
+	add_token_list(&mstruct->tlist, done);
 	free_tableau(done, twodlen(done));
-	modify_env(g_struct, g_struct->tlist);
-	update_exit(g_struct);
-	if (list_check(g_struct->tlist))
-		qidentify(g_struct, g_struct->tlist);
+	modify_env(mstruct, mstruct->tlist);
+	update_exit(mstruct);
+	if (list_check(mstruct->tlist))
+		qidentify(mstruct, mstruct->tlist);
 	else
 	{
-		g_struct->exit_status = 258;
-		update_exit(g_struct);
+		mstruct->exit_status = 258;
+		update_exit(mstruct);
 		printf("minishell: syntax error\n");
+		free_tokens(mstruct->tlist);
 		return ;
 	}
-	if (command_id(g_struct->tlist) == DOC)
+	if (command_id(mstruct->tlist) == DOC)
 	{
-		g_struct->heredoc_list = NULL;
-		docs = element_counter(g_struct, g_struct->tlist, DOC);
+		mstruct->heredoc_list = NULL;
+		docs = element_counter(mstruct, mstruct->tlist, DOC);
 	}
-	expander_init(g_struct, g_struct->tlist, NULL);
+	expander_init(mstruct, mstruct->tlist, NULL);
 
 	
-	if (command_id(g_struct->tlist) == PIPE
-		||command_id(g_struct->tlist) == REDIW
-		|| command_id(g_struct->tlist) == REDIR
-		|| command_id(g_struct->tlist) == APPEND || command_id(g_struct->tlist) == DOC )
+	if (command_id(mstruct->tlist) == PIPE
+		||command_id(mstruct->tlist) == REDIW
+		|| command_id(mstruct->tlist) == REDIR
+		|| command_id(mstruct->tlist) == APPEND || command_id(mstruct->tlist) == DOC )
 	{
-		files_finder(g_struct->tlist);
-		redi_set(g_struct);
-		pipes_divider(g_struct);
-		execute_pipelines(&g_struct->pipes_list, g_struct);
-		update_exit(g_struct);
-		g_struct->redi_list = NULL;
+		files_finder(mstruct->tlist);
+		redi_set(mstruct);
+		pipes_divider(mstruct);
+		execute_pipelines(&mstruct->pipes_list, mstruct);
+		update_exit(mstruct);
+		mstruct->redi_list = NULL;
 
-		if((command_id(g_struct->tlist) == REDIW
-		|| command_id(g_struct->tlist) == REDIR
-		|| command_id(g_struct->tlist) == APPEND || command_id(g_struct->tlist) == DOC)) 
+		if((command_id(mstruct->tlist) == REDIW
+		|| command_id(mstruct->tlist) == REDIR
+		|| command_id(mstruct->tlist) == APPEND || command_id(mstruct->tlist) == DOC)) 
 		{
-			free(g_struct->tlist);
+			free(mstruct->tlist);
 		}
 	}
 	else
 	{
-		single_comm = from_list_to_arr(g_struct->tlist);
-		general_execution(g_struct, single_comm, 1);
-		update_exit(g_struct);
+		single_comm = from_list_to_arr(mstruct->tlist);
+		general_execution(mstruct, single_comm, 1);
+		update_exit(mstruct);
 		free(single_comm);
-		free_tokens(g_struct->tlist);
+		free_tokens(mstruct->tlist);
 	}
 
 }
@@ -96,7 +97,7 @@ int	command_id(t_tlist *head)
 	return (0);
 }
 
-void	pipes_divider(t_shell *g_struct)
+void	pipes_divider(t_shell *mstruct)
 {
 	static t_tlist	*current;
 	int				i;
@@ -104,24 +105,24 @@ void	pipes_divider(t_shell *g_struct)
 	int				a;
 	t_node			*cu;
 
-	g_struct->pipes_list = NULL;
-	current = g_struct->tlist;
+	mstruct->pipes_list = NULL;
+	current = mstruct->tlist;
 	i = 0;
 	b = 0;
-	a = element_counter(g_struct, g_struct->tlist, PIPE) + 1;
+	a = element_counter(mstruct, mstruct->tlist, PIPE) + 1;
 	while (i < a)
 	{
 		b = nodes_count(&current);
-		pipes_list(g_struct, b);
+		pipes_list(mstruct, b);
 		i++;
 	}
-	if (g_struct->redi_list != NULL)
+	if (mstruct->redi_list != NULL)
 	{
 		// printf("\t%p\n", cu);
-		cu = g_struct->pipes_list;
+		cu = mstruct->pipes_list;
 		// printf("\t%p\n", cu);
 		while (cu && cu->next)
 			cu = cu->next;
-		cu->redirect = g_struct->redi_list;
+		cu->redirect = mstruct->redi_list;
 	}
 }

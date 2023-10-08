@@ -6,7 +6,7 @@
 /*   By: zbenaiss <zbenaissa@1337.ma>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 04:11:30 by zbenaiss          #+#    #+#             */
-/*   Updated: 2023/10/08 05:35:07 by zbenaiss         ###   ########.fr       */
+/*   Updated: 2023/10/08 06:09:24 by zbenaiss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	close_pipes(int *pipes)
 	close(pipes[1]);
 }
 
-void	pipes_exec(t_node *current_node, t_shell *g_struct, int *pipes,
+void	pipes_exec(t_node *current_node, t_shell *mstruct, int *pipes,
 		int temp_fd)
 {
 	int		status;
@@ -36,19 +36,19 @@ void	pipes_exec(t_node *current_node, t_shell *g_struct, int *pipes,
 		if (current_node->next != NULL)
 			dup2(pipes[1], STDOUT_FILENO);
 		close_pipes(pipes);
-		redirections(current_node->redirect, g_struct);
-		general_execution(g_struct, current_node->args, 0);
-		exit(g_struct->exit_status);
+		redirections(current_node->redirect, mstruct);
+		general_execution(mstruct, current_node->args, 0);
+		exit(mstruct->exit_status);
 	}
 	else
 	{
 		waitpid(pid, &status, 0);
 		if (WIFEXITED(status))
-			g_struct->exit_status = WEXITSTATUS(status);
+			mstruct->exit_status = WEXITSTATUS(status);
 	}
 }
 
-void	execute_pipelines(t_node **command_node, t_shell *g_struct)
+void	execute_pipelines(t_node **command_node, t_shell *mstruct)
 {
 	int		status;
 	int		temp_fd;
@@ -61,7 +61,7 @@ void	execute_pipelines(t_node **command_node, t_shell *g_struct)
 	temp_fd = -1;
 	while (current_node)
 	{
-		pipes_exec(current_node, g_struct, pipes, temp_fd);
+		pipes_exec(current_node, mstruct, pipes, temp_fd);
 		if (temp_fd != -1)
 			close(temp_fd);
 		temp_fd = pipes[0];

@@ -6,7 +6,7 @@
 /*   By: zbenaiss <zbenaissa@1337.ma>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 04:11:14 by zbenaiss          #+#    #+#             */
-/*   Updated: 2023/10/08 05:33:17 by zbenaiss         ###   ########.fr       */
+/*   Updated: 2023/10/08 06:09:24 by zbenaiss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,13 @@ void	add_to_environ(char *argument, t_var_t **env)
 	free(key);
 }
 
-void	export(t_shell *g_struct, int ac, char **av, char **env)
+void	export(t_shell *mstruct, int ac, char **av, char **env)
 {
 	int	i;
 
 	i = 0;
 	while (++i < ac)
-		add_to_environ(av[i], &g_struct->envlist);
+		add_to_environ(av[i], &mstruct->envlist);
 	if (ac == 1)
-		print_env(g_struct->envlist, 1);
+		print_env(mstruct->envlist, 1);
 }

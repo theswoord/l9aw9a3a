@@ -38,27 +38,27 @@ void		ft_putstr_fd(char *s, int fd);
 size_t		ft_strlen(const char *str);
 void		execute_commands(char *command, char **args, char **env,
 				t_shell *g_shell);
-void		execute_pipelines(t_node **command_node, t_shell *g_struct);
-void		echo_command(int ac, char **av, t_shell *g_struct);
+void		execute_pipelines(t_node **command_node, t_shell *mstruct);
+void		echo_command(int ac, char **av, t_shell *mstruct);
 char		*find_executable_command(char *command, char *path);
 void		ft_exit_error(int case_num, char *command);
 int			valid_arg(char *arg);
 void		pwd_command(t_shell *g_shell);
 int			find_delimeter(char *string, char *delimeter);
-void		ft_unset(int ac, char **av, t_shell *g_struct);
+void		ft_unset(int ac, char **av, t_shell *mstruct);
 void		output_out(int fd);
 void		output_in(int fd);
 void		file_out(char *file);
 void		file_append(char *file);
 void		file_in(char *file);
-void		redirections(t_redi_node *redirect_node, t_shell *g_struct);
+void		redirections(t_redi_node *redirect_node, t_shell *mstruct);
 t_redi_node	*new_redi(char *file, int type);
 t_node		*new_node(char **arr, t_redi_node *redirect);
 void		add_redi(t_redi_node **node, t_redi_node *new);
 void		add_node(t_node **node, t_node *new);
 void		execute_commands_pipes(char *command, char **args, char **env,
 				t_shell *g_shell);
-void		ft_exit(char **args, t_shell *g_struct);
+void		ft_exit(char **args, t_shell *mstruct);
 int			allspaces(char *str);
 void		copy_path(char **executable_path, char *dir_start, char *dir_end,
 				char *command);

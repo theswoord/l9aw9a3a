@@ -6,7 +6,7 @@
 /*   By: zbenaiss <zbenaissa@1337.ma>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 04:11:09 by zbenaiss          #+#    #+#             */
-/*   Updated: 2023/10/08 04:11:10 by zbenaiss         ###   ########.fr       */
+/*   Updated: 2023/10/08 06:33:46 by zbenaiss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,10 @@ size_t	ft_strlen(const char *str)
 {
 	size_t	i;
 
+	if (!str)
+	{
+		return (0);
+	}
 	i = 0;
 	while (str[i])
 		i++;

@@ -6,7 +6,7 @@
 /*   By: zbenaiss <zbenaissa@1337.ma>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 04:50:46 by nbouhali          #+#    #+#             */
-/*   Updated: 2023/10/08 05:47:56 by zbenaiss         ###   ########.fr       */
+/*   Updated: 2023/10/08 06:09:24 by zbenaiss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,7 +158,7 @@ typedef struct s_shell
     t_redi_node *redi_list;
 }t_shell; 
 
-// extern t_shell	g_struct;
+// extern t_shell	mstruct;
 // typedef struct s_tre
 // {
 // 	char *token;
@@ -170,7 +170,7 @@ typedef struct s_shell
 // }t_tre;
 
 /*	----	----lexer----	-----	*/
-void					tokenisation(char *str, t_shell *g_struct, char **env);
+void					tokenisation(char *str, t_shell *mstruct, char **env);
 void					element_init(t_counter *elements, char *str);
 int						syntax_check(t_counter *elements, char *str);
 /*	----	----utils----	-----	*/
@@ -221,7 +221,7 @@ char					*toktok(char *str);
 // t_env	*ft_lstlast(t_env *lst);
 void print_env(t_var_t *head, int boole);
 void free_env(t_var_t *head);
-void initialize_environment(t_shell *g_struct,t_var_t **head, char **env);
+void initialize_environment(t_shell *mstruct,t_var_t **head, char **env);
 int add_env_var(t_var_t **head, char *key, char *value);
 int ft_strcmp(const char *s1, const char *s2);
 int ft_charfind(const char *str, char c);
@@ -236,11 +236,11 @@ void add_token_list(t_tlist **head, char **tab);
 int typefinder (char *line);
 // void print_tokens(t_tlist *head);
 // void add_to_env(t_var_t **head, char *env);
-void modify_env(t_shell *g_struct,t_tlist *token);
-char * expanded(t_shell *g_struct,char* str);
-void expander_init(t_shell *g_struct,t_tlist *head, t_var_t *env);
+void modify_env(t_shell *mstruct,t_tlist *token);
+char * expanded(t_shell *mstruct,char* str);
+void expander_init(t_shell *mstruct,t_tlist *head, t_var_t *env);
 // int find_in_list(t_var_t *head, char* search);
-void qidentify(t_shell *g_struct,t_tlist *token);
+void qidentify(t_shell *mstruct,t_tlist *token);
 void add_to_environ(char *argument, t_var_t **env);
 int list_size(t_tlist *head);
 // void execute_pipelines(array_of_commands *command_list, char **env);
@@ -250,7 +250,7 @@ char					*find_key(char *key, t_var_t *head);
 // void change_pwd(t_var_t *head);
 void change_pwd(t_var_t *head, t_shell *g_shell);
 void cd_command(char *directory, char **env, t_shell *g_shell);
-char *expanded_q(t_shell *g_struct, char *str);
+char *expanded_q(t_shell *mstruct, char *str);
 char	*ft_strchrtill(const char *s, int c,int len);
 char *strdelch(char *str, char ch);
 void free_tokens(t_tlist *head);
@@ -260,66 +260,66 @@ bool list_check(t_tlist *head);
 char *delete_pos(char *str, int pos);
 char *recombinator(char *first , char *later, char *rest);
 int command_id(t_tlist *head);
-void pipes_divider(t_shell *g_struct);
+void pipes_divider(t_shell *mstruct);
 char *quotes_remover(char *str);
 t_tlist *pipes_copy(t_tlist *head, t_tlist *current);
 void free_tableauv2(char **tableau);
 // void execute_pipelines(t_node **command_node, char **env);
-void execute_pipelines(t_node **command_node, t_shell *g_struct);
+void execute_pipelines(t_node **command_node, t_shell *mstruct);
 void free_pipes(t_node *head);
 void free_pipes_node(t_node **command_node);
 t_node *new_command_node(t_node **list, char **args);
 t_node *new_node(char **arr, t_redi_node *redirect);
 void add_node(t_node **node, t_node *new);
 void execute_commands(char *command, char **args, char **env, t_shell *g_shell);
-void special_free(t_shell *g_struct);
-// void special_free_recursive(t_shell *g_struct, t_tlist *current);
-// void special_freex(t_shell *g_struct);
+void special_free(t_shell *mstruct);
+// void special_free_recursive(t_shell *mstruct, t_tlist *current);
+// void special_freex(t_shell *mstruct);
 void print_pointers(t_tlist *head);
-// void versatile_divider(t_shell *g_struct);
+// void versatile_divider(t_shell *mstruct);
 // int versatile_nodes_count(t_tlist **current);
-// void versatile_pipes_list(t_shell *g_struct, int count, bool detected);
+// void versatile_pipes_list(t_shell *mstruct, int count, bool detected);
 // int versatile_counter(t_tlist *head);
 void files_finder(t_tlist *head);
 void add_redi(t_redi_node **node, t_redi_node *new);
 t_redi_node *new_redi(char *file, int type);
 void add_node(t_node **node, t_node *new);
-void redi_set(t_shell *g_struct);
-char *expander_qv2(t_shell *g_struct , char * str);
-char *env_expander(t_shell * g_struct,t_var_t *head, char * key);
+void redi_set(t_shell *mstruct);
+char *expander_qv2(t_shell *mstruct , char * str);
+char *env_expander(t_shell * mstruct,t_var_t *head, char * key);
 void print_pointers2(t_redi_node* head);
-// void cd_command(int ac, char *directory, char **env, t_shell *g_struct);
+// void cd_command(int ac, char *directory, char **env, t_shell *mstruct);
 void					execute_commands_pipes(char *command, char **args,
 							char **env, t_shell *g_shell);
-void					export(t_shell *g_struct, int ac, char **av,
+void					export(t_shell *mstruct, int ac, char **av,
 							char **env);
-void					ft_unset(int ac, char **av, t_shell *g_struct);
+void					ft_unset(int ac, char **av, t_shell *mstruct);
 void					exit_status_expand(t_shell *g_shell, int free_memory);
-void					ft_exit(char **args, t_shell *g_struct);
+void					ft_exit(char **args, t_shell *mstruct);
 void					exit_status_error(t_shell *g_shell);
 void					print_error_message(t_shell *g_shell);
 void					pwd_command(t_shell *g_shell);
-void					echo_command(int ac, char **av, t_shell *g_struct);
-char					*extract_from_in_list(t_shell *g_struct, t_var_t *tlist,
+void					echo_command(int ac, char **av, t_shell *mstruct);
+char					*extract_from_in_list(t_shell *mstruct, t_var_t *tlist,
 							char *key);
 t_heredoc				*new_here(int fd);
 void					add_here(t_heredoc **node, t_heredoc *new);
-void					heredoc(t_shell *g_struct, char *eof);
+void					heredoc(t_shell *mstruct, char *eof);
 // void echo_command(int ac, char **av);
-char					* extract_from_in_list(t_shell * g_struct ,t_var_t *tlist, char * key);
-void					ft_env(t_shell *g_struct, int ac, char **av);
-void					echo_command(int size, char **args, t_shell* g_struct);
+char					* extract_from_in_list(t_shell * mstruct ,t_var_t *tlist, char * key);
+void					ft_env(t_shell *mstruct, int ac, char **av);
+void					echo_command(int size, char **args, t_shell* mstruct);
 char					*ft_strjoinmini(char *s1, char *s2);
 char					*ft_realloc(char* str, int size);
-char					*add_exit_to_env(t_shell * g_struct, int exit); //here
-void					update_exit(t_shell *g_struct);
+char					*add_exit_to_env(t_shell * mstruct, int exit); //here
+void					update_exit(t_shell *mstruct);
 int						allspaces(char *str);
-void					builtins(t_shell *g_struct , char ** env ,  char ** single_comm);
-int						element_counter(t_shell *g_struct ,t_tlist *head, int what);
+void					builtins(t_shell *mstruct , char ** env ,  char ** single_comm);
+int						element_counter(t_shell *mstruct ,t_tlist *head, int what);
 int						nodes_count(t_tlist **current);
-void					pipes_list(t_shell *g_struct, int count);
+void					pipes_list(t_shell *mstruct, int count);
 void					free_tokens3(t_tlist *head);
-void					general_execution(t_shell *g_struct, char **args,
+void					general_execution(t_shell *mstruct, char **args,
 							int fork);
 void					error_set(t_shell *g_shell, t_shell_error error_name,
 							int print);

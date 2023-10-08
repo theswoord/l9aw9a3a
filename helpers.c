@@ -6,7 +6,7 @@
 /*   By: zbenaiss <zbenaissa@1337.ma>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 04:50:04 by nbouhali          #+#    #+#             */
-/*   Updated: 2023/10/08 05:08:47 by zbenaiss         ###   ########.fr       */
+/*   Updated: 2023/10/08 06:09:24 by zbenaiss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	add_env_var(t_var_t **head, char *key, char *value)
 	return (1);
 }
 
-void	initialize_environment(t_shell *g_struct, t_var_t **head, char **env)
+void	initialize_environment(t_shell *mstruct, t_var_t **head, char **env)
 {
 	char	*key;
 	char	*value;
@@ -82,7 +82,7 @@ void	initialize_environment(t_shell *g_struct, t_var_t **head, char **env)
 			key = ft_substr(env[i], 0, ft_charfind(env[i], '='));
 			value = ft_strchr(env[i], '=') + 1;
 			add_env_var(head, key, value);
-			g_struct->count++;
+			mstruct->count++;
 			free(key);
 		}
 		i++;

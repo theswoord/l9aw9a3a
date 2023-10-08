@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nbouhali < nbouhali@student.1337.ma >      +#+  +:+       +#+        */
+/*   By: zbenaiss <zbenaissa@1337.ma>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 04:41:46 by nbouhali          #+#    #+#             */
-/*   Updated: 2023/10/07 20:29:33 by nbouhali         ###   ########.fr       */
+/*   Updated: 2023/10/08 06:09:24 by zbenaiss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ char	*ft_realloc(char *str, int size)
 	}
 }
 
-int	element_counter(t_shell *g_struct, t_tlist *head, int what)
+int	element_counter(t_shell *mstruct, t_tlist *head, int what)
 {
 	int		count;
 	t_tlist	*current;
@@ -105,7 +105,7 @@ int	element_counter(t_shell *g_struct, t_tlist *head, int what)
 		if (current->value == what)
 		{
 			if (current->value == DOC)
-				heredoc(g_struct, current->next->str);
+				heredoc(mstruct, current->next->str);
 			count++;
 		}
 		current = current->next;

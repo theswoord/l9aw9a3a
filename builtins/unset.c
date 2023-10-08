@@ -6,7 +6,7 @@
 /*   By: zbenaiss <zbenaissa@1337.ma>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 04:11:39 by zbenaiss          #+#    #+#             */
-/*   Updated: 2023/10/08 05:38:01 by zbenaiss         ###   ########.fr       */
+/*   Updated: 2023/10/08 06:09:24 by zbenaiss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,12 @@ void	unset_var_env(t_var_t **head, char *key)
 	}
 }
 
-void	ft_unset(int ac, char **av, t_shell *g_struct)
+void	ft_unset(int ac, char **av, t_shell *mstruct)
 {
 	int	i;
 
 	i = 0;
 	while (++i < ac)
-		unset_var_env(&g_struct->envlist, av[i]);
+		unset_var_env(&mstruct->envlist, av[i]);
 	return ;
 }

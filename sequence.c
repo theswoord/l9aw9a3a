@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sequence.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nbouhali < nbouhali@student.1337.ma >      +#+  +:+       +#+        */
+/*   By: zbenaiss <zbenaissa@1337.ma>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 04:34:59 by nbouhali          #+#    #+#             */
-/*   Updated: 2023/10/08 01:50:39 by nbouhali         ###   ########.fr       */
+/*   Updated: 2023/10/08 06:09:24 by zbenaiss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ t_tlist	*pipes_copy(t_tlist *head, t_tlist *current)
 	return (current);
 }
 
-void	pipes_list(t_shell *g_struct, int count)
+void	pipes_list(t_shell *mstruct, int count)
 {
 	int		i;
 	int		j;
@@ -75,7 +75,7 @@ void	pipes_list(t_shell *g_struct, int count)
 
 	i = 0;
 	j = count;
-	current = g_struct->tlist;
+	current = mstruct->tlist;
 	node = (t_node *)ft_calloc(1, sizeof(t_node));
 	node->next = NULL;
 	node->args = ft_calloc((count + 1), sizeof(char *));
@@ -88,11 +88,11 @@ void	pipes_list(t_shell *g_struct, int count)
 		current = current->next;
 	}
 	node->redirect = NULL;
-	if (!g_struct->pipes_list)
-		g_struct->pipes_list = node;
+	if (!mstruct->pipes_list)
+		mstruct->pipes_list = node;
 	else
 	{
-		last = g_struct->pipes_list;
+		last = mstruct->pipes_list;
 		while (last->next != NULL)
 			last = last->next;
 		last->next = node;
@@ -101,19 +101,19 @@ void	pipes_list(t_shell *g_struct, int count)
 		return ;
 	free(current->str);
 	free(current);
-	g_struct->tlist = current->next;
+	mstruct->tlist = current->next;
 }
 
-void	redi_set(t_shell *g_struct)
+void	redi_set(t_shell *mstruct)
 {
 	t_tlist	*current;
 
-	current = g_struct->tlist;
+	current = mstruct->tlist;
 	while (current != NULL)
 	{
 		if (current->is_file == true)
 		{
-			add_redi(&g_struct->redi_list, new_redi(current->str,
+			add_redi(&mstruct->redi_list, new_redi(current->str,
 					current->value));
 			current = current->next;
 		}

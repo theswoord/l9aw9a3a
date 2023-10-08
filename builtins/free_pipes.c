@@ -6,7 +6,7 @@
 /*   By: zbenaiss <zbenaissa@1337.ma>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 04:11:22 by zbenaiss          #+#    #+#             */
-/*   Updated: 2023/10/08 05:41:08 by zbenaiss         ###   ########.fr       */
+/*   Updated: 2023/10/08 05:58:38 by zbenaiss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	free_redirections(t_redi_node **redirect_node)
 	{
 		temp = current_redi;
 		current_redi = current_redi->next;
-		// free(temp->file);
+		free(temp->file);
 		free(temp);
 		temp = NULL;
 	}

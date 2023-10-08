@@ -6,7 +6,7 @@
 /*   By: zbenaiss <zbenaissa@1337.ma>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 04:11:27 by zbenaiss          #+#    #+#             */
-/*   Updated: 2023/10/08 05:36:06 by zbenaiss         ###   ########.fr       */
+/*   Updated: 2023/10/08 06:09:24 by zbenaiss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	add_here(t_heredoc **node, t_heredoc *new)
 	head->next = new;
 }
 
-void	heredoc(t_shell *g_struct, char *eof)
+void	heredoc(t_shell *mstruct, char *eof)
 {
 	int		pipes[2];
 	char	*line;
@@ -58,5 +58,5 @@ void	heredoc(t_shell *g_struct, char *eof)
 		free(line);
 	}
 	close(pipes[1]);
-	add_here(&g_struct->heredoc_list, new_here(pipes[0]));
+	add_here(&mstruct->heredoc_list, new_here(pipes[0]));
 }

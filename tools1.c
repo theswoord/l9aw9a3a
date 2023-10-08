@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools1.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nbouhali < nbouhali@student.1337.ma >      +#+  +:+       +#+        */
+/*   By: zbenaiss <zbenaissa@1337.ma>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 04:41:07 by nbouhali          #+#    #+#             */
-/*   Updated: 2023/10/07 21:51:53 by nbouhali         ###   ########.fr       */
+/*   Updated: 2023/10/08 06:09:24 by zbenaiss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ char	*delete_pos(char *str, int pos)
 }
 
 // 7di m3a had file checked ++ o >> |       << |
-char	*extract_from_in_list(t_shell *g_struct, t_var_t *tlist, char *key)
+char	*extract_from_in_list(t_shell *mstruct, t_var_t *tlist, char *key)
 {
 	t_var_t	*current;
 	int		checked;
@@ -102,7 +102,7 @@ char	*extract_from_in_list(t_shell *g_struct, t_var_t *tlist, char *key)
 			return (current->value);
 		}
 		checked++;
-		if (checked == g_struct->count)
+		if (checked == mstruct->count)
 			return ("");
 		current = current->next;
 	}

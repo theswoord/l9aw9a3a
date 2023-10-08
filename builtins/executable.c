@@ -6,7 +6,7 @@
 /*   By: zbenaiss <zbenaissa@1337.ma>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 04:11:11 by zbenaiss          #+#    #+#             */
-/*   Updated: 2023/10/08 05:29:53 by zbenaiss         ###   ########.fr       */
+/*   Updated: 2023/10/08 06:09:24 by zbenaiss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ char	*find_executable_command(char *command, char *path)
 	{
 		while (*dir_end && *dir_end != ':')
 			dir_end++;
-		executable_path = malloc_path(executable_path, dir_start,
-				dir_start, command_len);
+		executable_path = malloc_path(executable_path, dir_start, dir_start,
+				command_len);
 		copy_path(&executable_path, dir_start, dir_end, command);
 		if (access(executable_path, X_OK) == 0)
 			return (executable_path);
@@ -92,24 +92,24 @@ void	execute_commands_pipes(char *command, char **args, char **env,
 	exit(g_shell->exit_status);
 }
 
-void	general_execution(t_shell *g_struct, char **args, int fork)
+void	general_execution(t_shell *mstruct, char **args, int fork)
 {
 	if (ft_strcmp(args[0], "cd") == 0)
-		cd_command(args[1], g_struct->env, g_struct);
+		cd_command(args[1], mstruct->env, mstruct);
 	else if (ft_strcmp(args[0], "env") == 0)
-		ft_env(g_struct, twodlen(args), args);
+		ft_env(mstruct, twodlen(args), args);
 	else if (ft_strcmp(args[0], "export") == 0)
-		export(g_struct, twodlen(args), args, g_struct->env);
+		export(mstruct, twodlen(args), args, mstruct->env);
 	else if (ft_strcmp(args[0], "unset") == 0)
-		ft_unset(twodlen(args), args, g_struct);
+		ft_unset(twodlen(args), args, mstruct);
 	else if (ft_strcmp(args[0], "exit") == 0)
-		ft_exit(args, g_struct);
+		ft_exit(args, mstruct);
 	else if (ft_strcmp(args[0], "pwd") == 0)
-		pwd_command(g_struct);
+		pwd_command(mstruct);
 	else if (ft_strcmp(args[0], "echo") == 0)
-		echo_command(twodlen(args), args, g_struct);
+		echo_command(twodlen(args), args, mstruct);
 	else if (fork == 1)
-		execute_commands(args[0], args, g_struct->env, g_struct);
+		execute_commands(args[0], args, mstruct->env, mstruct);
 	else
-		execute_commands_pipes(args[0], args, g_struct->env, g_struct);
+		execute_commands_pipes(args[0], args, mstruct->env, mstruct);
 }

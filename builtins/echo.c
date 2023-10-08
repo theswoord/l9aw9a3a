@@ -6,7 +6,7 @@
 /*   By: zbenaiss <zbenaissa@1337.ma>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 04:11:01 by zbenaiss          #+#    #+#             */
-/*   Updated: 2023/10/08 05:44:11 by zbenaiss         ###   ########.fr       */
+/*   Updated: 2023/10/08 06:09:24 by zbenaiss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	check_n(char *str)
 	return (1);
 }
 
-void	echo_child(int size, char **args, t_shell *g_struct)
+void	echo_child(int size, char **args, t_shell *mstruct)
 {
 	int	i;
 	int	skip_newline;
@@ -53,11 +53,11 @@ void	echo_child(int size, char **args, t_shell *g_struct)
 	}
 	if (!skip_newline)
 		printf("\n");
-	g_struct->error_name = SUCCESS;
-	exit_status_error(g_struct);
+	mstruct->error_name = SUCCESS;
+	exit_status_error(mstruct);
 }
 
-void	echo_command(int size, char **args, t_shell *g_struct)
+void	echo_command(int size, char **args, t_shell *mstruct)
 {
-	echo_child(size, args, g_struct);
+	echo_child(size, args, mstruct);
 }
