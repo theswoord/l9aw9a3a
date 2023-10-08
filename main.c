@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zbenaiss <zbenaissa@1337.ma>               +#+  +:+       +#+        */
+/*   By: nbouhali < nbouhali@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 04:50:35 by nbouhali          #+#    #+#             */
-/*   Updated: 2023/10/08 06:09:24 by zbenaiss         ###   ########.fr       */
+/*   Updated: 2023/10/08 07:41:52 by nbouhali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	sig(int signal)
 	{
 		printf("\n");
 		rl_on_new_line();
-		// rl_replace_line("", 0);
+		rl_replace_line("", 0);
 		rl_redisplay();
 	}
 }
@@ -26,13 +26,9 @@ void	sig(int signal)
 int	main(int ac, char **av, char **env)
 {
 	t_shell				mstruct;
-	int					i;
 	char				*test;
 	struct sigaction	minisignols;
 
-	i = 0;
-	(void)ac;
-	(void)av;
 	minisignols.sa_handler = sig;
 	sigemptyset(&minisignols.sa_mask);
 	sigaddset(&minisignols.sa_mask, SIGQUIT);
@@ -51,7 +47,7 @@ int	main(int ac, char **av, char **env)
 		}
 		if (ft_strlen(test) > 0)
 			add_history(test);
-		tokenisation(test, &mstruct, env);
+		tokenisation(test, &mstruct, ac, av);
 		free(test);
 	}
 }

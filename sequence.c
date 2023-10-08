@@ -3,54 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   sequence.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zbenaiss <zbenaissa@1337.ma>               +#+  +:+       +#+        */
+/*   By: nbouhali < nbouhali@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 04:34:59 by nbouhali          #+#    #+#             */
-/*   Updated: 2023/10/08 06:09:24 by zbenaiss         ###   ########.fr       */
+/*   Updated: 2023/10/08 07:24:18 by nbouhali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	files_finder(t_tlist *head)
-{
-	t_tlist	*current;
-
-	while (current != NULL && current->next)
-	{
-		if (current->value == REDIR || current->value == APPEND
-			|| current->value == REDIW || current->value == DOC )
-		{
-			current->next->value = current->value;
-			current->next->is_file = true;
-		}
-		if (ft_strcmp(current->str, ">") == 0 || ft_strcmp(current->str,
-				">>") == 0 || ft_strcmp(current->str, "<") == 0 || ft_strcmp(current->str, "<<") == 0)
-			current->is_file = false;
-		current = current->next;
-	}
-}
-
-int	nodes_count(t_tlist **current)
-{
-	int	nodes;
-
-	nodes = 0;
-	while (*current != NULL)
-	{
-		if ((*current)->value == PIPE || (*current)->value == REDIR
-			|| (*current)->value == REDIW || (*current)->value == APPEND || (*current)->value == DOC )
-		{
-			(*current) = (*current)->next;
-			return (nodes);
-		}
-		nodes++;
-		(*current) = (*current)->next;
-	}
-	return (nodes);
-}
-
-t_tlist	*pipes_copy(t_tlist *head, t_tlist *current)
+t_tlist	*pipes_copy(t_tlist *current)
 {
 	while (current != NULL)
 	{
@@ -65,29 +27,16 @@ t_tlist	*pipes_copy(t_tlist *head, t_tlist *current)
 	return (current);
 }
 
-void	pipes_list(t_shell *mstruct, int count)
+void	pipes_list_init(t_tlist **current, t_node **node,
+		t_shell *mstruct)
 {
-	int		i;
-	int		j;
-	t_tlist	*current;
-	t_node	*node;
-	t_node	*last;
+	(*current) = mstruct->tlist;
+	(*node) = (t_node *)ft_calloc(1, sizeof(t_node));
+	(*node)->next = NULL;
+}
 
-	i = 0;
-	j = count;
-	current = mstruct->tlist;
-	node = (t_node *)ft_calloc(1, sizeof(t_node));
-	node->next = NULL;
-	node->args = ft_calloc((count + 1), sizeof(char *));
-	while (i < count)
-	{
-		node->args[i] = current->str;
-		// printf(".%s.\n", current->str);
-		free(current);
-		i++;
-		current = current->next;
-	}
-	node->redirect = NULL;
+void	pipes_list_check(t_node *node, t_node *last, t_shell *mstruct)
+{
 	if (!mstruct->pipes_list)
 		mstruct->pipes_list = node;
 	else
@@ -97,6 +46,25 @@ void	pipes_list(t_shell *mstruct, int count)
 			last = last->next;
 		last->next = node;
 	}
+}
+
+void	pipes_list(t_shell *mstruct, int count, int i)
+{
+	t_tlist	*current;
+	t_node	*node;
+	t_node	*last;
+
+	last = NULL;
+	pipes_list_init(&current, &node, mstruct);
+	node->args = ft_calloc((count + 1), sizeof(char *));
+	while (i < count)
+	{
+		node->args[i++] = current->str;
+		free(current);
+		current = current->next;
+	}
+	node->redirect = NULL;
+	pipes_list_check(node, last, mstruct);
 	if (current == NULL)
 		return ;
 	free(current->str);

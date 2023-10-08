@@ -3,30 +3,64 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zbenaiss <zbenaissa@1337.ma>               +#+  +:+       +#+        */
+/*   By: nbouhali < nbouhali@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 04:32:36 by nbouhali          #+#    #+#             */
-/*   Updated: 2023/10/08 06:09:24 by zbenaiss         ###   ########.fr       */
+/*   Updated: 2023/10/08 07:58:36 by nbouhali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	tokenisation(char *str, t_shell *mstruct, char **env)
+void	exec_who(t_shell *m)
 {
 	char	**single_comm;
-	char	**done;
-	int		docs;
 
-	if (allspaces(str) == 1 || ft_strlen(str) == 0)
+	if (command_id(m->tlist) == PIPE || command_id(m->tlist) == REDIW
+		|| command_id(m->tlist) == REDIR || command_id(m->tlist) == APPEND
+		|| command_id(m->tlist) == DOC)
 	{
-		return ;
+		files_finder(m->tlist);
+		redi_set(m);
+		pipes_divider(m);
+		execute_pipelines(&m->pipes_list, m);
+		update_exit(m);
+		m->redi_list = NULL;
+		if ((command_id(m->tlist) == REDIW || command_id(m->tlist) == REDIR
+				|| command_id(m->tlist) == APPEND
+				|| command_id(m->tlist) == DOC))
+			free(m->tlist);
 	}
+	else
+	{
+		single_comm = from_list_to_arr(m->tlist);
+		general_execution(m, single_comm, 1);
+		update_exit(m);
+		free(single_comm);
+		free_tokens(m->tlist);
+	}
+}
+
+void	decoupe(char *str, t_shell *mstruct)
+{
+	char	**done;
+
 	done = ft_u_split(str);
 	add_token_list(&mstruct->tlist, done);
 	free_tableau(done, twodlen(done));
 	modify_env(mstruct, mstruct->tlist);
 	update_exit(mstruct);
+}
+
+void	tokenisation(char *str, t_shell *mstruct, int ac, char **av)
+{
+	int	docs;
+
+	if (allspaces(str) == 1 || ft_strlen(str) == 0)
+		return ;
+	(void)ac;
+	(void)av;
+	decoupe(str, mstruct);
 	if (list_check(mstruct->tlist))
 		qidentify(mstruct, mstruct->tlist);
 	else
@@ -42,37 +76,8 @@ void	tokenisation(char *str, t_shell *mstruct, char **env)
 		mstruct->heredoc_list = NULL;
 		docs = element_counter(mstruct, mstruct->tlist, DOC);
 	}
-	expander_init(mstruct, mstruct->tlist, NULL);
-
-	
-	if (command_id(mstruct->tlist) == PIPE
-		||command_id(mstruct->tlist) == REDIW
-		|| command_id(mstruct->tlist) == REDIR
-		|| command_id(mstruct->tlist) == APPEND || command_id(mstruct->tlist) == DOC )
-	{
-		files_finder(mstruct->tlist);
-		redi_set(mstruct);
-		pipes_divider(mstruct);
-		execute_pipelines(&mstruct->pipes_list, mstruct);
-		update_exit(mstruct);
-		mstruct->redi_list = NULL;
-
-		if((command_id(mstruct->tlist) == REDIW
-		|| command_id(mstruct->tlist) == REDIR
-		|| command_id(mstruct->tlist) == APPEND || command_id(mstruct->tlist) == DOC)) 
-		{
-			free(mstruct->tlist);
-		}
-	}
-	else
-	{
-		single_comm = from_list_to_arr(mstruct->tlist);
-		general_execution(mstruct, single_comm, 1);
-		update_exit(mstruct);
-		free(single_comm);
-		free_tokens(mstruct->tlist);
-	}
-
+	expander_init(mstruct, mstruct->tlist);
+	exec_who(mstruct);
 }
 
 int	command_id(t_tlist *head)
@@ -113,14 +118,12 @@ void	pipes_divider(t_shell *mstruct)
 	while (i < a)
 	{
 		b = nodes_count(&current);
-		pipes_list(mstruct, b);
+		pipes_list(mstruct, b, 0);
 		i++;
 	}
 	if (mstruct->redi_list != NULL)
 	{
-		// printf("\t%p\n", cu);
 		cu = mstruct->pipes_list;
-		// printf("\t%p\n", cu);
 		while (cu && cu->next)
 			cu = cu->next;
 		cu->redirect = mstruct->redi_list;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zbenaiss <zbenaissa@1337.ma>               +#+  +:+       +#+        */
+/*   By: nbouhali < nbouhali@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 04:32:44 by nbouhali          #+#    #+#             */
-/*   Updated: 2023/10/08 06:09:24 by zbenaiss         ###   ########.fr       */
+/*   Updated: 2023/10/08 07:28:21 by nbouhali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	expanderv2(t_shell *mstruct, t_lesindex *indes, char *expantion,
 			indes->j = indes->i;
 			while (ft_isalnum(str[indes->i]) == 1 || str[indes->i] == '?')
 				indes->i++;
-			expantion = env_expander(mstruct, mstruct->envlist, ft_substr(str,
+			expantion = env_expander(mstruct->envlist, ft_substr(str,
 						indes->j, indes->i - indes->j));
 			indes->out = ft_strjoingnl(indes->out, expantion);
 			indes->out = ft_realloc(indes->out, (ft_strlen(str)
@@ -81,8 +81,8 @@ char	*expander_qv2(t_shell *mstruct, char *str)
 {
 	t_lesindex	indes;
 	char		*expantion;
-	char		*out;
 
+	expantion = NULL;
 	indes.i = 0;
 	indes.j = 0;
 	indes.k = 0;

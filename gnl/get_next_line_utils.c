@@ -6,7 +6,7 @@
 /*   By: nbouhali < nbouhali@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:55:22 by nbouhali          #+#    #+#             */
-/*   Updated: 2023/10/07 22:11:01 by nbouhali         ###   ########.fr       */
+/*   Updated: 2023/10/08 08:04:35 by nbouhali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,11 @@
 size_t	ft_strlengnl(char *s)
 {
 	size_t	a;
+
 	if (!s)
 	{
-		return 0;
-		/* code */
+		return (0);
 	}
-	
 	a = 0;
 	while (s[a] != '\0')
 	{

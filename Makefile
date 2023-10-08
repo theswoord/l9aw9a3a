@@ -11,10 +11,10 @@ msa7 = rm -rf
 obj = ${SRC:.c=.o}
 objb = ${SRCB:.c=.o}
 
-readflag = -L/Users/zbenaiss/.brew/opt/readline/lib 
-readinc = -I/Users/zbenaiss/.brew/opt/readline/include/
-# readflagnbl = -L/Users/nbouhali/.brew/opt/readline/lib 
-# readincnbl = -I/Users/nbouhali/.brew/opt/readline/include/
+# readflag = -L/Users/zbenaiss/.brew/opt/readline/lib 
+# readinc = -I/Users/zbenaiss/.brew/opt/readline/include/
+readflagnbl = -L/Users/nbouhali/.brew/opt/readline/lib 
+readincnbl = -I/Users/nbouhali/.brew/opt/readline/include/
 
 # tarzan = -L$(shell brew --prefix readline)
 libraries = ./printf/libftprintf.a ./gnl/gnl.a ./libft/libft.a ./ft_malloc/ft_malloc.a
@@ -27,7 +27,7 @@ ${NAME} : ${obj}
 	${CC} ${readflagnbl} ${CFLAGS}  ${readinc} ${obj} -lreadline $(libraries) -o $(NAME)
 
 %.o: %.c
-	${CC} -I ~/.brew/opt/readline/include/ -c $< -o $@
+	${CC} -I ~/.brew/opt/readline/include/ -Wall -Wextra -Werror  -c $< -o $@
 
 libs: $(SUBDIRS)
 	# @echo "\033[1;32mmaking the libs ...\033[0m"

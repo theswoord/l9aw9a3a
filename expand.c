@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zbenaiss <zbenaissa@1337.ma>               +#+  +:+       +#+        */
+/*   By: nbouhali < nbouhali@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 04:32:42 by nbouhali          #+#    #+#             */
-/*   Updated: 2023/10/08 06:09:24 by zbenaiss         ###   ########.fr       */
+/*   Updated: 2023/10/08 07:06:54 by nbouhali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	qidentify(t_shell *mstruct, t_tlist *token)
 	}
 }
 
-void	expander_init(t_shell *mstruct, t_tlist *head, t_var_t *env)
+void	expander_init(t_shell *mstruct, t_tlist *head)
 {
 	t_tlist	*tmp;
 	int		i;
@@ -76,7 +76,7 @@ char	*expanded(t_shell *mstruct, char *str)
 	return (ft_strjoingnl(first, ""));
 }
 
-char	*env_expander(t_shell *mstruct, t_var_t *head, char *key)
+char	*env_expander(t_var_t *head, char *key)
 {
 	t_var_t	*current;
 	int		checked;

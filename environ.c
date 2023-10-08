@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   environ.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zbenaiss <zbenaissa@1337.ma>               +#+  +:+       +#+        */
+/*   By: nbouhali < nbouhali@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 04:32:39 by nbouhali          #+#    #+#             */
-/*   Updated: 2023/10/08 06:09:24 by zbenaiss         ###   ########.fr       */
+/*   Updated: 2023/10/08 07:28:10 by nbouhali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*add_exit_to_env(t_shell *mstruct, int exit)
+char	*add_exit_to_env(t_shell *mstruct)
 {
 	if (mstruct->exit_arr)
 	{
@@ -55,4 +55,45 @@ void	modify_env(t_shell *mstruct, t_tlist *token)
 		}
 		tmp = tmp->next;
 	}
+}
+
+void	files_finder(t_tlist *head)
+{
+	t_tlist	*current;
+
+	current = head;
+	while (current != NULL && current->next)
+	{
+		if (current->value == REDIR || current->value == APPEND
+			|| current->value == REDIW || current->value == DOC)
+		{
+			current->next->value = current->value;
+			current->next->is_file = true;
+		}
+		if (ft_strcmp(current->str, ">") == 0 || ft_strcmp(current->str,
+				">>") == 0 || ft_strcmp(current->str, "<") == 0
+			|| ft_strcmp(current->str, "<<") == 0)
+			current->is_file = false;
+		current = current->next;
+	}
+}
+
+int	nodes_count(t_tlist **current)
+{
+	int	nodes;
+
+	nodes = 0;
+	while (*current != NULL)
+	{
+		if ((*current)->value == PIPE || (*current)->value == REDIR
+			|| (*current)->value == REDIW || (*current)->value == APPEND
+			|| (*current)->value == DOC)
+		{
+			(*current) = (*current)->next;
+			return (nodes);
+		}
+		nodes++;
+		(*current) = (*current)->next;
+	}
+	return (nodes);
 }

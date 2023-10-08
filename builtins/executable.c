@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executable.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zbenaiss <zbenaissa@1337.ma>               +#+  +:+       +#+        */
+/*   By: nbouhali < nbouhali@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 04:11:11 by zbenaiss          #+#    #+#             */
-/*   Updated: 2023/10/08 06:09:24 by zbenaiss         ###   ########.fr       */
+/*   Updated: 2023/10/08 07:01:47 by nbouhali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ char	*find_executable_command(char *command, char *path)
 	char	*dir_start;
 	char	*dir_end;
 	char	*executable_path;
-	int		path_len;
 
+	command_len = 0;
 	dir_start = path;
 	dir_end = path;
 	while (*dir_end)
@@ -41,7 +41,7 @@ char	*find_executable_command(char *command, char *path)
 	return (NULL);
 }
 
-void	execute_commands(char *command, char **args, char **env,
+void	execute_commands(char *command, char **args,
 		t_shell *g_shell)
 {
 	char	*path;
@@ -95,7 +95,7 @@ void	execute_commands_pipes(char *command, char **args, char **env,
 void	general_execution(t_shell *mstruct, char **args, int fork)
 {
 	if (ft_strcmp(args[0], "cd") == 0)
-		cd_command(args[1], mstruct->env, mstruct);
+		cd_command(args[1], mstruct);
 	else if (ft_strcmp(args[0], "env") == 0)
 		ft_env(mstruct, twodlen(args), args);
 	else if (ft_strcmp(args[0], "export") == 0)
@@ -109,7 +109,7 @@ void	general_execution(t_shell *mstruct, char **args, int fork)
 	else if (ft_strcmp(args[0], "echo") == 0)
 		echo_command(twodlen(args), args, mstruct);
 	else if (fork == 1)
-		execute_commands(args[0], args, mstruct->env, mstruct);
+		execute_commands(args[0], args, mstruct);
 	else
 		execute_commands_pipes(args[0], args, mstruct->env, mstruct);
 }

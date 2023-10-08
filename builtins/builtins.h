@@ -36,7 +36,7 @@ void		*ft_memcpy(void *dst, const void *src, size_t n);
 char		*ft_strjoin(char const *s1, char const *s2);
 void		ft_putstr_fd(char *s, int fd);
 size_t		ft_strlen(const char *str);
-void		execute_commands(char *command, char **args, char **env,
+void		execute_commands(char *command, char **args,
 				t_shell *g_shell);
 void		execute_pipelines(t_node **command_node, t_shell *mstruct);
 void		echo_command(int ac, char **av, t_shell *mstruct);

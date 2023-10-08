@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zbenaiss <zbenaissa@1337.ma>               +#+  +:+       +#+        */
+/*   By: nbouhali < nbouhali@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 04:11:14 by zbenaiss          #+#    #+#             */
-/*   Updated: 2023/10/08 06:09:24 by zbenaiss         ###   ########.fr       */
+/*   Updated: 2023/10/08 07:59:34 by nbouhali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	add_to_environ(char *argument, t_var_t **env)
 {
-	int		i;
 	char	*key;
 	char	*value;
 
@@ -38,6 +37,7 @@ void	export(t_shell *mstruct, int ac, char **av, char **env)
 {
 	int	i;
 
+	(void)env;
 	i = 0;
 	while (++i < ac)
 		add_to_environ(av[i], &mstruct->envlist);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zbenaiss <zbenaissa@1337.ma>               +#+  +:+       +#+        */
+/*   By: nbouhali < nbouhali@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 04:10:58 by zbenaiss          #+#    #+#             */
-/*   Updated: 2023/10/08 05:07:16 by zbenaiss         ###   ########.fr       */
+/*   Updated: 2023/10/08 06:57:19 by nbouhali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,8 @@ char	*find_key(char *key, t_var_t *head)
 	return (NULL);
 }
 
-void	change_pwd(t_var_t *head, t_shell *g_shell)
+void	change_pwd(t_var_t *head)
 {
-	t_var_t	*old_pwd;
-	t_var_t	*current_pwd;
 	char	pwd[1024];
 
 	getcwd(pwd, sizeof(pwd));
@@ -57,7 +55,7 @@ void	change_pwd(t_var_t *head, t_shell *g_shell)
 	find_value("PWD", head, pwd);
 }
 
-void	cd_command(char *directory, char **env, t_shell *g_shell)
+void	cd_command(char *directory, t_shell *g_shell)
 {
 	if (!directory)
 		chdir(extract_from_in_list(g_shell, g_shell->envlist, "PATH"));
@@ -66,7 +64,7 @@ void	cd_command(char *directory, char **env, t_shell *g_shell)
 		error_set(g_shell, PERMISSION_DENIED_FILE, 1);
 		return ;
 	}
-	change_pwd(g_shell->envlist, g_shell);
+	change_pwd(g_shell->envlist);
 	error_set(g_shell, SUCCESS, 0);
 	return ;
 }

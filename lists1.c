@@ -6,7 +6,7 @@
 /*   By: nbouhali < nbouhali@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 04:50:32 by nbouhali          #+#    #+#             */
-/*   Updated: 2023/10/08 03:46:11 by nbouhali         ###   ########.fr       */
+/*   Updated: 2023/10/08 07:12:23 by nbouhali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ void	token_list(t_tlist **head, char *tok, int type, int queue)
 
 	current = *head;
 	new_node = malloc(sizeof(t_tlist));
-	// printf("%p\n",new_node);
 	new_node->str = ft_strdup(tok);
 	if (type)
 		new_node->value = type;
@@ -97,8 +96,6 @@ void	token_list(t_tlist **head, char *tok, int type, int queue)
 void	add_token_list(t_tlist **head, char **tab)
 {
 	int		i;
-	char	*tok;
-	char	*type;
 
 	i = 0;
 	*head = NULL;
