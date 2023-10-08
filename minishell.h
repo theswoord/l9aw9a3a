@@ -6,7 +6,7 @@
 /*   By: zbenaiss <zbenaissa@1337.ma>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 04:50:46 by nbouhali          #+#    #+#             */
-/*   Updated: 2023/10/08 05:15:33 by zbenaiss         ###   ########.fr       */
+/*   Updated: 2023/10/08 05:47:56 by zbenaiss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,18 +118,6 @@ typedef struct s_prompt
 	int					twodlen;
 
 }						t_prompt;
-
-typedef struct s_index
-{
-
-int i;
-int j;
-int k;
-char *out;
-char *result;
-
-
-}t_lesindex;
 
 typedef struct s_index
 {
