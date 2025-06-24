@@ -1,27 +1,22 @@
-# l9aw9a3a
-al9aw9a3a saghira
+🚀 About The Project
 
+This project is an exploration into the fundamentals of shell programming. The goal is to recreate a command-line interface environment that behaves similarly to Bash, handling command execution, input/output, and potentially more advanced shell features. The use of the Readline library enhances the user experience by providing features like command history, line editing, and auto-completion.
+✨ Features
 
-Tree Data Structure:
-https://www.cs.cmu.edu/~clo/www/CMU/DataStructures/Lessons/lesson4_1.htm
+    Interactive Prompt: A custom command prompt for user input.
 
-Single & double quotes;
-https://www.dba-oracle.com/t_linux_single_double_quotes.htm
+    Command Execution: Ability to parse and execute external commands.
 
-guide how to make shell in C.
-https://www.geeksforgeeks.org/making-linux-shell-c/
+    Readline Integration: Utilizes GNU Readline for:
 
-https://brennan.io/2015/01/16/write-a-shell-in-c/
+        Command history (up/down arrow navigation)
 
-https://www.bottomupcs.com/
+        Line editing (insert, delete, navigate characters)
 
-good quotes handling
- https://www.codevivek.com/writing-a-shell-in-c/
-awileeeeeeeeee 
-https://www.grymoire.com/Unix/Quote.html
+        Basic auto-completion
 
+🛠️ Technologies Used
 
-https://dev.to/oyagci/generating-a-parse-tree-from-a-shell-grammar-f1
+    C Language: The core language for the shell implementation.
 
-
-chof hadi mazal makhdamach '"nabil'bouhali' "' their result "nabilbouhali " , our resullt 'nabil'bouhali' '
+    GNU Readline Library: For handling interactive command-line input.
